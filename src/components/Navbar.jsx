@@ -321,14 +321,14 @@ export const Navbar = ({
         </div>
       </header>
 
-      {/* MOBILE FLOATING BOTTOM NAVIGATION BAR (Positioned safely above persistent player) */}
+      {/* MOBILE FLOATING BOTTOM NAVIGATION BAR (Cleanly positioned above audio player) */}
       <div 
         className="
           fixed
-          bottom-28
+          bottom-32
           left-1/2
           -translate-x-1/2
-          z-40
+          z-30
           flex
           md:hidden
           items-center
@@ -337,12 +337,12 @@ export const Navbar = ({
           rounded-full
           border
           shadow-2xl
-          backdrop-blur-xl
+          backdrop-blur-2xl
         "
         style={{
-          backgroundColor: 'color-mix(in srgb, var(--surface-primary) 95%, transparent)',
+          backgroundColor: 'color-mix(in srgb, var(--surface-primary) 96%, transparent)',
           borderColor: 'var(--border-subtle)',
-          boxShadow: '0 12px 35px rgba(0, 0, 0, 0.4)'
+          boxShadow: '0 15px 40px rgba(0, 0, 0, 0.5)'
         }}
       >
         <button
@@ -352,8 +352,8 @@ export const Navbar = ({
             flex
             items-center
             gap-2
-            px-4
-            py-2
+            px-5
+            py-2.5
             rounded-full
             text-xs
             transition-all
@@ -372,7 +372,7 @@ export const Navbar = ({
                 }
           }
         >
-          <Home size={13} />
+          <Home size={14} />
           <span>Builder</span>
         </button>
 
@@ -383,8 +383,8 @@ export const Navbar = ({
             flex
             items-center
             gap-2
-            px-4
-            py-2
+            px-5
+            py-2.5
             rounded-full
             text-xs
             transition-all
@@ -403,7 +403,7 @@ export const Navbar = ({
                 }
           }
         >
-          <SlidersHorizontal size={13} />
+          <SlidersHorizontal size={14} />
           <span>Studio</span>
         </button>
       </div>
