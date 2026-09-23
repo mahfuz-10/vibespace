@@ -1,0 +1,405 @@
+/* =========================================================
+   VIBESPACE INTRO
+   Premium / Warm / Cinematic
+   ========================================================= */
+
+.vibe-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(112, 124, 103, 0.13),
+      transparent 32%
+    ),
+    #24231f;
+
+  color: #eee7d8;
+
+  opacity: 0;
+
+  transition:
+    opacity 900ms ease,
+    background 900ms ease;
+}
+
+
+/* =========================================================
+   SUBTLE ATMOSPHERE
+   ========================================================= */
+
+.vibe-intro-glow {
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transition:
+    opacity 1600ms ease,
+    transform 1800ms ease;
+}
+
+.vibe-intro-glow-one {
+  top: -260px;
+  left: 8%;
+
+  background:
+    rgba(156, 175, 145, 0.12);
+}
+
+.vibe-intro-glow-two {
+  right: -260px;
+  bottom: -280px;
+
+  background:
+    rgba(211, 180, 134, 0.09);
+}
+
+
+/* =========================================================
+   GRAIN
+   ========================================================= */
+
+.vibe-intro-grain {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.035;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.vibe-intro-content {
+  position: relative;
+  z-index: 2;
+
+  width: min(760px, calc(100% - 40px));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  transform: translateY(18px);
+
+  opacity: 0;
+
+  transition:
+    opacity 1000ms ease,
+    transform 1000ms cubic-bezier(.22,.61,.36,1);
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.vibe-intro-brand {
+  color: #eee7d8;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  letter-spacing: .42em;
+
+  margin-left: .42em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   LINE
+   ========================================================= */
+
+.vibe-intro-line {
+  width: 42px;
+  height: 1px;
+
+  margin: 29px 0 32px;
+
+  background: #d3b486;
+
+  opacity: .7;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.vibe-intro-content h1 {
+  margin: 0;
+
+  color: #eee7d8;
+
+  font-size: clamp(48px, 6.2vw, 88px);
+
+  font-weight: 300;
+
+  line-height: .98;
+
+  letter-spacing: -.055em;
+}
+
+.vibe-intro-content h1 em {
+  color: #d3b486;
+
+  font-style: italic;
+
+  font-weight: 300;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.vibe-intro-content p {
+  margin: 30px 0 0;
+
+  color: rgba(238, 231, 216, .58);
+
+  font-size: 13px;
+
+  line-height: 1.8;
+
+  letter-spacing: .01em;
+}
+
+
+/* =========================================================
+   ENTER
+   ========================================================= */
+
+.vibe-intro-enter {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-top: 47px;
+
+  padding: 0 0 10px;
+
+  border: 0;
+  border-bottom:
+    1px solid rgba(238, 231, 216, .35);
+
+  background: transparent;
+
+  color: #eee7d8;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: .16em;
+
+  text-transform: uppercase;
+
+  transition:
+    color 300ms ease,
+    border-color 300ms ease;
+}
+
+.vibe-intro-enter::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -1px;
+
+  width: 0;
+  height: 1px;
+
+  background: #9caf91;
+
+  transition: width 400ms ease;
+}
+
+.vibe-intro-enter:hover {
+  color: #ffffff;
+
+  border-color:
+    rgba(238, 231, 216, .12);
+}
+
+.vibe-intro-enter:hover::after {
+  width: 100%;
+}
+
+.vibe-intro-arrow {
+  display: flex;
+
+  transition:
+    transform 300ms ease;
+}
+
+.vibe-intro-enter:hover .vibe-intro-arrow {
+  transform: translateX(5px);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.vibe-intro-footer {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 31px;
+
+  display: flex;
+  justify-content: center;
+
+  color: rgba(238, 231, 216, .28);
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: .22em;
+}
+
+
+/* =========================================================
+   ENTER ANIMATION
+   ========================================================= */
+
+.vibe-intro.is-visible {
+  opacity: 1;
+}
+
+.vibe-intro.is-visible .vibe-intro-content {
+  opacity: 1;
+
+  transform: translateY(0);
+
+  transition-delay: 250ms;
+}
+
+.vibe-intro.is-visible .vibe-intro-glow {
+  opacity: 1;
+
+  transform: scale(1);
+}
+
+.vibe-intro.is-leaving {
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition-duration: 800ms;
+}
+
+.vibe-intro.is-leaving .vibe-intro-content {
+  opacity: 0;
+
+  transform: translateY(-12px);
+
+  transition-duration: 550ms;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .vibe-intro-content {
+    width: calc(100% - 34px);
+  }
+
+  .vibe-intro-brand {
+    font-size: 11px;
+
+    letter-spacing: .3em;
+  }
+
+  .vibe-intro-line {
+    margin:
+      25px 0
+      29px;
+  }
+
+  .vibe-intro-content h1 {
+    font-size: clamp(43px, 12vw, 62px);
+
+    line-height: 1.02;
+  }
+
+  .vibe-intro-content p {
+    font-size: 12px;
+
+    margin-top: 25px;
+  }
+
+  .desktop-break {
+    display: none;
+  }
+
+  .vibe-intro-enter {
+    margin-top: 40px;
+  }
+
+  .vibe-intro-footer {
+    bottom: 23px;
+
+    font-size: 7px;
+
+    letter-spacing: .16em;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .vibe-intro,
+  .vibe-intro-content,
+  .vibe-intro-glow,
+  .vibe-intro-enter,
+  .vibe-intro-enter::after,
+  .vibe-intro-arrow {
+    transition: none !important;
+  }
+}

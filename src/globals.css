@@ -1,0 +1,1365 @@
+/* ============================================================
+   VIBESPACE
+   PREMIUM EDITORIAL ATMOSPHERE SYSTEM
+   ============================================================ */
+
+
+/* ============================================================
+   DESIGN TOKENS (DARK MODE DEFAULT)
+   ============================================================ */
+
+:root {
+  --bg-primary: #171714;
+  --bg-secondary: #1E1F1B;
+
+  --surface-primary: #252620;
+  --surface-elevated: #2D2E27;
+  --surface-soft: #34352D;
+
+  --text-primary: #F4F0E6;
+  --text-secondary: #C9C5B9;
+  --text-muted: #929287;
+
+  --border-subtle: rgba(244, 240, 230, 0.10);
+  --border-soft: rgba(244, 240, 230, 0.055);
+
+  /* Brand */
+  --accent-color: #A8B69A;
+  --accent-soft: #BBC6AF;
+
+  /* Atmosphere */
+  --sage: #A8B69A;
+  --sage-soft: #C0CAB6;
+
+  --champagne: #D6B887;
+
+  --lavender: #AAA0B9;
+  --peach: #D39B86;
+  --rose: #C7969E;
+  --mauve: #B5A2AE;
+
+  /* Shadows */
+  --shadow-soft:
+    0 18px 60px rgba(0, 0, 0, 0.18);
+
+  --shadow-card:
+    0 12px 35px rgba(0, 0, 0, 0.12);
+
+  --shadow-premium:
+    0 20px 60px rgba(0, 0, 0, 0.24);
+
+  --shadow-glow:
+    0 12px 40px rgba(168, 182, 154, 0.10);
+
+  /* Typography */
+  --font-heading:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  --font-body:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+/* ============================================================
+   LIGHT MODE (PROPERLY SYNCED DESIGN TOKENS)
+   ============================================================ */
+
+html[data-theme="light"],
+body[data-theme="light"] {
+  --bg-primary: #F1EEE7;
+  --bg-secondary: #E8E4DB;
+
+  --surface-primary: #F8F6F0;
+  --surface-elevated: #FFFFFF;
+  --surface-soft: #ECE9E1;
+
+  --text-primary: #262821;
+  --text-secondary: #5F6259;
+  --text-muted: #898B81;
+
+  --border-subtle: rgba(38, 40, 33, 0.10);
+  --border-soft: rgba(38, 40, 33, 0.055);
+
+  --accent-color: #819474;
+  --accent-soft: #9CAC90;
+
+  --sage: #819474;
+  --sage-soft: #718467;
+
+  --champagne: #B58E5E;
+
+  --lavender: #92899F;
+  --peach: #B77F6D;
+  --rose: #AD7F88;
+  --mauve: #9A8592;
+
+  --shadow-soft:
+    0 18px 50px rgba(52, 49, 40, 0.08);
+
+  --shadow-card:
+    0 12px 32px rgba(52, 49, 40, 0.06);
+
+  --shadow-premium:
+    0 20px 60px rgba(52, 49, 40, 0.10);
+
+  --shadow-glow:
+    0 12px 40px rgba(129, 148, 116, 0.12);
+}
+
+
+/* ============================================================
+   GLOBAL RESET
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg-primary);
+  scroll-behavior: smooth;
+
+  transition:
+    background-color 400ms ease,
+    color 400ms ease;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+
+  background:
+    radial-gradient(
+      circle at 50% -15%,
+      rgba(168, 182, 154, 0.065),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(214, 184, 135, 0.025),
+      transparent 30%
+    ),
+    var(--bg-primary);
+
+  color: var(--text-primary);
+
+  font-family: var(--font-body);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  text-rendering: optimizeLegibility;
+
+  transition:
+    background-color 400ms ease,
+    color 400ms ease;
+}
+
+
+/* ============================================================
+   PREMIUM GRAIN / FILM TEXTURE
+   ============================================================ */
+
+body::before {
+  content: "";
+
+  position: fixed;
+  inset: -50%;
+
+  width: 200%;
+  height: 200%;
+
+  pointer-events: none;
+
+  z-index: 9999;
+
+  opacity: 0.028;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.55'/%3E%3C/svg%3E");
+
+  background-repeat: repeat;
+
+  transform: translate3d(0, 0, 0);
+
+  animation: grainMovement 0.35s steps(2) infinite;
+}
+
+
+/* ============================================================
+   ATMOSPHERIC LIGHT
+   ============================================================ */
+
+body::after {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(168, 182, 154, 0.025),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(214, 184, 135, 0.018),
+      transparent 30%
+    );
+}
+
+
+/* ============================================================
+   BUTTON BASE
+   ============================================================ */
+
+button {
+  font: inherit;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+
+/* ============================================================
+   VIBESPACE BUILDER
+   ============================================================ */
+
+.vibe-builder {
+  width: min(1180px, calc(100% - 48px));
+
+  margin: 0 auto;
+
+  padding:
+    110px
+    0
+    150px;
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.vibe-hero {
+  max-width: 780px;
+
+  margin:
+    0 auto
+    90px;
+
+  text-align: center;
+}
+
+.vibe-eyebrow {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 25px;
+
+  color: var(--sage-soft);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+
+  animation:
+    heroReveal 800ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.vibe-eyebrow svg {
+  color: var(--champagne);
+
+  filter:
+    drop-shadow(
+      0 0 8px
+      rgba(214, 184, 135, 0.18)
+    );
+}
+
+.vibe-hero h1 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-family: var(--font-heading);
+
+  font-size:
+    clamp(42px, 5vw, 68px);
+
+  line-height: 1.02;
+
+  font-weight: 300;
+
+  letter-spacing: -0.055em;
+
+  animation:
+    heroReveal 900ms
+    cubic-bezier(.22, 1, .36, 1)
+    100ms both;
+}
+
+.vibe-hero h1 em {
+  color: var(--champagne);
+
+  font-weight: 300;
+
+  font-style: italic;
+
+  text-shadow:
+    0 0 30px
+    rgba(214, 184, 135, 0.10);
+}
+
+.vibe-hero p {
+  max-width: 500px;
+
+  margin:
+    24px auto
+    0;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+
+  animation:
+    heroReveal 900ms
+    cubic-bezier(.22, 1, .36, 1)
+    220ms both;
+}
+
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+
+.vibe-builder-layout {
+  display: grid;
+
+  grid-template-columns:
+    280px
+    minmax(0, 1fr);
+
+  gap: 76px;
+
+  align-items: start;
+}
+
+
+/* ============================================================
+   MOMENT PANEL
+   ============================================================ */
+
+.vibe-moment-panel {
+  position: sticky;
+
+  top: 110px;
+
+  min-height: 390px;
+
+  padding: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(168, 182, 154, 0.065),
+      rgba(255, 255, 255, 0.012)
+    ),
+    var(--surface-primary);
+
+  border:
+    1px solid
+    var(--border-subtle);
+
+  border-radius: 18px;
+
+  box-shadow:
+    var(--shadow-soft);
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+
+  transition:
+    transform 300ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 300ms ease,
+    border-color 300ms ease;
+}
+
+.vibe-moment-panel:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    var(--shadow-premium);
+
+  border-color:
+    rgba(214, 184, 135, 0.16);
+}
+
+.moment-panel-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding-bottom: 22px;
+
+  border-bottom:
+    1px solid
+    var(--border-soft);
+}
+
+.moment-label {
+  color: var(--text-muted);
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+}
+
+.moment-number {
+  color: var(--champagne);
+
+  font-size: 11px;
+
+  letter-spacing: 0.1em;
+}
+
+.moment-content {
+  padding-top: 30px;
+}
+
+.moment-main-word {
+  min-height: 76px;
+
+  color: var(--text-primary);
+
+  font-size: 30px;
+
+  font-weight: 300;
+
+  letter-spacing: -0.035em;
+
+  line-height: 1.15;
+}
+
+.moment-divider {
+  width: 34px;
+
+  height: 1px;
+
+  margin:
+    22px
+    0;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--sage),
+      var(--champagne),
+      transparent
+    );
+}
+
+.moment-detail {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding:
+    13px
+    0;
+
+  border-bottom:
+    1px solid
+    var(--border-soft);
+}
+
+.moment-detail span {
+  color: var(--text-muted);
+
+  font-size: 9px;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.moment-detail strong {
+  color: var(--text-secondary);
+
+  font-size: 12px;
+
+  font-weight: 500;
+}
+
+.moment-note {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 28px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+.moment-dot {
+  width: 5px;
+
+  height: 5px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--sage);
+
+  box-shadow:
+    0 0 10px
+    rgba(168, 182, 154, 0.45);
+}
+
+
+/* ============================================================
+   SELECTION AREA
+   ============================================================ */
+
+.vibe-selections {
+  min-width: 0;
+}
+
+.vibe-section {
+  padding:
+    0
+    0
+    54px;
+
+  margin-bottom: 54px;
+
+  border-bottom:
+    1px solid transparent;
+
+  border-image:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(214, 184, 135, 0.20),
+      transparent
+    )
+    1;
+}
+
+
+/* ============================================================
+   SECTION HEADING
+   ============================================================ */
+
+.section-heading {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.section-index {
+  padding-top: 4px;
+
+  color: var(--champagne);
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: 17px;
+
+  font-weight: 500;
+
+  letter-spacing: -0.02em;
+}
+
+.section-heading p {
+  margin:
+    6px
+    0
+    0;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   PREMIUM OPTION CARDS
+   ============================================================ */
+
+.vibe-options {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.vibe-option {
+  min-height: 56px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding:
+    0
+    16px;
+
+  border:
+    1px solid
+    var(--border-subtle);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.018),
+      rgba(168, 182, 154, 0.018)
+    ),
+    var(--surface-primary);
+
+  color: var(--text-secondary);
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+  text-align: left;
+
+  box-shadow:
+    0 6px 20px
+    rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 220ms cubic-bezier(.22, 1, .36, 1),
+    border-color 220ms ease,
+    background 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.vibe-option:hover {
+  transform:
+    translateY(-2px)
+    scale(1.015);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(168, 182, 154, 0.09),
+      rgba(214, 184, 135, 0.045)
+    ),
+    var(--surface-elevated);
+
+  border-color:
+    rgba(168, 182, 154, 0.40);
+
+  color:
+    var(--text-primary);
+
+  box-shadow:
+    0 12px 30px
+    rgba(0, 0, 0, 0.16),
+    0 0 24px
+    rgba(168, 182, 154, 0.045);
+}
+
+.vibe-option.is-selected {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(168, 182, 154, 0.17),
+      rgba(214, 184, 135, 0.055)
+    ),
+    var(--surface-primary);
+
+  border-color:
+    var(--sage);
+
+  color:
+    var(--text-primary);
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(168, 182, 154, 0.08),
+    0 10px 28px
+    rgba(0, 0, 0, 0.14),
+    0 0 22px
+    rgba(168, 182, 154, 0.08);
+}
+
+.vibe-option.is-selected svg {
+  color:
+    var(--sage);
+
+  filter:
+    drop-shadow(
+      0 0 7px
+      rgba(168, 182, 154, 0.40)
+    );
+}
+
+
+/* ============================================================
+   INTENSITY
+   ============================================================ */
+
+.intensity-section {
+  margin-bottom: 0;
+
+  padding-bottom: 42px;
+}
+
+.intensity-options {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+}
+
+.intensity-option {
+  height: 48px;
+
+  border:
+    1px solid
+    var(--border-subtle);
+
+  border-radius: 11px;
+
+  background:
+    var(--surface-primary);
+
+  color: var(--text-muted);
+
+  cursor: pointer;
+
+  font-size: 10px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 5px 18px
+    rgba(0, 0, 0, 0.06);
+
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.intensity-option:hover {
+  transform:
+    translateY(-2px)
+    scale(1.015);
+
+  color:
+    var(--text-primary);
+
+  border-color:
+    rgba(168, 182, 154, 0.40);
+
+  background:
+    var(--surface-elevated);
+
+  box-shadow:
+    0 10px 25px
+    rgba(0, 0, 0, 0.14);
+}
+
+.intensity-option.is-selected {
+  color:
+    var(--text-primary);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(168, 182, 154, 0.15),
+      rgba(214, 184, 135, 0.04)
+    );
+
+  border-color:
+    var(--sage);
+
+  box-shadow:
+    0 0 20px
+    rgba(168, 182, 154, 0.08);
+}
+
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+
+.vibe-actions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding-top: 28px;
+}
+
+
+/* ============================================================
+   SURPRISE BUTTON
+   ============================================================ */
+
+.surprise-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  min-height: 48px;
+
+  padding:
+    0
+    19px;
+
+  border:
+    1px solid
+    var(--border-subtle);
+
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.012);
+
+  color:
+    var(--text-secondary);
+
+  cursor: pointer;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  transition:
+    transform 220ms ease,
+    color 220ms ease,
+    background 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.surprise-button:hover {
+  transform:
+    translateY(-2px)
+    scale(1.015);
+
+  color:
+    var(--text-primary);
+
+  background:
+    rgba(168, 182, 154, 0.07);
+
+  border-color:
+    rgba(168, 182, 154, 0.38);
+
+  box-shadow:
+    0 10px 25px
+    rgba(0, 0, 0, 0.12);
+}
+
+
+/* ============================================================
+   ENTER BUTTON
+   ============================================================ */
+
+.enter-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 13px;
+
+  min-height: 50px;
+
+  padding:
+    0
+    23px;
+
+  border: 0;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--sage),
+      var(--accent-color)
+    );
+
+  color:
+    var(--bg-primary);
+
+  cursor: pointer;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.11em;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 12px 32px
+    rgba(168, 182, 154, 0.12),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.16);
+
+  transition:
+    transform 220ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 220ms ease,
+    background 220ms ease;
+}
+
+.enter-button:hover {
+  transform:
+    translateY(-2px)
+    scale(1.02);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--sage-soft),
+      var(--sage)
+    );
+
+  box-shadow:
+    0 18px 40px
+    rgba(168, 182, 154, 0.17),
+    0 0 28px
+    rgba(168, 182, 154, 0.08),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.18);
+}
+
+.enter-button:active {
+  transform:
+    translateY(0)
+    scale(0.99);
+}
+
+
+/* ============================================================
+   PREMIUM DIVIDERS
+   ============================================================ */
+
+.vibe-section::after {
+  content: "";
+
+  display: block;
+
+  width: 100%;
+
+  height: 1px;
+
+  margin-top: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(214, 184, 135, 0.10),
+      transparent
+    );
+}
+
+
+/* ============================================================
+   HERO / CONTENT REVEAL
+   ============================================================ */
+
+.vibe-builder-layout {
+  animation:
+    contentReveal 900ms
+    cubic-bezier(.22, 1, .36, 1)
+    320ms both;
+}
+
+
+/* ============================================================
+   AMBIENCE ICON MICRO-ANIMATIONS
+   ============================================================ */
+
+@keyframes rainDrop {
+  0% { transform: translateY(-3px); opacity: 0.3; }
+  50% { transform: translateY(3px); opacity: 1; }
+  100% { transform: translateY(-3px); opacity: 0.3; }
+}
+
+@keyframes fireFlicker {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes windSway {
+  0%, 100% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+}
+
+@keyframes waveBob {
+  0%, 100% { transform: translateY(-1px); }
+  50% { transform: translateY(1px); }
+}
+
+.anim-rain {
+  animation: rainDrop 1.2s ease-in-out infinite;
+}
+
+.anim-fire {
+  animation: fireFlicker 1.5s ease-in-out infinite;
+}
+
+.anim-wind {
+  animation: windSway 2s ease-in-out infinite;
+}
+
+.anim-waves {
+  animation: waveBob 2.5s ease-in-out infinite;
+}
+
+
+/* ============================================================
+   VINYL RECORD SPINNING ANIMATION
+   ============================================================ */
+
+@keyframes vinylSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vinyl-spinning {
+  animation: vinylSpin 8s linear infinite;
+  border-radius: 50% !important;
+}
+
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes contentReveal {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes grainMovement {
+  0% {
+    transform:
+      translate3d(0, 0, 0);
+  }
+
+  25% {
+    transform:
+      translate3d(-2%, 1%, 0);
+  }
+
+  50% {
+    transform:
+      translate3d(1%, -2%, 0);
+  }
+
+  75% {
+    transform:
+      translate3d(2%, 2%, 0);
+  }
+
+  100% {
+    transform:
+      translate3d(0, 0, 0);
+  }
+}
+
+
+/* ============================================================
+   MOBILE (SAFE OPTIMIZATION WITHOUT BREAKING PC WEB)
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .vibe-builder {
+    width:
+      min(
+        calc(100% - 32px),
+        700px
+      );
+
+    padding-top: 90px;
+  }
+
+  .vibe-builder-layout {
+    grid-template-columns: 1fr;
+
+    gap: 38px;
+  }
+
+  .vibe-moment-panel {
+    position: relative;
+
+    top: auto;
+
+    min-height: auto;
+
+    padding: 22px;
+  }
+
+  .moment-content {
+    display: grid;
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap:
+      0
+      20px;
+  }
+
+  .moment-main-word {
+    grid-column:
+      1 / -1;
+
+    min-height: auto;
+
+    margin-bottom: 14px;
+  }
+
+  .moment-note {
+    display: none;
+  }
+
+  .vibe-options {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 560px) {
+
+  .vibe-builder {
+    width:
+      calc(100% - 28px);
+
+    padding:
+      72px
+      0
+      130px;
+  }
+
+  .vibe-hero {
+    margin-bottom: 60px;
+  }
+
+  .vibe-hero h1 {
+    font-size: 40px;
+
+    letter-spacing: -0.045em;
+  }
+
+  .vibe-hero p {
+    font-size: 13px;
+  }
+
+  .vibe-options {
+    grid-template-columns: 1fr;
+  }
+
+  .intensity-options {
+    grid-template-columns: 1fr;
+  }
+
+  .vibe-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .surprise-button,
+  .enter-button {
+    width: 100%;
+  }
+
+  .moment-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================================================
+   MOBILE HARDWARE ACCELERATION & TOUCH OPTIMIZATION
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .vinyl-spinning {
+    animation: vinylSpin 8s linear infinite !important;
+    will-change: transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .vibe-option, 
+  .intensity-option,
+  div[onClick] {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+    scroll-behavior: auto !important;
+  }
+
+  body::before {
+    animation: none;
+  }
+
+  .anim-rain, .anim-fire, .anim-wind, .anim-waves {
+    animation: none !important;
+  }
+
+  .vinyl-spinning {
+    animation: none !important;
+  }
+}

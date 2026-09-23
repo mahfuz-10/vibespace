@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* ============================================================
+   VIBESPACE — GLOBAL RESET & THEME TOKENS
+   ============================================================ */
+
+:root {
+  --bg-primary: #0f1115;
+  --surface-primary: #14171c;
+  --sage: #A8B69A;
+  --sage-soft: #BBC6AF;
+  --champagne: #D6B887;
+  --text-primary: #F4F0E6;
+  --text-muted: #969A8E;
+  --border-subtle: rgba(244, 240, 230, 0.08);
+}
+
+/* Light/White Mode Support */
+.light, [data-theme="light"] {
+  --bg-primary: #f4f5f7;
+  --surface-primary: #ffffff;
+  --sage: #7a8c6c;
+  --sage-soft: #8f9e81;
+  --champagne: #b59562;
+  --text-primary: #1c1e21;
+  --text-muted: #65676b;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  /* Background depth with subtle vignette */
+  background-image: radial-gradient(ellipse at top, rgba(168,182,154,0.08), transparent 50%), var(--bg-primary);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Fixed Noise/Grain Texture Overlay (SVG feTurbulence) */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Shimmer Animation for 'moment.' text */
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, var(--champagne), var(--sage-soft), var(--champagne));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+/* Stagger Fade-Up Keyframes */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Sliders Thumb Glow & Scale on Hover */
+.studio-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sage);
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+}
+
+.studio-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(168, 182, 154, 0.5);
+}
+
+.studio-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sage);
+  cursor: pointer;
+  border: none;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+}
+
+.studio-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(168, 182, 154, 0.5);
+}

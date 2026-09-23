@@ -1,0 +1,526 @@
+/* =========================================================
+   VIBESPACE — SITUATION BUILDER
+   PREMIUM EDITORIAL UI (EXACT DESIGN SPEC)
+   ========================================================= */
+
+.vibe-builder {
+  width: min(1160px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 105px 0 150px;
+  color: #f5f1e8;
+  animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+
+/* =========================================================
+   HERO (EXACT SPECS)
+   ========================================================= */
+
+.vibe-hero {
+  max-width: 760px;
+  margin: 0 auto 88px;
+  text-align: center;
+}
+
+.vibe-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  color: var(--sage-soft);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* 2. Thin animated line before eyebrow text */
+.vibe-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sage-soft));
+}
+
+.vibe-eyebrow svg {
+  color: #d3b486;
+}
+
+.vibe-hero h1 {
+  margin: 0;
+  color: #f5f1e8;
+  font-size: clamp(42px, 5vw, 68px);
+  line-height: 1.04;
+  /* 3. Extra light weight for "Build your" part */
+  font-weight: 200;
+  letter-spacing: -.055em;
+  text-shadow: 0 0 40px rgba(168, 182, 154, 0.15);
+}
+
+.vibe-hero h1 em {
+  /* 3. Italic word weight 400 with shimmer effect */
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(90deg, var(--champagne), var(--sage-soft), var(--champagne));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+.vibe-hero p {
+  max-width: 510px;
+  margin: 24px auto 0;
+  color: #969a8e;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   MAIN COMPOSITION
+   ========================================================= */
+
+.vibe-builder-layout {
+  display: grid;
+  grid-template-columns: 285px minmax(0, 1fr);
+  gap: 70px;
+  align-items: start;
+}
+
+
+/* =========================================================
+   YOUR MOMENT PANEL (EXACT SPECS)
+   ========================================================= */
+
+.vibe-moment-panel {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  min-height: unset;
+  padding: 27px;
+  border: 1px solid rgba(244, 240, 230, 0.08);
+  border-radius: 18px;
+  /* 5. Subtle glass effect & top edge gradient highlight */
+  background: linear-gradient(155deg, rgba(168, 182, 154, 0.06), rgba(255, 255, 255, 0.02)), var(--surface-primary);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, .18);
+  position: relative;
+  overflow: hidden;
+}
+
+.vibe-moment-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sage), transparent);
+}
+
+.moment-panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(245, 241, 232, .06);
+}
+
+.moment-label {
+  color: #92978a;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.moment-number {
+  color: #d3b486;
+  font-size: 10px;
+  letter-spacing: .1em;
+}
+
+.moment-content {
+  padding-top: 29px;
+}
+
+/* 6. "Coding" main word specs */
+.moment-main-word {
+  min-height: 72px;
+  color: #f5f1e8;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -.03em;
+  position: relative;
+  display: inline-block;
+}
+
+/* 6. Animated underline */
+.moment-main-word::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--sage);
+  transition: width 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vibe-moment-panel:hover .moment-main-word::after {
+  width: 60px;
+}
+
+.moment-divider {
+  width: 34px;
+  height: 1px;
+  margin: 22px 0;
+  background: var(--sage);
+}
+
+.moment-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(245, 241, 232, .055);
+}
+
+.moment-detail span {
+  color: #80857b;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.moment-detail strong {
+  color: #c8c8ba;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.moment-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 27px;
+  color: #858a80;
+  font-size: 10px;
+}
+
+.moment-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.vibe-section {
+  margin-bottom: 54px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid rgba(245, 241, 232, .055);
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 17px;
+  margin-bottom: 23px;
+}
+
+.section-index {
+  padding-top: 4px;
+  color: #d3b486;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: #f5f1e8;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.section-heading p {
+  margin: 6px 0 0;
+  color: #858a80;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   OPTION CARDS (EXACT SPECS)
+   ========================================================= */
+
+.vibe-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.vibe-option {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1px solid rgba(245, 241, 232, .085);
+  /* 7. Border-radius 12px & subtle inner shadow */
+  border-radius: 12px;
+  background: rgba(41, 45, 38, .55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  color: #b9baae;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: left;
+  /* 8. Cubic-bezier transition */
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 8. Hover state specs */
+.vibe-option:hover {
+  transform: translateY(-2px);
+  background: rgba(57, 62, 51, .68);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(168, 182, 154, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  color: #f5f1e8;
+}
+
+/* 9. Selected state specs */
+.vibe-option.is-selected {
+  background: linear-gradient(135deg, rgba(168, 182, 154, 0.14), rgba(214, 184, 135, 0.04)) !important;
+  border: 1px solid var(--sage) !important;
+  box-shadow: 0 0 0 1px var(--sage), 0 4px 16px rgba(168, 182, 154, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+  color: var(--text-primary, #f5f1e8) !important;
+}
+
+.vibe-option.is-selected svg {
+  color: var(--sage);
+  animation: checkPop 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+
+/* =========================================================
+   INTENSITY (EXACT SPECS)
+   ========================================================= */
+
+.intensity-section {
+  margin-bottom: 0;
+  padding-bottom: 42px;
+}
+
+.intensity-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.intensity-option {
+  height: 48px;
+  border: 1px solid rgba(245, 241, 232, .085);
+  border-radius: 12px;
+  background: rgba(41, 45, 38, .45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  color: #858a80;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.intensity-option:hover {
+  transform: translateY(-2px);
+  color: #f5f1e8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(168, 182, 154, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border-color: rgba(168, 182, 154, .4);
+}
+
+.intensity-option.is-selected {
+  background: linear-gradient(135deg, rgba(168, 182, 154, 0.14), rgba(214, 184, 135, 0.04)) !important;
+  border: 1px solid var(--sage) !important;
+  box-shadow: 0 0 0 1px var(--sage), 0 4px 16px rgba(168, 182, 154, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+  color: var(--text-primary, #f5f1e8) !important;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.vibe-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 5px;
+  margin-bottom: 3.5rem;
+}
+
+.surprise-button {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 19px;
+  border: 1px solid rgba(245, 241, 232, .10);
+  border-radius: 12px;
+  background: transparent;
+  color: #a3a69c;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.surprise-button:hover {
+  background: rgba(168, 182, 154, .07);
+  border-color: rgba(168, 182, 154, .4);
+  color: #f5f1e8;
+}
+
+.enter-button {
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--sage);
+  color: #1b1d19;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 34px rgba(168, 182, 154, .12);
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.enter-button:hover {
+  transform: translateY(-1px);
+  background: var(--sage-soft);
+  box-shadow: 0 16px 40px rgba(168, 182, 154, .17);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 950px) {
+  .vibe-builder-layout {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .vibe-moment-panel {
+    position: relative;
+    top: auto;
+    min-height: auto;
+  }
+
+  .moment-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+  }
+
+  .moment-main-word {
+    grid-column: 1 / -1;
+    min-height: auto;
+    margin-bottom: 12px;
+  }
+
+  .moment-note {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .vibe-builder {
+    width: calc(100% - 30px);
+    padding: 78px 0 140px;
+  }
+
+  .vibe-hero {
+    margin-bottom: 62px;
+  }
+
+  .vibe-hero h1 {
+    font-size: 42px;
+  }
+
+  .vibe-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .vibe-builder {
+    width: calc(100% - 24px);
+  }
+
+  .vibe-hero h1 {
+    font-size: 37px;
+  }
+
+  .vibe-hero p {
+    font-size: 13px;
+  }
+
+  .vibe-options {
+    grid-template-columns: 1fr;
+  }
+
+  .intensity-options {
+    grid-template-columns: 1fr;
+  }
+
+  .moment-content {
+    grid-template-columns: 1fr;
+  }
+
+  .vibe-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .surprise-button,
+  .enter-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vibe-option,
+  .enter-button,
+  .surprise-button {
+    transition: none;
+  }
+}
