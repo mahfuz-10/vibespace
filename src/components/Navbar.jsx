@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import {
   Sun,
   Moon,
-  Sparkles
+  Sparkles,
+  SlidersHorizontal,
+  Home
 } from 'lucide-react';
 
 import { useAudio } from './AudioManager';
@@ -42,286 +44,375 @@ export const Navbar = ({
   };
 
   return (
-    <header
-      className="
-        fixed
-        top-0
-        left-0
-        right-0
-        z-50
-        border-b
-        backdrop-blur-xl
-        transition-all
-        duration-500
-      "
-      style={{
-        backgroundColor:
-          'color-mix(in srgb, var(--bg-primary) 88%, transparent)',
-        borderColor:
-          'var(--border-subtle)'
-      }}
-    >
-      <div
+    <>
+      <header
         className="
-          max-w-7xl
-          mx-auto
-          px-5
-          sm:px-8
-          h-20
-          flex
-          items-center
-          justify-between
+          fixed
+          top-0
+          left-0
+          right-0
+          z-50
+          border-b
+          backdrop-blur-xl
+          transition-all
+          duration-500
         "
+        style={{
+          backgroundColor:
+            'color-mix(in srgb, var(--bg-primary) 88%, transparent)',
+          borderColor:
+            'var(--border-subtle)'
+        }}
       >
+        <div
+          className="
+            max-w-7xl
+            mx-auto
+            px-5
+            sm:px-8
+            h-20
+            flex
+            items-center
+            justify-between
+          "
+        >
 
-        {/* ULTRA-PREMIUM LOGO */}
+          {/* ULTRA-PREMIUM LOGO */}
+          <button
+            type="button"
+            onClick={handleHome}
+            className="
+              flex
+              items-center
+              gap-3.5
+              cursor-pointer
+              group
+              bg-transparent
+              border-0
+              text-left
+            "
+            aria-label="Go to VibeSpace home"
+          >
+            <div
+              className="
+                w-10
+                h-10
+                rounded-2xl
+                flex
+                items-center
+                justify-center
+                transition-all
+                duration-500
+                group-hover:scale-105
+                group-hover:rotate-3
+                relative
+                overflow-hidden
+                shadow-lg
+              "
+              style={{
+                background: 'linear-gradient(145deg, var(--sage), var(--surface-soft))',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 10px 30px rgba(168, 182, 154, 0.25)'
+              }}
+            >
+              {/* Inner ambient glow */}
+              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <Sparkles
+                className="w-4 h-4 relative z-10 transition-transform duration-500 group-hover:scale-110"
+                style={{
+                  color: 'var(--bg-primary)'
+                }}
+              />
+            </div>
+
+            <div className="flex flex-col items-start">
+              <span
+                className="
+                  font-light
+                  tracking-tight
+                  text-sm
+                  transition-colors
+                  duration-300
+                "
+                style={{
+                  color: 'var(--text-primary)'
+                }}
+              >
+                Vibe<span className="font-normal italic" style={{ color: 'var(--champagne)' }}>Space</span>
+              </span>
+
+              <span
+                className="
+                  hidden
+                  sm:block
+                  text-[8px]
+                  uppercase
+                  tracking-[0.25em]
+                  font-mono
+                  opacity-60
+                "
+                style={{
+                  color: 'var(--text-muted)'
+                }}
+              >
+                Acoustic World
+              </span>
+            </div>
+          </button>
+
+
+          {/* DESKTOP NAVIGATION */}
+
+          <nav
+            className="
+              hidden
+              md:flex
+              items-center
+              gap-1
+              p-1
+              rounded-full
+              border
+            "
+            style={{
+              borderColor:
+                'var(--border-subtle)',
+
+              backgroundColor:
+                'var(--surface-primary)'
+            }}
+          >
+
+            <button
+              type="button"
+              onClick={() =>
+                setCurrentTab('builder')
+              }
+              className={`
+                px-4
+                py-2
+                rounded-full
+                text-xs
+                transition-all
+                duration-300
+
+                ${
+                  currentTab === 'builder'
+                    ? 'font-medium'
+                    : 'opacity-55 hover:opacity-100'
+                }
+              `}
+              style={
+                currentTab === 'builder'
+                  ? {
+                      backgroundColor:
+                        'var(--text-primary)',
+
+                      color:
+                        'var(--bg-primary)'
+                    }
+                  : {
+                      color:
+                        'var(--text-muted)'
+                    }
+              }
+            >
+              Situation Builder
+            </button>
+
+
+            <button
+              type="button"
+              onClick={() =>
+                setCurrentTab('studio')
+              }
+              className={`
+                px-4
+                py-2
+                rounded-full
+                text-xs
+                transition-all
+                duration-300
+
+                ${
+                  currentTab === 'studio'
+                    ? 'font-medium'
+                    : 'opacity-55 hover:opacity-100'
+                }
+              `}
+              style={
+                currentTab === 'studio'
+                  ? {
+                      backgroundColor:
+                        'var(--text-primary)',
+
+                      color:
+                        'var(--bg-primary)'
+                    }
+                  : {
+                      color:
+                        'var(--text-muted)'
+                    }
+              }
+            >
+              Atmosphere Studio
+            </button>
+
+          </nav>
+
+
+          {/* THEME SWITCHER */}
+
+          <button
+            type="button"
+            onClick={handleThemeToggle}
+            className="
+              relative
+              w-10
+              h-10
+              rounded-xl
+              border
+              flex
+              items-center
+              justify-center
+              transition-all
+              duration-300
+              hover:scale-105
+              active:scale-95
+            "
+            style={{
+              borderColor:
+                'var(--border-subtle)',
+
+              backgroundColor:
+                'var(--surface-primary)'
+            }}
+            aria-label={
+              isDarkMode
+                ? 'Switch to light mode'
+                : 'Switch to dark mode'
+            }
+            title={
+              isDarkMode
+                ? 'Light mode'
+                : 'Dark mode'
+            }
+          >
+
+            <span className="relative z-10">
+
+              {isDarkMode ? (
+                <Sun
+                  className="w-4 h-4"
+                  style={{
+                    color:
+                      'var(--champagne)'
+                  }}
+                />
+              ) : (
+                <Moon
+                  className="w-4 h-4"
+                  style={{
+                    color:
+                      'var(--sage)'
+                  }}
+                />
+              )}
+
+            </span>
+
+          </button>
+
+        </div>
+      </header>
+
+      {/* MOBILE FLOATING BOTTOM NAVIGATION BAR */}
+      <div 
+        className="
+          fixed
+          bottom-20
+          left-1/2
+          -translate-x-1/2
+          z-40
+          flex
+          md:hidden
+          items-center
+          gap-2
+          p-1.5
+          rounded-full
+          border
+          shadow-2xl
+          backdrop-blur-xl
+        "
+        style={{
+          backgroundColor: 'color-mix(in srgb, var(--surface-primary) 92%, transparent)',
+          borderColor: 'var(--border-subtle)',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+        }}
+      >
         <button
           type="button"
           onClick={handleHome}
           className="
             flex
             items-center
-            gap-3.5
-            cursor-pointer
-            group
-            bg-transparent
-            border-0
-            text-left
-          "
-          aria-label="Go to VibeSpace home"
-        >
-          <div
-            className="
-              w-10
-              h-10
-              rounded-2xl
-              flex
-              items-center
-              justify-center
-              transition-all
-              duration-500
-              group-hover:scale-105
-              group-hover:rotate-3
-              relative
-              overflow-hidden
-              shadow-lg
-            "
-            style={{
-              background: 'linear-gradient(145deg, var(--sage), var(--surface-soft))',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              boxShadow: '0 10px 30px rgba(168, 182, 154, 0.25)'
-            }}
-          >
-            {/* Inner ambient glow */}
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
-            <Sparkles
-              className="w-4 h-4 relative z-10 transition-transform duration-500 group-hover:scale-110"
-              style={{
-                color: 'var(--bg-primary)'
-              }}
-            />
-          </div>
-
-          <div className="flex flex-col items-start">
-            <span
-              className="
-                font-light
-                tracking-tight
-                text-sm
-                transition-colors
-                duration-300
-              "
-              style={{
-                color: 'var(--text-primary)'
-              }}
-            >
-              Vibe<span className="font-normal italic" style={{ color: 'var(--champagne)' }}>Space</span>
-            </span>
-
-            <span
-              className="
-                hidden
-                sm:block
-                text-[8px]
-                uppercase
-                tracking-[0.25em]
-                font-mono
-                opacity-60
-              "
-              style={{
-                color: 'var(--text-muted)'
-              }}
-            >
-              Acoustic World
-            </span>
-          </div>
-        </button>
-
-
-        {/* NAVIGATION */}
-
-        <nav
-          className="
-            hidden
-            md:flex
-            items-center
-            gap-1
-            p-1
+            gap-2
+            px-4
+            py-2
             rounded-full
-            border
+            text-xs
+            transition-all
+            duration-300
           "
-          style={{
-            borderColor:
-              'var(--border-subtle)',
-
-            backgroundColor:
-              'var(--surface-primary)'
-          }}
+          style={
+            currentTab === 'builder' || currentTab === 'result'
+              ? {
+                  backgroundColor: 'var(--text-primary)',
+                  color: 'var(--bg-primary)',
+                  fontWeight: 500
+                }
+              : {
+                  color: 'var(--text-muted)',
+                  backgroundColor: 'transparent'
+                }
+          }
         >
-
-          <button
-            type="button"
-            onClick={() =>
-              setCurrentTab('builder')
-            }
-            className={`
-              px-4
-              py-2
-              rounded-full
-              text-xs
-              transition-all
-              duration-300
-
-              ${
-                currentTab === 'builder'
-                  ? 'font-medium'
-                  : 'opacity-55 hover:opacity-100'
-              }
-            `}
-            style={
-              currentTab === 'builder'
-                ? {
-                    backgroundColor:
-                      'var(--text-primary)',
-
-                    color:
-                      'var(--bg-primary)'
-                  }
-                : {
-                    color:
-                      'var(--text-muted)'
-                  }
-            }
-          >
-            Situation Builder
-          </button>
-
-
-          <button
-            type="button"
-            onClick={() =>
-              setCurrentTab('studio')
-            }
-            className={`
-              px-4
-              py-2
-              rounded-full
-              text-xs
-              transition-all
-              duration-300
-
-              ${
-                currentTab === 'studio'
-                  ? 'font-medium'
-                  : 'opacity-55 hover:opacity-100'
-              }
-            `}
-            style={
-              currentTab === 'studio'
-                ? {
-                    backgroundColor:
-                      'var(--text-primary)',
-
-                    color:
-                      'var(--bg-primary)'
-                  }
-                : {
-                    color:
-                      'var(--text-muted)'
-                  }
-            }
-          >
-            Atmosphere Studio
-          </button>
-
-        </nav>
-
-
-        {/* THEME SWITCHER */}
+          <Home size={13} />
+          <span>Builder</span>
+        </button>
 
         <button
           type="button"
-          onClick={handleThemeToggle}
+          onClick={() => setCurrentTab('studio')}
           className="
-            relative
-            w-10
-            h-10
-            rounded-xl
-            border
             flex
             items-center
-            justify-center
+            gap-2
+            px-4
+            py-2
+            rounded-full
+            text-xs
             transition-all
             duration-300
-            hover:scale-105
-            active:scale-95
           "
-          style={{
-            borderColor:
-              'var(--border-subtle)',
-
-            backgroundColor:
-              'var(--surface-primary)'
-          }}
-          aria-label={
-            isDarkMode
-              ? 'Switch to light mode'
-              : 'Switch to dark mode'
-          }
-          title={
-            isDarkMode
-              ? 'Light mode'
-              : 'Dark mode'
+          style={
+            currentTab === 'studio'
+              ? {
+                  backgroundColor: 'var(--text-primary)',
+                  color: 'var(--bg-primary)',
+                  fontWeight: 500
+                }
+              : {
+                  color: 'var(--text-muted)',
+                  backgroundColor: 'transparent'
+                }
           }
         >
-
-          <span className="relative z-10">
-
-            {isDarkMode ? (
-              <Sun
-                className="w-4 h-4"
-                style={{
-                  color:
-                    'var(--champagne)'
-                }}
-              />
-            ) : (
-              <Moon
-                className="w-4 h-4"
-                style={{
-                  color:
-                    'var(--sage)'
-                }}
-              />
-            )}
-
-          </span>
-
+          <SlidersHorizontal size={13} />
+          <span>Studio</span>
         </button>
-
       </div>
-    </header>
+    </>
   );
 };
 
