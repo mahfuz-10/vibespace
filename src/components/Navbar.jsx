@@ -292,11 +292,6 @@ export const Navbar = ({
                 ? 'Switch to light mode'
                 : 'Switch to dark mode'
             }
-            title={
-              isDarkMode
-                ? 'Light mode'
-                : 'Dark mode'
-            }
           >
 
             <span className="relative z-10">
@@ -326,11 +321,11 @@ export const Navbar = ({
         </div>
       </header>
 
-      {/* MOBILE FLOATING BOTTOM NAVIGATION BAR */}
+      {/* MOBILE FLOATING BOTTOM NAVIGATION BAR (Positioned safely above persistent player) */}
       <div 
         className="
           fixed
-          bottom-20
+          bottom-28
           left-1/2
           -translate-x-1/2
           z-40
@@ -345,9 +340,9 @@ export const Navbar = ({
           backdrop-blur-xl
         "
         style={{
-          backgroundColor: 'color-mix(in srgb, var(--surface-primary) 92%, transparent)',
+          backgroundColor: 'color-mix(in srgb, var(--surface-primary) 95%, transparent)',
           borderColor: 'var(--border-subtle)',
-          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+          boxShadow: '0 12px 35px rgba(0, 0, 0, 0.4)'
         }}
       >
         <button
