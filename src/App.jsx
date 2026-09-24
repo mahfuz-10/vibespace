@@ -40,11 +40,10 @@ function MainContent() {
 
   /*
    * MAIN APPLICATION
-   * Added pb-44 to prevent the fixed bottom player bar from overlapping content.
    */
 
   return (
-    <div className="min-h-screen transition-colors duration-500 pb-44">
+    <div className="min-h-screen transition-colors duration-500 pb-56">
 
       <Navbar
         currentTab={currentTab}
@@ -54,28 +53,21 @@ function MainContent() {
 
       <main>
 
-        {currentTab === 'builder' && (
-          !hasSubmittedSituation ? (
-            <SituationBuilder
-              onProceed={() => setCurrentTab('result')}
-            />
-          ) : (
-            <VibeResult
-              onOpenStudio={() => setCurrentTab('studio')}
-            />
-          )
-        )}
-
-
-        {currentTab === 'result' && (
+        {/* If submitted or tab is result, show VibeResult. Otherwise show SituationBuilder */}
+        {(hasSubmittedSituation || currentTab === 'result') ? (
           <VibeResult
             onOpenStudio={() => setCurrentTab('studio')}
           />
-        )}
-
-
-        {currentTab === 'studio' && (
+        ) : currentTab === 'builder' ? (
+          <SituationBuilder
+            onProceed={() => setCurrentTab('result')}
+          />
+        ) : currentTab === 'studio' ? (
           <AtmosphereStudio />
+        ) : (
+          <SituationBuilder
+            onProceed={() => setCurrentTab('result')}
+          />
         )}
 
       </main>
