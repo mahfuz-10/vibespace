@@ -218,7 +218,7 @@ export const AudioProvider = ({ children }) => {
   });
 
   const heroAudioRef = useRef(null);
-  const [currentTrack, setCurrentTrack] = useState(MUSIC_DATABASE[0]);
+  const [currentTrack, setCurrentTrack] = useState(null); // Fixed: Default null to prevent auto-selecting Deep Sleep
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -346,7 +346,8 @@ export const AudioProvider = ({ children }) => {
     try {
       if (audio.paused) {
         if (!audio.src) {
-          await loadTrack(currentTrack, true);
+          const trackToPlay = currentTrack || recommendedTrack;
+          await loadTrack(trackToPlay, true);
           return;
         }
         await audio.play();
@@ -503,17 +504,9 @@ export const AudioProvider = ({ children }) => {
     localStorage.setItem("vibespace-custom-mixes", JSON.stringify(updated));
   };
 
-  const submitSituation = (newActivity, newFeeling, newEnvironment, newIntensity) => {
-    if (newActivity) setActivity(newActivity);
-    if (newFeeling) setFeeling(newFeeling);
-    if (newEnvironment) setEnvironment(newEnvironment);
-    if (newIntensity) setIntensity(newIntensity);
-    setHasSubmittedSituation(true);
-  };
-
   const recommendedTrack = useMemo(() => {
     const words = [activity, feeling, environment, intensity].join(" ").toLowerCase();
-    let bestTrack = MUSIC_DATABASE[0];
+    let bestTrack = MUSIC_DATABASE[1]; // Default fallback to lofi or another track instead of deep-sleep
     let bestScore = -1;
 
     MUSIC_DATABASE.forEach((track) => {
@@ -530,12 +523,33 @@ export const AudioProvider = ({ children }) => {
     return bestTrack;
   }, [activity, feeling, environment, intensity]);
 
-  useEffect(() => {
-    if (!hasSubmittedSituation || !recommendedTrack) return;
-    if (!isPlaying && currentTrack?.id !== recommendedTrack.id) {
-      setCurrentTrack(recommendedTrack);
+  const submitSituation = (newActivity, newFeeling, newEnvironment, newIntensity) => {
+    if (newActivity) setActivity(newActivity);
+    if (newFeeling) setFeeling(newFeeling);
+    if (newEnvironment) setEnvironment(newEnvironment);
+    if (newIntensity) setIntensity(newIntensity);
+    setHasSubmittedSituation(true);
+
+    // Immediately load and play the exact recommended track based on new selection
+    const words = [newActivity || activity, newFeeling || feeling, newEnvironment || environment, newIntensity || intensity].join(" ").toLowerCase();
+    let matchedTrack = MUSIC_DATABASE[1];
+    let bestScore = -1;
+
+    MUSIC_DATABASE.forEach((track) => {
+      let score = 0;
+      track.tags.forEach((tag) => {
+        if (words.includes(tag.toLowerCase())) score += 2;
+      });
+      if (score > bestScore) {
+        bestScore = score;
+        matchedTrack = track;
+      }
+    });
+
+    if (matchedTrack) {
+      loadTrack(matchedTrack, true);
     }
-  }, [hasSubmittedSituation, recommendedTrack]);
+  };
 
   const saveVibe = (name) => {
     try {
