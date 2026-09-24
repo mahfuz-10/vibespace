@@ -43,7 +43,7 @@ export const VibeResult = ({ onOpenStudio }) => {
   };
 
   return (
-    <main className="vibe-result-page">
+    <main className="vibe-result-page animate-fade-up">
 
       {/* =====================================================
           HEADER
@@ -73,7 +73,7 @@ export const VibeResult = ({ onOpenStudio }) => {
           MAIN CARD
           ===================================================== */}
 
-      <section className="vibe-result-card">
+      <section className="vibe-result-card stagger-reveal" style={{ animationDelay: '200ms' }}>
 
         {/* Top */}
 
@@ -102,7 +102,7 @@ export const VibeResult = ({ onOpenStudio }) => {
 
           <button
             onClick={togglePlayPause}
-            className="vibe-play-button"
+            className="vibe-play-button transition-transform active:scale-95 duration-200"
             type="button"
           >
             <span className="vibe-play-icon">
@@ -140,7 +140,7 @@ export const VibeResult = ({ onOpenStudio }) => {
 
           {/* MUSIC */}
 
-          <div className="vibe-result-block">
+          <div className="vibe-result-block space-y-3">
 
             <div className="vibe-block-heading">
 
@@ -196,6 +196,11 @@ export const VibeResult = ({ onOpenStudio }) => {
                 </span>
               </div>
 
+            </div>
+
+            {/* AI Matched Context Line */}
+            <div className="px-1 text-[11px] font-mono tracking-wide opacity-60" style={{ color: 'var(--champagne)' }}>
+              Matched for {activity} • {feeling} • {environment}
             </div>
 
           </div>
@@ -333,3 +338,5 @@ export const VibeResult = ({ onOpenStudio }) => {
     </main>
   );
 };
+
+export default VibeResult;

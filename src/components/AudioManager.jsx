@@ -218,7 +218,7 @@ export const AudioProvider = ({ children }) => {
   });
 
   const heroAudioRef = useRef(null);
-  const [currentTrack, setCurrentTrack] = useState(null); // Fixed: Default null to prevent auto-selecting Deep Sleep
+  const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -272,7 +272,7 @@ export const AudioProvider = ({ children }) => {
     };
   }, []);
 
-  // Global Keyboard Shortcuts (Space for Play/Pause, Arrow keys for skipping tracks)
+  // Global Keyboard Shortcuts
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
@@ -296,7 +296,8 @@ export const AudioProvider = ({ children }) => {
     heroAudioRef.current.volume = volume * masterVolume;
   }, [volume, masterVolume]);
 
-  const loadTrack = async (track, shouldPlay = false) => {
+  // 1. Shudhu track SET/LOAD korbe, play korbe na (Paused state / Ready state)
+  const loadTrackOnly = async (track) => {
     const audio = heroAudioRef.current;
     if (!audio || !track) return false;
 
@@ -309,34 +310,63 @@ export const AudioProvider = ({ children }) => {
       setCurrentTrack(track);
       setCurrentTime(0);
       setDuration(0);
-
-      if (shouldPlay) {
-        await audio.play();
-        setIsPlaying(true);
-        return true;
-      }
+      setIsPlaying(false);
       return true;
     } catch (error) {
-      errorLog("Track load/play failed:", track.title, error);
+      errorLog("Track load failed:", track.title, error);
       return false;
     }
   };
 
-  const playTrack = async (track) => {
-    if (!track) return;
+  // Standard loadTrack for backward compatibility
+  const loadTrack = async (track, shouldPlay = false) => {
+    if (shouldPlay) {
+      return await playTrackWithFade(track);
+    } else {
+      return await loadTrackOnly(track);
+    }
+  };
+
+  // 2. User click korle smooth fade-in volume diye play korbe
+  const playTrackWithFade = async (track) => {
+    const targetTrack = track || currentTrack || recommendedTrack;
+    if (!targetTrack) return;
     const audio = heroAudioRef.current;
     if (!audio) return;
 
-    if (currentTrack?.id === track.id && audio.src) {
-      try {
-        await audio.play();
-        setIsPlaying(true);
-        return;
-      } catch (error) {
-        errorLog("Resume failed:", error);
+    try {
+      if (!audio.src || audio.src !== window.location.origin + targetTrack.src) {
+        audio.src = targetTrack.src;
+        audio.load();
+        setCurrentTrack(targetTrack);
       }
+
+      audio.volume = 0;
+      await audio.play();
+      setIsPlaying(true);
+
+      let currentVol = 0;
+      const targetVol = volume * masterVolume;
+      const steps = 30; // 50ms * 30 = 1.5 seconds smooth fade-in
+      const increment = targetVol / steps;
+
+      const fadeInterval = setInterval(() => {
+        currentVol += increment;
+        if (currentVol >= targetVol) {
+          audio.volume = targetVol;
+          clearInterval(fadeInterval);
+        } else {
+          audio.volume = currentVol;
+        }
+      }, 50);
+
+    } catch (error) {
+      errorLog("Play with fade error:", error);
     }
-    await loadTrack(track, true);
+  };
+
+  const playTrack = async (track) => {
+    await playTrackWithFade(track);
   };
 
   const togglePlayPause = async () => {
@@ -346,12 +376,10 @@ export const AudioProvider = ({ children }) => {
     try {
       if (audio.paused) {
         if (!audio.src) {
-          const trackToPlay = currentTrack || recommendedTrack;
-          await loadTrack(trackToPlay, true);
+          await playTrackWithFade(currentTrack || recommendedTrack);
           return;
         }
-        await audio.play();
-        setIsPlaying(true);
+        await playTrackWithFade(currentTrack || recommendedTrack);
       } else {
         audio.pause();
         setIsPlaying(false);
@@ -365,14 +393,14 @@ export const AudioProvider = ({ children }) => {
     if (!currentTrack) return;
     const index = MUSIC_DATABASE.findIndex((track) => track.id === currentTrack.id);
     const nextIndex = index === -1 ? 0 : (index + 1) % MUSIC_DATABASE.length;
-    await loadTrack(MUSIC_DATABASE[nextIndex], true);
+    await playTrackWithFade(MUSIC_DATABASE[nextIndex]);
   };
 
   const playPreviousTrack = async () => {
     if (!currentTrack) return;
     const index = MUSIC_DATABASE.findIndex((track) => track.id === currentTrack.id);
     const previousIndex = index <= 0 ? MUSIC_DATABASE.length - 1 : index - 1;
-    await loadTrack(MUSIC_DATABASE[previousIndex], true);
+    await playTrackWithFade(MUSIC_DATABASE[previousIndex]);
   };
 
   const seekTo = (time) => {
@@ -506,7 +534,7 @@ export const AudioProvider = ({ children }) => {
 
   const recommendedTrack = useMemo(() => {
     const words = [activity, feeling, environment, intensity].join(" ").toLowerCase();
-    let bestTrack = MUSIC_DATABASE[1]; // Default fallback to lofi or another track instead of deep-sleep
+    let bestTrack = MUSIC_DATABASE[1];
     let bestScore = -1;
 
     MUSIC_DATABASE.forEach((track) => {
@@ -530,7 +558,7 @@ export const AudioProvider = ({ children }) => {
     if (newIntensity) setIntensity(newIntensity);
     setHasSubmittedSituation(true);
 
-    // Immediately load and play the exact recommended track based on new selection
+    // Load track ONLY (Do not auto-play on submission)
     const words = [newActivity || activity, newFeeling || feeling, newEnvironment || environment, newIntensity || intensity].join(" ").toLowerCase();
     let matchedTrack = MUSIC_DATABASE[1];
     let bestScore = -1;
@@ -547,7 +575,7 @@ export const AudioProvider = ({ children }) => {
     });
 
     if (matchedTrack) {
-      loadTrack(matchedTrack, true);
+      loadTrackOnly(matchedTrack);
     }
   };
 
@@ -601,6 +629,8 @@ export const AudioProvider = ({ children }) => {
     currentTrack, setCurrentTrack,
     isPlaying,
     playTrack, togglePlayPause,
+    loadTrackOnly,
+    playTrackWithFade,
     nextTrack: playNextTrack,
     prevTrack: playPreviousTrack,
     currentTime, duration, seekTo,

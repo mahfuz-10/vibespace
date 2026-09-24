@@ -7,10 +7,12 @@ import { VibeResult } from './components/VibeResult';
 import { AtmosphereStudio } from './components/AtmosphereStudio';
 import { PersistentPlayer } from './components/PersistentPlayer';
 import VibeIntro from './components/VibeIntro';
+import { TransitionOverlay } from './components/TransitionOverlay';
 
 
 function MainContent() {
   const [currentTab, setCurrentTab] = useState('builder');
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const [showIntro, setShowIntro] = useState(() => {
     return sessionStorage.getItem('vibespace-intro-seen') !== 'true';
@@ -22,6 +24,15 @@ function MainContent() {
   const handleEnterSpace = () => {
     setShowIntro(false);
     sessionStorage.setItem('vibespace-intro-seen', 'true');
+  };
+
+  // Cinematic Transition Handler for Entering Atmosphere
+  const handleProceedToResult = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentTab('result');
+      setIsTransitioning(false);
+    }, 650); // Matches cinematic overlay timing
   };
 
 
@@ -43,7 +54,10 @@ function MainContent() {
    */
 
   return (
-    <div className="min-h-screen transition-colors duration-500 pb-56">
+    <div className="min-h-screen transition-colors duration-500 pb-56 relative">
+
+      {/* Cinematic Full-Screen Transition Overlay */}
+      <TransitionOverlay isActive={isTransitioning} />
 
       <Navbar
         currentTab={currentTab}
@@ -60,13 +74,13 @@ function MainContent() {
           />
         ) : currentTab === 'builder' ? (
           <SituationBuilder
-            onProceed={() => setCurrentTab('result')}
+            onProceed={handleProceedToResult}
           />
         ) : currentTab === 'studio' ? (
           <AtmosphereStudio />
         ) : (
           <SituationBuilder
-            onProceed={() => setCurrentTab('result')}
+            onProceed={handleProceedToResult}
           />
         )}
 

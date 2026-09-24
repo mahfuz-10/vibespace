@@ -74,8 +74,7 @@ export const SituationBuilder = ({ onProceed }) => {
     intensity,
     setIntensity,
     setHasSubmittedSituation,
-    playTrack,
-    setIsPlaying
+    loadTrackOnly
   } = useAudio();
 
   const [isEntering, setIsEntering] = useState(false);
@@ -110,7 +109,7 @@ export const SituationBuilder = ({ onProceed }) => {
     );
     if (activityMatch) return activityMatch;
 
-    return MUSIC_DATABASE[0];
+    return MUSIC_DATABASE[1];
   }, [activity, feeling, environment]);
 
 
@@ -122,9 +121,9 @@ export const SituationBuilder = ({ onProceed }) => {
     if (isEntering) return;
     setIsEntering(true);
 
+    // Load track ONLY (Paused state - No Auto Play)
     if (recommendedTrack) {
-      playTrack(recommendedTrack);
-      setIsPlaying(true);
+      loadTrackOnly(recommendedTrack);
     }
     setHasSubmittedSituation(true);
 
@@ -133,7 +132,7 @@ export const SituationBuilder = ({ onProceed }) => {
         onProceed();
       }
       setIsEntering(false);
-    }, 300);
+    }, 400);
   };
 
   const handleSurpriseMe = () => {
@@ -438,7 +437,7 @@ export const SituationBuilder = ({ onProceed }) => {
                 {isEntering ? (
                   <>
                     <Loader2 size={16} className="animate-spin" />
-                    <span>Calibrating Atmosphere...</span>
+                    <span>Curating your atmosphere...</span>
                   </>
                 ) : (
                   <>
@@ -479,7 +478,7 @@ export const SituationBuilder = ({ onProceed }) => {
 
                 <div className="flex items-center gap-2 flex-shrink-0 px-3 py-1.5 rounded-xl border text-[10px] font-medium" 
                      style={{ borderColor: 'rgba(168, 182, 154, 0.2)', backgroundColor: 'rgba(168, 182, 154, 0.05)', color: 'var(--sage)' }}>
-                  <Sparkles size=12 />
+                  <Sparkles size={12} />
                   <span>Ready to Play</span>
                 </div>
               </div>
