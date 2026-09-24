@@ -9,7 +9,7 @@ import React, {
 
 /* =========================================================
    VIBESPACE AUDIO DATABASE
-   ========================================================= */
+========================================================= */
 
 export const MUSIC_DATABASE = [
   {
@@ -155,7 +155,7 @@ export const MUSIC_DATABASE = [
 
 /* =========================================================
    AMBIENT SOUND DATABASE
-   ========================================================= */
+========================================================= */
 
 export const AMBIENT_DATABASE = [
   {
@@ -163,49 +163,41 @@ export const AMBIENT_DATABASE = [
     name: "Rain",
     src: "/audio/mixkit-long-rain-ambience-1247.wav",
   },
-
   {
     id: "coffee",
     name: "Coffee Shop",
     src: "/audio/mixkit-restaurant-crowd-talking-ambience-444.wav",
   },
-
   {
     id: "fireplace",
     name: "Fireplace",
     src: "/audio/mixkit-night-forest-with-insects-2414.wav",
   },
-
   {
     id: "wind",
     name: "Wind",
     src: "/audio/mixkit-wind-blowing-ambience-2658.wav",
   },
-
   {
     id: "ocean",
     name: "Ocean Waves",
     src: "/audio/mixkit-sea-waves-loop-1196.wav",
   },
-
   {
     id: "forest",
     name: "Forest",
     src: "/audio/mixkit-wind-in-the-forest-1237.wav",
   },
-
   {
     id: "birds",
     name: "Birds",
     src: "/audio/mixkit-forest-birds-singing-1212.wav",
   },
-
   {
     id: "thunder",
     name: "Thunder",
     src: "/audio/mixkit-thunder-rumble-during-a-storm-2395.wav",
   },
-
   {
     id: "city",
     name: "City Traffic",
@@ -215,18 +207,18 @@ export const AMBIENT_DATABASE = [
 
 /* =========================================================
    CONTEXT
-   ========================================================= */
+========================================================= */
 
 const AudioContext = createContext(null);
 
 /* =========================================================
    PROVIDER
-   ========================================================= */
+========================================================= */
 
 export const AudioProvider = ({ children }) => {
-  /* -------------------------------------------------------
-     SITUATION STATE
-  ------------------------------------------------------- */
+  /* =======================================================
+     SITUATION
+  ======================================================= */
 
   const [activity, setActivity] = useState("Coding");
   const [feeling, setFeeling] = useState("Deep Focus");
@@ -236,9 +228,9 @@ export const AudioProvider = ({ children }) => {
   const [hasSubmittedSituation, setHasSubmittedSituation] =
     useState(false);
 
-  /* -------------------------------------------------------
+  /* =======================================================
      THEME
-  ------------------------------------------------------- */
+  ======================================================= */
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
     try {
@@ -262,9 +254,9 @@ export const AudioProvider = ({ children }) => {
     }
   }, [isDarkMode]);
 
-  /* -------------------------------------------------------
+  /* =======================================================
      SAVED MIXES
-  ------------------------------------------------------- */
+  ======================================================= */
 
   const [savedMixes, setSavedMixes] = useState(() => {
     try {
@@ -275,19 +267,17 @@ export const AudioProvider = ({ children }) => {
     }
   });
 
-  /* -------------------------------------------------------
+  /* =======================================================
      HERO AUDIO
-  ------------------------------------------------------- */
+  ======================================================= */
 
   const heroAudioRef = useRef(null);
 
   /*
-    IMPORTANT:
-    Do NOT make Deep Sleep the automatic playing track.
-
-    It can remain the initial selected track because the player
-    needs a track object, but isPlaying stays false.
+    Tracks which track is actually loaded
+    inside the HTMLAudioElement.
   */
+  const loadedTrackIdRef = useRef(null);
 
   const [currentTrack, setCurrentTrack] = useState(
     MUSIC_DATABASE[0]
@@ -300,9 +290,9 @@ export const AudioProvider = ({ children }) => {
   const [volume, setVolumeState] = useState(0.8);
   const [masterVolume, setMasterVolumeState] = useState(1);
 
-  /* -------------------------------------------------------
+  /* =======================================================
      AMBIENT AUDIO
-  ------------------------------------------------------- */
+  ======================================================= */
 
   const ambientRefs = useRef({});
 
@@ -314,9 +304,9 @@ export const AudioProvider = ({ children }) => {
     }))
   );
 
-  /* -------------------------------------------------------
-     DEBUG HELPERS
-  ------------------------------------------------------- */
+  /* =======================================================
+     DEBUG
+  ======================================================= */
 
   const log = (...args) => {
     console.log("[VibeSpace Audio]", ...args);
@@ -326,9 +316,9 @@ export const AudioProvider = ({ children }) => {
     console.error("[VibeSpace Audio]", ...args);
   };
 
-  /* =========================================================
+  /* =======================================================
      HERO AUDIO ELEMENT
-     ========================================================= */
+  ======================================================= */
 
   useEffect(() => {
     const audio = new Audio();
@@ -338,14 +328,9 @@ export const AudioProvider = ({ children }) => {
     heroAudioRef.current = audio;
 
     const handleLoadedMetadata = () => {
-      log(
-        "Audio metadata loaded:",
-        audio.src,
-        "duration:",
-        audio.duration
-      );
-
       setDuration(audio.duration || 0);
+
+      log("Metadata loaded:", audio.src);
     };
 
     const handleTimeUpdate = () => {
@@ -362,25 +347,20 @@ export const AudioProvider = ({ children }) => {
     };
 
     const handlePlay = () => {
-      log("Hero audio PLAY event");
       setIsPlaying(true);
     };
 
     const handlePause = () => {
-      log("Hero audio PAUSE event");
       setIsPlaying(false);
     };
 
-    const handleError = (event) => {
+    const handleError = () => {
       errorLog("HERO AUDIO ERROR:", {
-        event,
         src: audio.src,
         error: audio.error,
       });
-    };
 
-    const handleCanPlay = () => {
-      log("Hero audio can play:", audio.src);
+      setIsPlaying(false);
     };
 
     audio.addEventListener(
@@ -394,14 +374,9 @@ export const AudioProvider = ({ children }) => {
     );
 
     audio.addEventListener("ended", handleEnded);
-
     audio.addEventListener("play", handlePlay);
-
     audio.addEventListener("pause", handlePause);
-
     audio.addEventListener("error", handleError);
-
-    audio.addEventListener("canplay", handleCanPlay);
 
     return () => {
       audio.pause();
@@ -417,22 +392,20 @@ export const AudioProvider = ({ children }) => {
       );
 
       audio.removeEventListener("ended", handleEnded);
-
       audio.removeEventListener("play", handlePlay);
-
       audio.removeEventListener("pause", handlePause);
-
       audio.removeEventListener("error", handleError);
 
-      audio.removeEventListener("canplay", handleCanPlay);
+      audio.src = "";
 
       heroAudioRef.current = null;
+      loadedTrackIdRef.current = null;
     };
   }, []);
 
-  /* =========================================================
+  /* =======================================================
      KEYBOARD SHORTCUTS
-     ========================================================= */
+  ======================================================= */
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -447,10 +420,14 @@ export const AudioProvider = ({ children }) => {
       if (e.code === "Space") {
         e.preventDefault();
         togglePlayPause();
-      } else if (e.code === "ArrowRight") {
+      }
+
+      if (e.code === "ArrowRight") {
         e.preventDefault();
         playNextTrack();
-      } else if (e.code === "ArrowLeft") {
+      }
+
+      if (e.code === "ArrowLeft") {
         e.preventDefault();
         playPreviousTrack();
       }
@@ -458,16 +435,17 @@ export const AudioProvider = ({ children }) => {
 
     window.addEventListener("keydown", handleKeyDown);
 
-    return () =>
+    return () => {
       window.removeEventListener(
         "keydown",
         handleKeyDown
       );
-  }, [currentTrack, isPlaying]);
+    };
+  }, [currentTrack]);
 
-  /* =========================================================
+  /* =======================================================
      HERO VOLUME
-     ========================================================= */
+  ======================================================= */
 
   useEffect(() => {
     if (!heroAudioRef.current) return;
@@ -476,9 +454,9 @@ export const AudioProvider = ({ children }) => {
       volume * masterVolume;
   }, [volume, masterVolume]);
 
-  /* =========================================================
+  /* =======================================================
      LOAD TRACK
-     ========================================================= */
+  ======================================================= */
 
   const loadTrack = async (
     track,
@@ -487,51 +465,38 @@ export const AudioProvider = ({ children }) => {
     const audio = heroAudioRef.current;
 
     if (!audio || !track) {
-      errorLog("Cannot load track:", {
-        audioExists: !!audio,
-        track,
-      });
-
+      errorLog("Cannot load track.");
       return false;
     }
 
     try {
-      log("Loading track:", track.title);
-      log("Audio path:", track.src);
+      log("Loading:", track.title);
+      log("Path:", track.src);
 
       audio.pause();
-
-      audio.currentTime = 0;
 
       audio.src = track.src;
 
       audio.volume =
         volume * masterVolume;
 
+      audio.currentTime = 0;
+
       audio.load();
 
+      loadedTrackIdRef.current = track.id;
+
       setCurrentTrack(track);
-
       setCurrentTime(0);
-
       setDuration(0);
-
-      /*
-        IMPORTANT:
-        shouldPlay=false only selects the track.
-        It does NOT start audio.
-      */
+      setIsPlaying(false);
 
       if (shouldPlay) {
-        log("Attempting to play:", track.title);
-
         await audio.play();
 
         setIsPlaying(true);
 
-        log("Playback started:", track.title);
-
-        return true;
+        log("Playing:", track.title);
       }
 
       return true;
@@ -548,9 +513,9 @@ export const AudioProvider = ({ children }) => {
     }
   };
 
-  /* =========================================================
+  /* =======================================================
      PLAY TRACK
-     ========================================================= */
+  ======================================================= */
 
   const playTrack = async (track) => {
     if (!track) return;
@@ -558,39 +523,47 @@ export const AudioProvider = ({ children }) => {
     const audio = heroAudioRef.current;
 
     if (!audio) {
-      errorLog("Hero audio element not ready.");
+      errorLog("Audio element not ready.");
       return;
     }
 
-    if (
-      currentTrack?.id === track.id &&
-      audio.src
-    ) {
-      try {
-        log("Resuming:", track.title);
+    try {
+      /*
+        If same track is already loaded,
+        simply resume it.
+      */
 
+      if (
+        loadedTrackIdRef.current === track.id &&
+        audio.src
+      ) {
         await audio.play();
 
         setIsPlaying(true);
 
         return;
-      } catch (error) {
-        errorLog(
-          "Resume failed:",
-          track.title,
-          error
-        );
-
-        setIsPlaying(false);
       }
-    }
 
-    await loadTrack(track, true);
+      /*
+        Otherwise load the requested track
+        and immediately play it.
+      */
+
+      await loadTrack(track, true);
+    } catch (error) {
+      errorLog(
+        "playTrack failed:",
+        track.title,
+        error
+      );
+
+      setIsPlaying(false);
+    }
   };
 
-  /* =========================================================
+  /* =======================================================
      PLAY / PAUSE
-     ========================================================= */
+  ======================================================= */
 
   const togglePlayPause = async () => {
     const audio = heroAudioRef.current;
@@ -601,34 +574,46 @@ export const AudioProvider = ({ children }) => {
     }
 
     try {
-      if (audio.paused) {
-        /*
-          If current track has not been loaded yet,
-          load it first.
-        */
+      /*
+        PAUSE
+      */
 
-        if (!audio.src) {
-          await loadTrack(currentTrack, true);
-          return;
-        }
+      if (!audio.paused) {
+        audio.pause();
+        setIsPlaying(false);
+        return;
+      }
 
-        log(
-          "Play button clicked:",
-          currentTrack?.title
+      /*
+        IMPORTANT FIX
+
+        Don't check only audio.src.
+
+        Because after audio.src = "",
+        browsers can resolve it to the current page URL.
+
+        Instead we check whether the selected track
+        is actually loaded.
+      */
+
+      if (
+        loadedTrackIdRef.current !== currentTrack?.id
+      ) {
+        await loadTrack(
+          currentTrack,
+          true
         );
 
-        log("Source:", audio.src);
-
-        await audio.play();
-
-        setIsPlaying(true);
-      } else {
-        log("Pause button clicked");
-
-        audio.pause();
-
-        setIsPlaying(false);
+        return;
       }
+
+      /*
+        Track already loaded.
+      */
+
+      await audio.play();
+
+      setIsPlaying(true);
     } catch (error) {
       errorLog(
         "Play/Pause error:",
@@ -639,9 +624,9 @@ export const AudioProvider = ({ children }) => {
     }
   };
 
-  /* =========================================================
+  /* =======================================================
      NEXT TRACK
-     ========================================================= */
+  ======================================================= */
 
   const playNextTrack = async () => {
     if (!currentTrack) return;
@@ -664,9 +649,9 @@ export const AudioProvider = ({ children }) => {
     );
   };
 
-  /* =========================================================
+  /* =======================================================
      PREVIOUS TRACK
-     ========================================================= */
+  ======================================================= */
 
   const playPreviousTrack = async () => {
     if (!currentTrack) return;
@@ -688,9 +673,9 @@ export const AudioProvider = ({ children }) => {
     );
   };
 
-  /* =========================================================
+  /* =======================================================
      SEEK
-     ========================================================= */
+  ======================================================= */
 
   const seekTo = (time) => {
     const audio = heroAudioRef.current;
@@ -703,7 +688,7 @@ export const AudioProvider = ({ children }) => {
     }
 
     try {
-      audio.currentTime = Math.max(
+      const safeTime = Math.max(
         0,
         Math.min(
           time,
@@ -711,25 +696,25 @@ export const AudioProvider = ({ children }) => {
         )
       );
 
-      setCurrentTime(
-        audio.currentTime
-      );
+      audio.currentTime = safeTime;
+
+      setCurrentTime(safeTime);
     } catch (error) {
-      errorLog(
-        "Seek error:",
-        error
-      );
+      errorLog("Seek error:", error);
     }
   };
 
-  /* =========================================================
+  /* =======================================================
      HERO VOLUME
-     ========================================================= */
+  ======================================================= */
 
   const setVolume = (value) => {
     const safeValue = Math.max(
       0,
-      Math.min(1, Number(value))
+      Math.min(
+        1,
+        Number(value)
+      )
     );
 
     setVolumeState(safeValue);
@@ -740,14 +725,17 @@ export const AudioProvider = ({ children }) => {
     }
   };
 
-  /* =========================================================
+  /* =======================================================
      MASTER VOLUME
-     ========================================================= */
+  ======================================================= */
 
   const setMasterVolume = (value) => {
     const safeValue = Math.max(
       0,
-      Math.min(1, Number(value))
+      Math.min(
+        1,
+        Number(value)
+      )
     );
 
     setMasterVolumeState(
@@ -776,9 +764,9 @@ export const AudioProvider = ({ children }) => {
     });
   };
 
-  /* =========================================================
-     CREATE AMBIENT AUDIO ELEMENTS
-     ========================================================= */
+  /* =======================================================
+     CREATE AMBIENT AUDIO
+  ======================================================= */
 
   useEffect(() => {
     AMBIENT_DATABASE.forEach(
@@ -786,21 +774,17 @@ export const AudioProvider = ({ children }) => {
         const audio = new Audio();
 
         audio.preload = "auto";
-
         audio.loop = true;
-
         audio.volume = 0;
-
         audio.src = layer.src;
 
         audio.addEventListener(
           "error",
-          (event) => {
+          () => {
             errorLog(
               `Ambient audio error: ${layer.name}`,
               {
                 src: layer.src,
-                event,
                 error: audio.error,
               }
             );
@@ -818,9 +802,7 @@ export const AudioProvider = ({ children }) => {
         ambientRefs.current
       ).forEach((audio) => {
         audio.pause();
-
         audio.src = "";
-
         audio.load();
       });
 
@@ -828,9 +810,9 @@ export const AudioProvider = ({ children }) => {
     };
   }, []);
 
-  /* =========================================================
+  /* =======================================================
      AMBIENT VOLUME
-     ========================================================= */
+  ======================================================= */
 
   const setAmbientVolume = async (
     id,
@@ -838,7 +820,10 @@ export const AudioProvider = ({ children }) => {
   ) => {
     const safeValue = Math.max(
       0,
-      Math.min(1, Number(value))
+      Math.min(
+        1,
+        Number(value)
+      )
     );
 
     const layer =
@@ -851,16 +836,18 @@ export const AudioProvider = ({ children }) => {
 
     if (!layer || !audio) return;
 
+    const nextMuted =
+      safeValue === 0
+        ? layer.isMuted
+        : false;
+
     setAmbientLayers((prev) =>
       prev.map((item) =>
         item.id === id
           ? {
               ...item,
               volume: safeValue,
-              isMuted:
-                safeValue === 0
-                  ? item.isMuted
-                  : false,
+              isMuted: nextMuted,
             }
           : item
       )
@@ -869,7 +856,7 @@ export const AudioProvider = ({ children }) => {
     audio.volume =
       safeValue *
       masterVolume *
-      (layer.isMuted ? 0 : 1);
+      (nextMuted ? 0 : 1);
 
     if (safeValue > 0) {
       try {
@@ -885,9 +872,9 @@ export const AudioProvider = ({ children }) => {
     }
   };
 
-  /* =========================================================
+  /* =======================================================
      AMBIENT MUTE
-     ========================================================= */
+  ======================================================= */
 
   const toggleAmbientMute = async (
     id
@@ -918,6 +905,7 @@ export const AudioProvider = ({ children }) => {
 
     if (newMuted) {
       audio.volume = 0;
+      audio.pause();
     } else {
       audio.volume =
         layer.volume *
@@ -936,18 +924,18 @@ export const AudioProvider = ({ children }) => {
     }
   };
 
-  /* =========================================================
-     SAVED CUSTOM MIX
-     ========================================================= */
+  /* =======================================================
+     SAVE CUSTOM MIX
+  ======================================================= */
 
-  const saveCustomMix = (
-    mixName
-  ) => {
+  const saveCustomMix = (mixName) => {
     const activeMixData =
-      ambientLayers.map((layer) => ({
-        id: layer.id,
-        volume: layer.volume,
-      }));
+      ambientLayers.map(
+        (layer) => ({
+          id: layer.id,
+          volume: layer.volume,
+        })
+      );
 
     const newMix = {
       id: Date.now(),
@@ -974,13 +962,15 @@ export const AudioProvider = ({ children }) => {
     );
   };
 
-  /* =========================================================
+  /* =======================================================
      LOAD CUSTOM MIX
-     ========================================================= */
+  ======================================================= */
 
   const loadCustomMix = async (
     mix
   ) => {
+    if (!mix?.layers) return;
+
     for (
       const savedLayer of mix.layers
     ) {
@@ -991,9 +981,9 @@ export const AudioProvider = ({ children }) => {
     }
   };
 
-  /* =========================================================
+  /* =======================================================
      DELETE CUSTOM MIX
-     ========================================================= */
+  ======================================================= */
 
   const deleteCustomMix = (
     id
@@ -1011,9 +1001,9 @@ export const AudioProvider = ({ children }) => {
     );
   };
 
-  /* =========================================================
+  /* =======================================================
      RECOMMENDATION ENGINE
-     ========================================================= */
+  ======================================================= */
 
   const getRecommendedTrack = (
     selectedActivity,
@@ -1041,14 +1031,8 @@ export const AudioProvider = ({ children }) => {
         selectedIntensity || ""
       ).toLowerCase();
 
-    /*
-      Explicit priority rules.
-
-      These make sure common situations don't accidentally
-      fall back to Deep Sleep.
-    */
-
     /* SLEEP */
+
     if (
       activityValue.includes("sleep")
     ) {
@@ -1062,14 +1046,11 @@ export const AudioProvider = ({ children }) => {
       );
     }
 
-    /* CODING / DEEP FOCUS */
+    /* CODING + DEEP FOCUS */
+
     if (
-      activityValue.includes(
-        "coding"
-      ) &&
-      feelingValue.includes(
-        "deep focus"
-      )
+      activityValue.includes("coding") &&
+      feelingValue.includes("deep focus")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1087,18 +1068,13 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* STUDY */
+
     if (
-      activityValue.includes(
-        "stud"
-      )
+      activityValue.includes("stud")
     ) {
       if (
-        feelingValue.includes(
-          "deep focus"
-        ) ||
-        intensityValue.includes(
-          "immersive"
-        )
+        feelingValue.includes("deep focus") ||
+        intensityValue.includes("immersive")
       ) {
         return (
           MUSIC_DATABASE.find(
@@ -1126,13 +1102,10 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* READING + COFFEE */
+
     if (
-      activityValue.includes(
-        "read"
-      ) &&
-      environmentValue.includes(
-        "coffee"
-      )
+      activityValue.includes("read") &&
+      environmentValue.includes("coffee")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1145,10 +1118,9 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* READING */
+
     if (
-      activityValue.includes(
-        "read"
-      )
+      activityValue.includes("read")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1166,10 +1138,9 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* DRIVING */
+
     if (
-      activityValue.includes(
-        "driv"
-      )
+      activityValue.includes("driv")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1182,10 +1153,9 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* CREATING */
+
     if (
-      activityValue.includes(
-        "creat"
-      )
+      activityValue.includes("creat")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1198,10 +1168,9 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* COFFEE SHOP */
+
     if (
-      environmentValue.includes(
-        "coffee"
-      )
+      environmentValue.includes("coffee")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1214,13 +1183,10 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* MIDNIGHT */
+
     if (
-      environmentValue.includes(
-        "midnight"
-      ) ||
-      feelingValue.includes(
-        "melancholic"
-      )
+      environmentValue.includes("midnight") ||
+      feelingValue.includes("melancholic")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1238,10 +1204,9 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* DREAMY */
+
     if (
-      feelingValue.includes(
-        "dreamy"
-      )
+      feelingValue.includes("dreamy")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1254,13 +1219,10 @@ export const AudioProvider = ({ children }) => {
     }
 
     /* CALM / PEACEFUL */
+
     if (
-      feelingValue.includes(
-        "calm"
-      ) ||
-      feelingValue.includes(
-        "peaceful"
-      )
+      feelingValue.includes("calm") ||
+      feelingValue.includes("peaceful")
     ) {
       return (
         MUSIC_DATABASE.find(
@@ -1277,9 +1239,7 @@ export const AudioProvider = ({ children }) => {
       );
     }
 
-    /* =====================================================
-       FALLBACK TAG MATCHING
-    ===================================================== */
+    /* FALLBACK */
 
     const words = [
       activityValue,
@@ -1293,7 +1253,8 @@ export const AudioProvider = ({ children }) => {
         (track) =>
           track.id ===
           "peaceful-music"
-      ) || MUSIC_DATABASE[0];
+      ) ||
+      MUSIC_DATABASE[0];
 
     let bestScore = 0;
 
@@ -1307,18 +1268,14 @@ export const AudioProvider = ({ children }) => {
               tag.toLowerCase();
 
             if (
-              words.includes(
-                cleanTag
-              )
+              words.includes(cleanTag)
             ) {
               score += 2;
             }
           }
         );
 
-        if (
-          score > bestScore
-        ) {
+        if (score > bestScore) {
           bestScore = score;
           bestTrack = track;
         }
@@ -1328,9 +1285,9 @@ export const AudioProvider = ({ children }) => {
     return bestTrack;
   };
 
-  /* =========================================================
+  /* =======================================================
      CURRENT RECOMMENDED TRACK
-  ========================================================= */
+  ======================================================= */
 
   const recommendedTrack =
     useMemo(() => {
@@ -1347,14 +1304,9 @@ export const AudioProvider = ({ children }) => {
       intensity,
     ]);
 
-  /* =========================================================
+  /* =======================================================
      SUBMIT SITUATION
-     
-     THIS IS THE IMPORTANT FIX.
-     
-     We calculate recommendation using the NEW values
-     immediately instead of waiting for React state updates.
-  ========================================================= */
+  ======================================================= */
 
   const submitSituation = (
     newActivity,
@@ -1375,41 +1327,6 @@ export const AudioProvider = ({ children }) => {
     const finalIntensity =
       newIntensity || intensity;
 
-    log(
-      "Submitting situation:",
-      {
-        activity: finalActivity,
-        feeling: finalFeeling,
-        environment:
-          finalEnvironment,
-        intensity: finalIntensity,
-      }
-    );
-
-    /* Update situation state */
-
-    setActivity(
-      finalActivity
-    );
-
-    setFeeling(
-      finalFeeling
-    );
-
-    setEnvironment(
-      finalEnvironment
-    );
-
-    setIntensity(
-      finalIntensity
-    );
-
-    /*
-      IMPORTANT:
-      Calculate using the NEW values,
-      not the old React state.
-    */
-
     const selectedTrack =
       getRecommendedTrack(
         finalActivity,
@@ -1418,57 +1335,55 @@ export const AudioProvider = ({ children }) => {
         finalIntensity
       );
 
-    log(
-      "Recommended track:",
-      selectedTrack?.title
-    );
+    setActivity(finalActivity);
+    setFeeling(finalFeeling);
+    setEnvironment(finalEnvironment);
+    setIntensity(finalIntensity);
 
     /*
-      Only SELECT the track.
-
-      DO NOT PLAY IT.
-
-      User will press Play.
+      Select recommended track only.
+      DO NOT autoplay.
     */
 
-    setCurrentTrack(
-      selectedTrack
-    );
+    setCurrentTrack(selectedTrack);
 
     /*
-      Reset player state because we changed
-      the recommended track.
+      Completely reset loaded audio.
     */
 
     if (heroAudioRef.current) {
       heroAudioRef.current.pause();
 
-      heroAudioRef.current.currentTime = 0;
+      heroAudioRef.current.removeAttribute(
+        "src"
+      );
 
-      heroAudioRef.current.src =
-        "";
-
-      setCurrentTime(0);
-
-      setDuration(0);
+      heroAudioRef.current.load();
     }
 
+    loadedTrackIdRef.current = null;
+
+    setCurrentTime(0);
+    setDuration(0);
     setIsPlaying(false);
 
-    /*
-      Finally move to Result page.
-    */
+    setHasSubmittedSituation(true);
 
-    setHasSubmittedSituation(
-      true
+    log(
+      "Situation submitted:",
+      {
+        activity: finalActivity,
+        feeling: finalFeeling,
+        environment: finalEnvironment,
+        intensity: finalIntensity,
+        track: selectedTrack?.title,
+      }
     );
   };
 
-  /* =========================================================
-     KEEP THIS FOR EXTERNAL STATE CHANGES
-     
-     This does NOT automatically play.
-  ========================================================= */
+  /* =======================================================
+     SYNC RECOMMENDED TRACK
+  ======================================================= */
 
   useEffect(() => {
     if (
@@ -1477,13 +1392,6 @@ export const AudioProvider = ({ children }) => {
     ) {
       return;
     }
-
-    /*
-      If another component changes situation
-      directly, keep current track synced.
-
-      Never autoplay here.
-    */
 
     if (
       currentTrack?.id !==
@@ -1496,16 +1404,17 @@ export const AudioProvider = ({ children }) => {
       if (heroAudioRef.current) {
         heroAudioRef.current.pause();
 
-        heroAudioRef.current.currentTime = 0;
+        heroAudioRef.current.removeAttribute(
+          "src"
+        );
 
-        heroAudioRef.current.src =
-          "";
-
-        setCurrentTime(0);
-
-        setDuration(0);
+        heroAudioRef.current.load();
       }
 
+      loadedTrackIdRef.current = null;
+
+      setCurrentTime(0);
+      setDuration(0);
       setIsPlaying(false);
     }
   }, [
@@ -1513,13 +1422,11 @@ export const AudioProvider = ({ children }) => {
     recommendedTrack,
   ]);
 
-  /* =========================================================
+  /* =======================================================
      SAVE VIBE
-  ========================================================= */
+  ======================================================= */
 
-  const saveVibe = (
-    name
-  ) => {
+  const saveVibe = (name) => {
     try {
       const existing =
         JSON.parse(
@@ -1536,16 +1443,12 @@ export const AudioProvider = ({ children }) => {
           `${environment} ${activity}`,
 
         activity,
-
         feeling,
-
         environment,
-
         intensity,
 
         track:
-          currentTrack?.title ||
-          "",
+          currentTrack?.title || "",
 
         createdAt:
           new Date().toISOString(),
@@ -1566,9 +1469,9 @@ export const AudioProvider = ({ children }) => {
     }
   };
 
-  /* =========================================================
+  /* =======================================================
      SURPRISE ME
-  ========================================================= */
+  ======================================================= */
 
   const surpriseMe = () => {
     const activities = [
@@ -1631,40 +1534,22 @@ export const AudioProvider = ({ children }) => {
     const newIntensity =
       random(intensities);
 
-    setActivity(
-      newActivity
-    );
-
-    setFeeling(
-      newFeeling
-    );
-
-    setEnvironment(
-      newEnvironment
-    );
-
-    setIntensity(
-      newIntensity
-    );
+    setActivity(newActivity);
+    setFeeling(newFeeling);
+    setEnvironment(newEnvironment);
+    setIntensity(newIntensity);
 
     return {
-      activity:
-        newActivity,
-
-      feeling:
-        newFeeling,
-
-      environment:
-        newEnvironment,
-
-      intensity:
-        newIntensity,
+      activity: newActivity,
+      feeling: newFeeling,
+      environment: newEnvironment,
+      intensity: newIntensity,
     };
   };
 
-  /* =========================================================
+  /* =======================================================
      CONTEXT VALUE
-  ========================================================= */
+  ======================================================= */
 
   const value = {
     /* Situation */
@@ -1685,10 +1570,9 @@ export const AudioProvider = ({ children }) => {
     setHasSubmittedSituation,
 
     submitSituation,
-
     surpriseMe,
 
-    /* Hero music */
+    /* Hero Music */
 
     currentTrack,
     setCurrentTrack,
@@ -1696,23 +1580,17 @@ export const AudioProvider = ({ children }) => {
     isPlaying,
 
     playTrack,
-
     togglePlayPause,
 
-    nextTrack:
-      playNextTrack,
-
-    prevTrack:
-      playPreviousTrack,
+    nextTrack: playNextTrack,
+    prevTrack: playPreviousTrack,
 
     currentTime,
-
     duration,
 
     seekTo,
 
     volume,
-
     setVolume,
 
     /* Ambience */
@@ -1720,50 +1598,41 @@ export const AudioProvider = ({ children }) => {
     ambientLayers,
 
     setAmbientVolume,
-
     toggleAmbientMute,
 
     /* Master */
 
     masterVolume,
-
     setMasterVolume,
 
     /* Recommendation */
 
     recommendedTrack,
 
-    /* Saved vibes */
+    /* Saved Vibes */
 
     saveVibe,
 
-    /* Saved mixes */
+    /* Saved Mixes */
 
     savedMixes,
-
     saveCustomMix,
-
     loadCustomMix,
-
     deleteCustomMix,
 
     /* Theme */
 
     isDarkMode,
-
     setIsDarkMode,
 
     /* Databases */
 
     MUSIC_DATABASE,
-
     AMBIENT_DATABASE,
   };
 
   return (
-    <AudioContext.Provider
-      value={value}
-    >
+    <AudioContext.Provider value={value}>
       {children}
     </AudioContext.Provider>
   );
@@ -1771,13 +1640,11 @@ export const AudioProvider = ({ children }) => {
 
 /* =========================================================
    HOOK
-   ========================================================= */
+========================================================= */
 
 export const useAudio = () => {
   const context =
-    useContext(
-      AudioContext
-    );
+    useContext(AudioContext);
 
   if (!context) {
     throw new Error(
