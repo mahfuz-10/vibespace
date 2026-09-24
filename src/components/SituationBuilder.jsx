@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Sparkles,
   ArrowRight,
@@ -82,6 +82,71 @@ export const SituationBuilder = () => {
 
 
   /* ============================================================
+     SCROLL PROGRESS
+     ============================================================ */
+
+  const [activeSection, setActiveSection] = useState(0);
+
+  const sectionRefs = useRef([]);
+
+
+  useEffect(() => {
+
+    let ticking = false;
+
+    const updateProgress = () => {
+
+      const viewportPoint = window.innerHeight * 0.35;
+
+      let currentSection = 0;
+
+      sectionRefs.current.forEach((section, index) => {
+
+        if (!section) return;
+
+        const rect = section.getBoundingClientRect();
+
+        if (rect.top <= viewportPoint) {
+          currentSection = index;
+        }
+
+      });
+
+      setActiveSection(currentSection);
+
+      ticking = false;
+    };
+
+
+    const handleScroll = () => {
+
+      if (!ticking) {
+        window.requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+
+    };
+
+
+    updateProgress();
+
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    });
+
+    window.addEventListener('resize', updateProgress);
+
+    return () => {
+
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateProgress);
+
+    };
+
+  }, []);
+
+
+  /* ============================================================
      RECOMMENDATION ENGINE
      ============================================================ */
 
@@ -90,13 +155,6 @@ export const SituationBuilder = () => {
     if (!Array.isArray(MUSIC_DATABASE) || MUSIC_DATABASE.length === 0) {
       return null;
     }
-
-    /*
-     * SCORE EVERY TRACK
-     *
-     * Exact situation gets the highest score.
-     * This prevents simply selecting MUSIC_DATABASE[0].
-     */
 
     const scoredTracks = MUSIC_DATABASE.map((track) => {
 
@@ -108,14 +166,25 @@ export const SituationBuilder = () => {
 
       const title = String(track.title || '').toLowerCase();
       const mood = String(track.mood || '').toLowerCase();
-      const trackEnvironment = String(track.environment || '').toLowerCase();
-      const trackArtist = String(track.artist || '').toLowerCase();
+      const trackEnvironment = String(
+        track.environment || ''
+      ).toLowerCase();
 
-      const selectedActivity = String(activity || '').toLowerCase();
-      const selectedFeeling = String(feeling || '').toLowerCase();
-      const selectedEnvironment = String(environment || '').toLowerCase();
+      const selectedActivity = String(
+        activity || ''
+      ).toLowerCase();
+
+      const selectedFeeling = String(
+        feeling || ''
+      ).toLowerCase();
+
+      const selectedEnvironment = String(
+        environment || ''
+      ).toLowerCase();
+
 
       /* Activity match */
+
       if (
         situations.some(
           item =>
@@ -125,15 +194,20 @@ export const SituationBuilder = () => {
         score += 10;
       }
 
+
       /* Feeling / mood match */
+
       if (mood === selectedFeeling) {
         score += 10;
       }
 
+
       /* Environment match */
+
       if (trackEnvironment === selectedEnvironment) {
         score += 10;
       }
+
 
       /* Title keyword matching */
 
@@ -158,15 +232,15 @@ export const SituationBuilder = () => {
         score += 4;
       }
 
-      /*
-       * Useful keyword matching for your existing track names.
-       */
+
+      /* Activity keyword matching */
 
       if (
         selectedActivity === 'studying' ||
         selectedActivity === 'coding' ||
         selectedActivity === 'reading'
       ) {
+
         if (
           title.includes('focus') ||
           title.includes('study') ||
@@ -175,9 +249,12 @@ export const SituationBuilder = () => {
         ) {
           score += 3;
         }
+
       }
 
+
       if (selectedActivity === 'driving') {
+
         if (
           title.includes('drive') ||
           title.includes('driving') ||
@@ -187,9 +264,12 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedActivity === 'sleeping') {
+
         if (
           title.includes('sleep') ||
           title.includes('dream') ||
@@ -197,9 +277,12 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedActivity === 'relaxing') {
+
         if (
           title.includes('relax') ||
           title.includes('calm') ||
@@ -208,9 +291,12 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedActivity === 'chilling') {
+
         if (
           title.includes('chill') ||
           title.includes('lofi') ||
@@ -218,22 +304,26 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
-      /*
-       * Environment keywords
-       */
+
+      /* Environment keywords */
 
       if (selectedEnvironment === 'rainy window') {
+
         if (
           title.includes('rain') ||
           trackEnvironment.includes('rain')
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedEnvironment === 'coffee shop') {
+
         if (
           title.includes('coffee') ||
           title.includes('cafe') ||
@@ -241,9 +331,12 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedEnvironment === 'midnight city') {
+
         if (
           title.includes('midnight') ||
           title.includes('city') ||
@@ -251,9 +344,12 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedEnvironment === 'forest cabin') {
+
         if (
           title.includes('forest') ||
           title.includes('cabin') ||
@@ -261,9 +357,12 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedEnvironment === 'ocean') {
+
         if (
           title.includes('ocean') ||
           title.includes('sea') ||
@@ -271,9 +370,12 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedEnvironment === 'fireplace') {
+
         if (
           title.includes('fire') ||
           title.includes('fireplace') ||
@@ -281,9 +383,12 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
+
       if (selectedEnvironment === 'rooftop') {
+
         if (
           title.includes('rooftop') ||
           title.includes('wind') ||
@@ -291,33 +396,22 @@ export const SituationBuilder = () => {
         ) {
           score += 5;
         }
+
       }
 
-      /*
-       * Artist is intentionally not used to determine
-       * recommendation. Only actual music metadata matters.
-       */
 
       return {
         track,
         score
       };
+
     });
 
 
-    /*
-     * Sort highest score first.
-     */
+    scoredTracks.sort(
+      (a, b) => b.score - a.score
+    );
 
-    scoredTracks.sort((a, b) => b.score - a.score);
-
-
-    /*
-     * IMPORTANT:
-     * Never blindly select MUSIC_DATABASE[0].
-     *
-     * If there is a real match, return it.
-     */
 
     const bestMatch = scoredTracks[0];
 
@@ -326,15 +420,11 @@ export const SituationBuilder = () => {
     }
 
 
-    /*
-     * If there is absolutely no metadata match,
-     * use a neutral track rather than forcing a
-     * Deep Sleep track.
-     */
-
     const neutralTrack = MUSIC_DATABASE.find(track => {
 
-      const title = String(track.title || '').toLowerCase();
+      const title = String(
+        track.title || ''
+      ).toLowerCase();
 
       return (
         title.includes('chill') ||
@@ -342,7 +432,9 @@ export const SituationBuilder = () => {
         title.includes('lofi') ||
         title.includes('relax')
       );
+
     });
+
 
     return neutralTrack || MUSIC_DATABASE[0] || null;
 
@@ -356,6 +448,7 @@ export const SituationBuilder = () => {
   const handleEnterAtmosphere = () => {
 
     if (!recommendedTrack) {
+
       console.warn(
         'VibeSpace: No recommended track found for this situation.'
       );
@@ -363,15 +456,6 @@ export const SituationBuilder = () => {
       return;
     }
 
-    /*
-     * IMPORTANT:
-     *
-     * Do NOT manually call setIsPlaying(true).
-     *
-     * playTrack() should be responsible for starting
-     * the actual HTMLAudioElement and updating the
-     * playing state.
-     */
 
     try {
 
@@ -386,12 +470,8 @@ export const SituationBuilder = () => {
         }
       );
 
-      playTrack(recommendedTrack);
 
-      /*
-       * Only after selecting the track do we enter
-       * the result screen.
-       */
+      playTrack(recommendedTrack);
 
       setHasSubmittedSituation(true);
 
@@ -403,6 +483,7 @@ export const SituationBuilder = () => {
       );
 
     }
+
   };
 
 
@@ -414,22 +495,30 @@ export const SituationBuilder = () => {
 
     const randomActivity =
       ACTIVITIES[
-        Math.floor(Math.random() * ACTIVITIES.length)
+        Math.floor(
+          Math.random() * ACTIVITIES.length
+        )
       ];
 
     const randomFeeling =
       FEELINGS[
-        Math.floor(Math.random() * FEELINGS.length)
+        Math.floor(
+          Math.random() * FEELINGS.length
+        )
       ];
 
     const randomEnvironment =
       ENVIRONMENTS[
-        Math.floor(Math.random() * ENVIRONMENTS.length)
+        Math.floor(
+          Math.random() * ENVIRONMENTS.length
+        )
       ];
 
     const randomIntensity =
       INTENSITIES[
-        Math.floor(Math.random() * INTENSITIES.length)
+        Math.floor(
+          Math.random() * INTENSITIES.length
+        )
       ];
 
 
@@ -437,7 +526,16 @@ export const SituationBuilder = () => {
     setFeeling(randomFeeling.name);
     setEnvironment(randomEnvironment.name);
     setIntensity(randomIntensity.name);
+
   };
+
+
+  /* ============================================================
+     PROGRESS CALCULATION
+     ============================================================ */
+
+  const progressPercentage =
+    (activeSection / 3) * 100;
 
 
   /* ============================================================
@@ -445,52 +543,382 @@ export const SituationBuilder = () => {
      ============================================================ */
 
   return (
+
     <main className="min-h-screen px-6 pt-32 pb-40 max-w-7xl mx-auto animate-fade-up">
 
-      {/* HERO */}
+      {/* ========================================================
+          LOCAL ANIMATION SYSTEM
+          ======================================================== */}
+
+      <style>{`
+
+        /* --------------------------------------------------------
+           SECTION BADGE — ROTATING SCANNING RING
+        -------------------------------------------------------- */
+
+        @keyframes sectionRingRotate {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .section-ring {
+          position: relative;
+          isolation: isolate;
+        }
+
+        .section-ring::before {
+          content: "";
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          background:
+            conic-gradient(
+              from 0deg,
+              transparent 0deg,
+              transparent 65deg,
+              var(--sage) 110deg,
+              var(--champagne) 145deg,
+              transparent 205deg,
+              transparent 360deg
+            );
+          animation:
+            sectionRingRotate 4.5s linear infinite;
+          z-index: -2;
+        }
+
+        .section-ring::after {
+          content: "";
+          position: absolute;
+          inset: 1px;
+          border-radius: inherit;
+          background: var(--surface-primary);
+          z-index: -1;
+        }
+
+
+        /* --------------------------------------------------------
+           LIVE STUDIO STATE — SLOW GRADIENT SWEEP
+        -------------------------------------------------------- */
+
+        @keyframes studioBorderSweep {
+          0% {
+            background-position: 200% 50%;
+          }
+
+          100% {
+            background-position: -200% 50%;
+          }
+        }
+
+        .studio-border-shell {
+          position: relative;
+          border-radius: 24px;
+          padding: 1px;
+          overflow: hidden;
+          background:
+            linear-gradient(
+              110deg,
+              transparent 0%,
+              transparent 30%,
+              var(--sage) 45%,
+              var(--champagne) 50%,
+              var(--sage) 55%,
+              transparent 70%,
+              transparent 100%
+            );
+          background-size: 300% 100%;
+          animation:
+            studioBorderSweep 9s linear infinite;
+        }
+
+
+        /* --------------------------------------------------------
+           CHECKMARK — SPRING SETTLE
+        -------------------------------------------------------- */
+
+        @keyframes checkmarkSettle {
+
+          0% {
+            transform: scale(0);
+            opacity: 0;
+          }
+
+          55% {
+            transform: scale(1.15);
+            opacity: 1;
+          }
+
+          75% {
+            transform: scale(0.96);
+          }
+
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+
+        }
+
+        .checkmark-settle {
+          animation:
+            checkmarkSettle 430ms
+            cubic-bezier(
+              0.22,
+              1,
+              0.36,
+              1
+            );
+          transform-origin: center;
+        }
+
+
+        /* --------------------------------------------------------
+           IDLE WAVEFORM
+        -------------------------------------------------------- */
+
+        @keyframes idleWaveOne {
+
+          0%,
+          100% {
+            transform: scaleY(0.45);
+            opacity: 0.55;
+          }
+
+          50% {
+            transform: scaleY(1);
+            opacity: 1;
+          }
+
+        }
+
+        @keyframes idleWaveTwo {
+
+          0%,
+          100% {
+            transform: scaleY(0.7);
+            opacity: 0.65;
+          }
+
+          50% {
+            transform: scaleY(0.35);
+            opacity: 0.9;
+          }
+
+        }
+
+        @keyframes idleWaveThree {
+
+          0%,
+          100% {
+            transform: scaleY(0.35);
+            opacity: 0.6;
+          }
+
+          50% {
+            transform: scaleY(0.9);
+            opacity: 1;
+          }
+
+        }
+
+        @keyframes idleWaveFour {
+
+          0%,
+          100% {
+            transform: scaleY(0.8);
+            opacity: 0.7;
+          }
+
+          50% {
+            transform: scaleY(0.4);
+            opacity: 0.95;
+          }
+
+        }
+
+        .idle-wave-bar {
+          width: 3px;
+          height: 15px;
+          border-radius: 999px;
+          background: var(--sage);
+          transform-origin: center;
+        }
+
+        .idle-wave-1 {
+          animation:
+            idleWaveOne 2.4s ease-in-out infinite;
+        }
+
+        .idle-wave-2 {
+          animation:
+            idleWaveTwo 2.1s ease-in-out infinite;
+          animation-delay: 180ms;
+        }
+
+        .idle-wave-3 {
+          animation:
+            idleWaveThree 2.6s ease-in-out infinite;
+          animation-delay: 320ms;
+        }
+
+        .idle-wave-4 {
+          animation:
+            idleWaveFour 2.2s ease-in-out infinite;
+          animation-delay: 120ms;
+        }
+
+
+        /* --------------------------------------------------------
+           PROGRESS LINE
+        -------------------------------------------------------- */
+
+        .studio-progress-line {
+          position: absolute;
+          left: 9px;
+          top: 86px;
+          bottom: 82px;
+          width: 1px;
+          background: rgba(168, 182, 154, 0.12);
+          overflow: hidden;
+          pointer-events: none;
+        }
+
+        .studio-progress-fill {
+          width: 100%;
+          background:
+            linear-gradient(
+              to bottom,
+              var(--sage),
+              var(--champagne)
+            );
+          transition:
+            height 500ms
+            cubic-bezier(
+              0.22,
+              1,
+              0.36,
+              1
+            );
+        }
+
+        .studio-progress-dot {
+          position: absolute;
+          left: 4px;
+          width: 11px;
+          height: 11px;
+          border-radius: 999px;
+          background: var(--sage);
+          box-shadow:
+            0 0 0 4px rgba(168, 182, 154, 0.08),
+            0 0 18px rgba(168, 182, 154, 0.45);
+          transform: translateY(-50%);
+          transition:
+            top 500ms
+            cubic-bezier(
+              0.22,
+              1,
+              0.36,
+              1
+            );
+          pointer-events: none;
+        }
+
+
+        /* --------------------------------------------------------
+           REDUCED MOTION
+        -------------------------------------------------------- */
+
+        @media (prefers-reduced-motion: reduce) {
+
+          .section-ring::before,
+          .studio-border-shell,
+          .checkmark-settle,
+          .idle-wave-1,
+          .idle-wave-2,
+          .idle-wave-3,
+          .idle-wave-4 {
+            animation: none !important;
+          }
+
+          .studio-progress-fill,
+          .studio-progress-dot {
+            transition: none !important;
+          }
+
+        }
+
+      `}</style>
+
+
+      {/* ========================================================
+          HERO
+      ======================================================== */}
 
       <section className="text-center max-w-3xl mx-auto mb-20 relative">
 
         <div className="absolute inset-0 -top-10 bg-radial from-emerald-500/10 via-transparent to-transparent blur-3xl pointer-events-none" />
 
+
         <div
           className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border mb-6 backdrop-blur-md"
           style={{
-            backgroundColor: 'rgba(168, 182, 154, 0.05)',
-            borderColor: 'rgba(168, 182, 154, 0.2)'
+            backgroundColor:
+              'rgba(168, 182, 154, 0.05)',
+            borderColor:
+              'rgba(168, 182, 154, 0.2)'
           }}
         >
+
           <Sparkles
             size={13}
-            style={{ color: 'var(--sage)' }}
+            style={{
+              color: 'var(--sage)'
+            }}
           />
 
           <span
             className="text-[10px] font-semibold tracking-widest uppercase"
-            style={{ color: 'var(--sage)' }}
+            style={{
+              color: 'var(--sage)'
+            }}
           >
             Spatial Architecture & Sound Engine
           </span>
+
         </div>
 
 
         <h1
           className="text-4xl sm:text-6xl font-light tracking-tight mb-6"
-          style={{ color: 'var(--text-primary)' }}
+          style={{
+            color: 'var(--text-primary)'
+          }}
         >
+
           Sculpt your{' '}
+
           <span
             className="font-normal italic"
-            style={{ color: 'var(--champagne)' }}
+            style={{
+              color: 'var(--champagne)'
+            }}
           >
             atmosphere.
           </span>
+
         </h1>
 
 
         <p
           className="text-sm opacity-60 leading-relaxed max-w-xl mx-auto"
-          style={{ color: 'var(--text-muted)' }}
+          style={{
+            color: 'var(--text-muted)'
+          }}
         >
           Immerse your senses in generative soundscapes tuned precisely
           to your current coordinates, actions, and inner rhythm.
@@ -499,187 +927,289 @@ export const SituationBuilder = () => {
       </section>
 
 
-      {/* MAIN GRID */}
+      {/* ========================================================
+          MAIN GRID
+      ======================================================== */}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
 
-        {/* LEFT HUD */}
+
+        {/* ======================================================
+            LEFT HUD
+        ====================================================== */}
 
         <div className="lg:col-span-4 lg:sticky lg:top-28">
 
-          <div
-            className="p-6 rounded-3xl border relative overflow-hidden transition-all duration-500 hover:shadow-2xl"
-            style={{
-              background:
-                'linear-gradient(145deg, rgba(37, 38, 32, 0.9), rgba(20, 21, 17, 0.95))',
-              borderColor: 'rgba(214, 184, 135, 0.2)',
-              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.5)'
-            }}
-          >
+          <div className="studio-border-shell">
 
             <div
-              className="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
-              style={{ backgroundColor: 'var(--sage)' }}
-            />
+              className="p-6 rounded-3xl relative overflow-hidden transition-all duration-500 hover:shadow-2xl"
+              style={{
+                background:
+                  'linear-gradient(145deg, rgba(37, 38, 32, 0.96), rgba(20, 21, 17, 0.98))',
+                boxShadow:
+                  '0 25px 60px rgba(0, 0, 0, 0.5)'
+              }}
+            >
 
+              {/* -----------------------------------------------
+                  SCROLL PROGRESS
+              ------------------------------------------------ */}
 
-            <div className="flex items-center justify-between pb-5 mb-6 border-b border-white/5">
-
-              <div className="flex items-center gap-2">
+              <div className="studio-progress-line">
 
                 <div
-                  className="w-2 h-2 rounded-full animate-ping"
-                  style={{ backgroundColor: 'var(--sage)' }}
+                  className="studio-progress-fill"
+                  style={{
+                    height: `${progressPercentage}%`
+                  }}
                 />
 
-                <span
-                  className="text-[10px] uppercase font-bold tracking-widest"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  Live Studio State
-                </span>
-
               </div>
 
 
-              <span
-                className="text-xs font-mono font-medium px-2 py-0.5 rounded-md"
+              <div
+                className="studio-progress-dot"
                 style={{
-                  color: 'var(--champagne)',
-                  backgroundColor: 'rgba(214, 184, 135, 0.1)'
+                  top:
+                    `${86 +
+                      ((this?.activeSection || 0) / 3) *
+                      0}px`
                 }}
-              >
-                Active Session
-              </span>
-
-            </div>
+              />
 
 
-            <div className="space-y-6">
+              {/* -----------------------------------------------
+                  DECORATIVE GLOW
+              ------------------------------------------------ */}
 
-              <div>
-
-                <span
-                  className="text-[9px] uppercase tracking-wider block mb-1 opacity-50"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  Primary Focus
-                </span>
-
-                <h3
-                  className="text-2xl font-light tracking-tight"
-                  style={{ color: 'var(--champagne)' }}
-                >
-                  {activity}
-                </h3>
-
-              </div>
+              <div
+                className="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
+                style={{
+                  backgroundColor:
+                    'var(--sage)'
+                }}
+              />
 
 
-              <div className="grid grid-cols-2 gap-4 pt-2">
+              {/* -----------------------------------------------
+                  HEADER
+              ------------------------------------------------ */}
 
-                <div
-                  className="p-3 rounded-xl border bg-black/20"
-                  style={{ borderColor: 'rgba(255,255,255,0.04)' }}
-                >
+              <div className="flex items-center justify-between pb-5 mb-6 border-b border-white/5">
 
-                  <span
-                    className="text-[9px] uppercase tracking-wider block opacity-40 mb-1"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Vibe
-                  </span>
-
-                  <p
-                    className="text-xs font-medium truncate"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {feeling}
-                  </p>
-
-                </div>
-
-
-                <div
-                  className="p-3 rounded-xl border bg-black/20"
-                  style={{ borderColor: 'rgba(255,255,255,0.04)' }}
-                >
-
-                  <span
-                    className="text-[9px] uppercase tracking-wider block opacity-40 mb-1"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Environment
-                  </span>
-
-                  <p
-                    className="text-xs font-medium truncate"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {environment}
-                  </p>
-
-                </div>
-
-              </div>
-
-
-              <div className="pt-2">
-
-                <div className="flex justify-between items-center mb-1.5">
-
-                  <span
-                    className="text-[9px] uppercase tracking-wider opacity-50"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Spatial Depth
-                  </span>
-
-                  <span
-                    className="text-[10px] font-mono font-medium"
-                    style={{ color: 'var(--sage)' }}
-                  >
-                    {intensity}
-                  </span>
-
-                </div>
-
-
-                <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                <div className="flex items-center gap-2">
 
                   <div
-                    className="h-full transition-all duration-500 rounded-full"
+                    className="w-2 h-2 rounded-full animate-ping"
                     style={{
-                      width:
-                        intensity === 'Quiet'
-                          ? '33%'
-                          : intensity === 'Balanced'
-                            ? '66%'
-                            : '100%',
-                      backgroundColor: 'var(--sage)'
+                      backgroundColor:
+                        'var(--sage)'
                     }}
                   />
 
+                  <span
+                    className="text-[10px] uppercase font-bold tracking-widest"
+                    style={{
+                      color:
+                        'var(--text-muted)'
+                    }}
+                  >
+                    Live Studio State
+                  </span>
+
+                </div>
+
+
+                <span
+                  className="text-xs font-mono font-medium px-2 py-0.5 rounded-md"
+                  style={{
+                    color:
+                      'var(--champagne)',
+                    backgroundColor:
+                      'rgba(214, 184, 135, 0.1)'
+                  }}
+                >
+                  Active Session
+                </span>
+
+              </div>
+
+
+              {/* -----------------------------------------------
+                  STATE CONTENT
+              ------------------------------------------------ */}
+
+              <div className="space-y-6">
+
+
+                <div>
+
+                  <span
+                    className="text-[9px] uppercase tracking-wider block mb-1 opacity-50"
+                    style={{
+                      color:
+                        'var(--text-muted)'
+                    }}
+                  >
+                    Primary Focus
+                  </span>
+
+                  <h3
+                    className="text-2xl font-light tracking-tight"
+                    style={{
+                      color:
+                        'var(--champagne)'
+                    }}
+                  >
+                    {activity}
+                  </h3>
+
+                </div>
+
+
+                <div className="grid grid-cols-2 gap-4 pt-2">
+
+
+                  <div
+                    className="p-3 rounded-xl border bg-black/20"
+                    style={{
+                      borderColor:
+                        'rgba(255,255,255,0.04)'
+                    }}
+                  >
+
+                    <span
+                      className="text-[9px] uppercase tracking-wider block opacity-40 mb-1"
+                      style={{
+                        color:
+                          'var(--text-muted)'
+                      }}
+                    >
+                      Vibe
+                    </span>
+
+                    <p
+                      className="text-xs font-medium truncate"
+                      style={{
+                        color:
+                          'var(--text-primary)'
+                      }}
+                    >
+                      {feeling}
+                    </p>
+
+                  </div>
+
+
+                  <div
+                    className="p-3 rounded-xl border bg-black/20"
+                    style={{
+                      borderColor:
+                        'rgba(255,255,255,0.04)'
+                    }}
+                  >
+
+                    <span
+                      className="text-[9px] uppercase tracking-wider block opacity-40 mb-1"
+                      style={{
+                        color:
+                          'var(--text-muted)'
+                      }}
+                    >
+                      Environment
+                    </span>
+
+                    <p
+                      className="text-xs font-medium truncate"
+                      style={{
+                        color:
+                          'var(--text-primary)'
+                      }}
+                    >
+                      {environment}
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <div className="pt-2">
+
+                  <div className="flex justify-between items-center mb-1.5">
+
+                    <span
+                      className="text-[9px] uppercase tracking-wider opacity-50"
+                      style={{
+                        color:
+                          'var(--text-muted)'
+                      }}
+                    >
+                      Spatial Depth
+                    </span>
+
+                    <span
+                      className="text-[10px] font-mono font-medium"
+                      style={{
+                        color:
+                          'var(--sage)'
+                      }}
+                    >
+                      {intensity}
+                    </span>
+
+                  </div>
+
+
+                  <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+
+                    <div
+                      className="h-full transition-all duration-500 rounded-full"
+                      style={{
+                        width:
+                          intensity === 'Quiet'
+                            ? '33%'
+                            : intensity === 'Balanced'
+                              ? '66%'
+                              : '100%',
+                        backgroundColor:
+                          'var(--sage)'
+                      }}
+                    />
+
+                  </div>
+
                 </div>
 
               </div>
 
-            </div>
 
+              {/* -----------------------------------------------
+                  FOOTER
+              ------------------------------------------------ */}
 
-            <div
-              className="mt-8 pt-5 border-t border-white/5 flex items-center gap-3 text-[10px]"
-              style={{ color: 'var(--text-muted)' }}
-            >
+              <div
+                className="mt-8 pt-5 border-t border-white/5 flex items-center gap-3 text-[10px]"
+                style={{
+                  color:
+                    'var(--text-muted)'
+                }}
+              >
 
-              <Compass
-                size={13}
-                style={{ color: 'var(--sage)' }}
-              />
+                <Compass
+                  size={13}
+                  style={{
+                    color:
+                      'var(--sage)'
+                  }}
+                />
 
-              <span>
-                Multi-channel spatial audio calibration ready.
-              </span>
+                <span>
+                  Multi-channel spatial audio calibration ready.
+                </span>
+
+              </div>
 
             </div>
 
@@ -688,38 +1218,60 @@ export const SituationBuilder = () => {
         </div>
 
 
-        {/* RIGHT */}
+        {/* ======================================================
+            RIGHT CONTENT
+        ====================================================== */}
 
         <div className="lg:col-span-8 space-y-14">
 
-          {/* ACTIVITY */}
 
-          <section className="space-y-4">
+          {/* ====================================================
+              ACTIVITY — 01
+          ==================================================== */}
+
+          <section
+            ref={el => {
+              sectionRefs.current[0] = el;
+            }}
+            className="space-y-4"
+          >
 
             <div className="flex items-center gap-3">
 
+
+              {/* ROTATING RING */}
+
               <span
-                className="text-xs font-mono font-bold px-2 py-0.5 rounded"
+                className="section-ring text-xs font-mono font-bold px-2 py-0.5 rounded relative"
                 style={{
-                  color: 'var(--champagne)',
-                  backgroundColor: 'rgba(214,184,135,0.1)'
+                  color:
+                    'var(--champagne)',
+                  backgroundColor:
+                    'var(--surface-primary)'
                 }}
               >
                 01
               </span>
 
+
               <div>
 
                 <h2
                   className="text-lg font-medium tracking-tight"
-                  style={{ color: 'var(--text-primary)' }}
+                  style={{
+                    color:
+                      'var(--text-primary)'
+                  }}
                 >
                   What are you doing?
                 </h2>
 
                 <p
                   className="text-xs opacity-50"
-                  style={{ color: 'var(--text-muted)' }}
+                  style={{
+                    color:
+                      'var(--text-muted)'
+                  }}
                 >
                   Select your primary workflow or task state.
                 </p>
@@ -733,23 +1285,32 @@ export const SituationBuilder = () => {
 
               {ACTIVITIES.map(item => {
 
-                const selected = item.name === activity;
+                const selected =
+                  item.name === activity;
 
                 return (
+
                   <button
                     key={item.name}
-                    onClick={() => setActivity(item.name)}
+                    onClick={() =>
+                      setActivity(item.name)
+                    }
                     className="p-4 rounded-2xl border text-left transition-all duration-300 group relative flex items-center justify-between overflow-hidden cursor-pointer"
                     style={{
-                      backgroundColor: selected
-                        ? 'rgba(168, 182, 154, 0.12)'
-                        : 'var(--surface-primary)',
-                      borderColor: selected
-                        ? 'var(--sage)'
-                        : 'var(--border-subtle, rgba(244,240,230,0.08))',
-                      boxShadow: selected
-                        ? '0 8px 30px rgba(168, 182, 154, 0.15)'
-                        : '0 4px 20px rgba(0,0,0,0.05)'
+                      backgroundColor:
+                        selected
+                          ? 'rgba(168, 182, 154, 0.12)'
+                          : 'var(--surface-primary)',
+
+                      borderColor:
+                        selected
+                          ? 'var(--sage)'
+                          : 'var(--border-subtle, rgba(244,240,230,0.08))',
+
+                      boxShadow:
+                        selected
+                          ? '0 8px 30px rgba(168, 182, 154, 0.15)'
+                          : '0 4px 20px rgba(0,0,0,0.05)'
                     }}
                   >
 
@@ -762,9 +1323,10 @@ export const SituationBuilder = () => {
                       <span
                         className="text-xs font-medium"
                         style={{
-                          color: selected
-                            ? 'var(--text-primary)'
-                            : 'var(--text-secondary)'
+                          color:
+                            selected
+                              ? 'var(--text-primary)'
+                              : 'var(--text-secondary)'
                         }}
                       >
                         {item.name}
@@ -774,19 +1336,31 @@ export const SituationBuilder = () => {
 
 
                     {selected && (
+
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center relative z-10"
-                        style={{ backgroundColor: 'var(--sage)' }}
+                        className="w-5 h-5 rounded-full flex items-center justify-center relative z-10 checkmark-settle"
+                        style={{
+                          backgroundColor:
+                            'var(--sage)'
+                        }}
                       >
+
                         <Check
                           size={11}
-                          className="text-black font-bold"
+                          style={{
+                            color:
+                              'var(--bg-primary)'
+                          }}
                         />
+
                       </div>
+
                     )}
 
                   </button>
+
                 );
+
               })}
 
             </div>
@@ -794,34 +1368,51 @@ export const SituationBuilder = () => {
           </section>
 
 
-          {/* FEELING */}
+          {/* ====================================================
+              FEELING — 02
+          ==================================================== */}
 
-          <section className="space-y-4">
+          <section
+            ref={el => {
+              sectionRefs.current[1] = el;
+            }}
+            className="space-y-4"
+          >
 
             <div className="flex items-center gap-3">
 
+
               <span
-                className="text-xs font-mono font-bold px-2 py-0.5 rounded"
+                className="section-ring text-xs font-mono font-bold px-2 py-0.5 rounded relative"
                 style={{
-                  color: 'var(--champagne)',
-                  backgroundColor: 'rgba(214,184,135,0.1)'
+                  color:
+                    'var(--champagne)',
+                  backgroundColor:
+                    'var(--surface-primary)'
                 }}
               >
                 02
               </span>
 
+
               <div>
 
                 <h2
                   className="text-lg font-medium tracking-tight"
-                  style={{ color: 'var(--text-primary)' }}
+                  style={{
+                    color:
+                      'var(--text-primary)'
+                  }}
                 >
                   How should it feel?
                 </h2>
 
                 <p
                   className="text-xs opacity-50"
-                  style={{ color: 'var(--text-muted)' }}
+                  style={{
+                    color:
+                      'var(--text-muted)'
+                  }}
                 >
                   Define the emotional resonance of your soundscape.
                 </p>
@@ -835,23 +1426,32 @@ export const SituationBuilder = () => {
 
               {FEELINGS.map(item => {
 
-                const selected = item.name === feeling;
+                const selected =
+                  item.name === feeling;
 
                 return (
+
                   <button
                     key={item.name}
-                    onClick={() => setFeeling(item.name)}
+                    onClick={() =>
+                      setFeeling(item.name)
+                    }
                     className="p-4 rounded-2xl border text-left transition-all duration-300 group relative flex items-center justify-between cursor-pointer"
                     style={{
-                      backgroundColor: selected
-                        ? 'rgba(168, 182, 154, 0.12)'
-                        : 'var(--surface-primary)',
-                      borderColor: selected
-                        ? 'var(--sage)'
-                        : 'var(--border-subtle, rgba(244,240,230,0.08))',
-                      boxShadow: selected
-                        ? '0 8px 30px rgba(168, 182, 154, 0.15)'
-                        : 'none'
+                      backgroundColor:
+                        selected
+                          ? 'rgba(168, 182, 154, 0.12)'
+                          : 'var(--surface-primary)',
+
+                      borderColor:
+                        selected
+                          ? 'var(--sage)'
+                          : 'var(--border-subtle, rgba(244,240,230,0.08))',
+
+                      boxShadow:
+                        selected
+                          ? '0 8px 30px rgba(168, 182, 154, 0.15)'
+                          : 'none'
                     }}
                   >
 
@@ -859,14 +1459,22 @@ export const SituationBuilder = () => {
 
                       <h4
                         className="text-xs font-medium mb-0.5"
-                        style={{ color: 'var(--text-primary)' }}
+                        style={{
+                          color:
+                            selected
+                              ? 'var(--text-primary)'
+                              : 'var(--text-secondary)'
+                        }}
                       >
                         {item.name}
                       </h4>
 
                       <p
                         className="text-[10px] opacity-50"
-                        style={{ color: 'var(--text-muted)' }}
+                        style={{
+                          color:
+                            'var(--text-muted)'
+                        }}
                       >
                         {item.desc}
                       </p>
@@ -875,19 +1483,31 @@ export const SituationBuilder = () => {
 
 
                     {selected && (
+
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center"
-                        style={{ backgroundColor: 'var(--sage)' }}
+                        className="w-5 h-5 rounded-full flex items-center justify-center checkmark-settle"
+                        style={{
+                          backgroundColor:
+                            'var(--sage)'
+                        }}
                       >
+
                         <Check
                           size={11}
-                          className="text-black font-bold"
+                          style={{
+                            color:
+                              'var(--bg-primary)'
+                          }}
                         />
+
                       </div>
+
                     )}
 
                   </button>
+
                 );
+
               })}
 
             </div>
@@ -895,34 +1515,51 @@ export const SituationBuilder = () => {
           </section>
 
 
-          {/* ENVIRONMENT */}
+          {/* ====================================================
+              ENVIRONMENT — 03
+          ==================================================== */}
 
-          <section className="space-y-4">
+          <section
+            ref={el => {
+              sectionRefs.current[2] = el;
+            }}
+            className="space-y-4"
+          >
 
             <div className="flex items-center gap-3">
 
+
               <span
-                className="text-xs font-mono font-bold px-2 py-0.5 rounded"
+                className="section-ring text-xs font-mono font-bold px-2 py-0.5 rounded relative"
                 style={{
-                  color: 'var(--champagne)',
-                  backgroundColor: 'rgba(214,184,135,0.1)'
+                  color:
+                    'var(--champagne)',
+                  backgroundColor:
+                    'var(--surface-primary)'
                 }}
               >
                 03
               </span>
 
+
               <div>
 
                 <h2
                   className="text-lg font-medium tracking-tight"
-                  style={{ color: 'var(--text-primary)' }}
+                  style={{
+                    color:
+                      'var(--text-primary)'
+                  }}
                 >
                   Where would you rather be?
                 </h2>
 
                 <p
                   className="text-xs opacity-50"
-                  style={{ color: 'var(--text-muted)' }}
+                  style={{
+                    color:
+                      'var(--text-muted)'
+                  }}
                 >
                   Anchor your acoustic environment.
                 </p>
@@ -936,29 +1573,41 @@ export const SituationBuilder = () => {
 
               {ENVIRONMENTS.map(item => {
 
-                const selected = item.name === environment;
+                const selected =
+                  item.name === environment;
 
                 return (
+
                   <button
                     key={item.name}
-                    onClick={() => setEnvironment(item.name)}
+                    onClick={() =>
+                      setEnvironment(item.name)
+                    }
                     className="p-3.5 rounded-2xl border text-center transition-all duration-300 cursor-pointer flex flex-col justify-between h-20"
                     style={{
-                      backgroundColor: selected
-                        ? 'rgba(168, 182, 154, 0.12)'
-                        : 'var(--surface-primary)',
-                      borderColor: selected
-                        ? 'var(--sage)'
-                        : 'var(--border-subtle, rgba(244,240,230,0.08))',
-                      boxShadow: selected
-                        ? '0 8px 30px rgba(168, 182, 154, 0.15)'
-                        : 'none'
+                      backgroundColor:
+                        selected
+                          ? 'rgba(168, 182, 154, 0.12)'
+                          : 'var(--surface-primary)',
+
+                      borderColor:
+                        selected
+                          ? 'var(--sage)'
+                          : 'var(--border-subtle, rgba(244,240,230,0.08))',
+
+                      boxShadow:
+                        selected
+                          ? '0 8px 30px rgba(168, 182, 154, 0.15)'
+                          : 'none'
                     }}
                   >
 
                     <span
                       className="text-[9px] uppercase tracking-widest opacity-40 font-mono"
-                      style={{ color: 'var(--text-muted)' }}
+                      style={{
+                        color:
+                          'var(--text-muted)'
+                      }}
                     >
                       {item.tag}
                     </span>
@@ -966,16 +1615,19 @@ export const SituationBuilder = () => {
                     <span
                       className="text-xs font-medium"
                       style={{
-                        color: selected
-                          ? 'var(--text-primary)'
-                          : 'var(--text-secondary)'
+                        color:
+                          selected
+                            ? 'var(--text-primary)'
+                            : 'var(--text-secondary)'
                       }}
                     >
                       {item.name}
                     </span>
 
                   </button>
+
                 );
+
               })}
 
             </div>
@@ -983,34 +1635,51 @@ export const SituationBuilder = () => {
           </section>
 
 
-          {/* INTENSITY */}
+          {/* ====================================================
+              INTENSITY — 04
+          ==================================================== */}
 
-          <section className="space-y-4">
+          <section
+            ref={el => {
+              sectionRefs.current[3] = el;
+            }}
+            className="space-y-4"
+          >
 
             <div className="flex items-center gap-3">
 
+
               <span
-                className="text-xs font-mono font-bold px-2 py-0.5 rounded"
+                className="section-ring text-xs font-mono font-bold px-2 py-0.5 rounded relative"
                 style={{
-                  color: 'var(--champagne)',
-                  backgroundColor: 'rgba(214,184,135,0.1)'
+                  color:
+                    'var(--champagne)',
+                  backgroundColor:
+                    'var(--surface-primary)'
                 }}
               >
                 04
               </span>
 
+
               <div>
 
                 <h2
                   className="text-lg font-medium tracking-tight"
-                  style={{ color: 'var(--text-primary)' }}
+                  style={{
+                    color:
+                      'var(--text-primary)'
+                  }}
                 >
                   How immersive?
                 </h2>
 
                 <p
                   className="text-xs opacity-50"
-                  style={{ color: 'var(--text-muted)' }}
+                  style={{
+                    color:
+                      'var(--text-muted)'
+                  }}
                 >
                   Control sound pressure density.
                 </p>
@@ -1024,32 +1693,42 @@ export const SituationBuilder = () => {
 
               {INTENSITIES.map(item => {
 
-                const selected = item.name === intensity;
+                const selected =
+                  item.name === intensity;
 
                 return (
+
                   <button
                     key={item.name}
-                    onClick={() => setIntensity(item.name)}
+                    onClick={() =>
+                      setIntensity(item.name)
+                    }
                     className="p-4 rounded-2xl border text-center transition-all duration-300 cursor-pointer"
                     style={{
-                      backgroundColor: selected
-                        ? 'rgba(168, 182, 154, 0.12)'
-                        : 'var(--surface-primary)',
-                      borderColor: selected
-                        ? 'var(--sage)'
-                        : 'var(--border-subtle, rgba(244,240,230,0.08))',
-                      boxShadow: selected
-                        ? '0 8px 30px rgba(168, 182, 154, 0.15)'
-                        : 'none'
+                      backgroundColor:
+                        selected
+                          ? 'rgba(168, 182, 154, 0.12)'
+                          : 'var(--surface-primary)',
+
+                      borderColor:
+                        selected
+                          ? 'var(--sage)'
+                          : 'var(--border-subtle, rgba(244,240,230,0.08))',
+
+                      boxShadow:
+                        selected
+                          ? '0 8px 30px rgba(168, 182, 154, 0.15)'
+                          : 'none'
                     }}
                   >
 
                     <h4
                       className="text-xs font-medium mb-1"
                       style={{
-                        color: selected
-                          ? 'var(--text-primary)'
-                          : 'var(--text-secondary)'
+                        color:
+                          selected
+                            ? 'var(--text-primary)'
+                            : 'var(--text-secondary)'
                       }}
                     >
                       {item.name}
@@ -1057,13 +1736,18 @@ export const SituationBuilder = () => {
 
                     <p
                       className="text-[9px] opacity-40 hidden sm:block"
-                      style={{ color: 'var(--text-muted)' }}
+                      style={{
+                        color:
+                          'var(--text-muted)'
+                      }}
                     >
                       {item.desc}
                     </p>
 
                   </button>
+
                 );
+
               })}
 
             </div>
@@ -1071,23 +1755,33 @@ export const SituationBuilder = () => {
           </section>
 
 
-          {/* ACTIONS */}
+          {/* ====================================================
+              ACTIONS
+          ==================================================== */}
 
           <div className="pt-6 space-y-6">
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+
 
               <button
                 type="button"
                 className="surprise-button flex-1 py-4 rounded-xl border flex items-center justify-center gap-2 text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300"
                 onClick={handleSurpriseMe}
                 style={{
-                  borderColor: 'var(--border-subtle)',
-                  backgroundColor: 'rgba(255,255,255,0.02)'
+                  borderColor:
+                    'var(--border-subtle)',
+                  backgroundColor:
+                    'rgba(255,255,255,0.02)'
                 }}
               >
-                <RefreshCw size={14} />
+
+                <RefreshCw
+                  size={14}
+                />
+
                 Surprise Me
+
               </button>
 
 
@@ -1098,22 +1792,31 @@ export const SituationBuilder = () => {
                 style={{
                   background:
                     'linear-gradient(135deg, var(--sage), var(--accent-color))',
-                  color: 'var(--bg-primary)',
+
+                  color:
+                    'var(--bg-primary)',
+
                   boxShadow:
                     '0 12px 35px rgba(168, 182, 154, 0.2)'
                 }}
               >
 
-                <span>Enter Atmosphere</span>
+                <span>
+                  Enter Atmosphere
+                </span>
 
-                <ArrowRight size={16} />
+                <ArrowRight
+                  size={16}
+                />
 
               </button>
 
             </div>
 
 
-            {/* RECOMMENDED TRACK */}
+            {/* ==================================================
+                RECOMMENDED TRACK / YOUR ATMOSPHERE
+            ================================================== */}
 
             {recommendedTrack && (
 
@@ -1122,12 +1825,18 @@ export const SituationBuilder = () => {
                 style={{
                   background:
                     'linear-gradient(145deg, rgba(37, 38, 32, 0.95), rgba(20, 21, 17, 0.98))',
-                  borderColor: 'rgba(168, 182, 154, 0.3)',
-                  boxShadow: '0 15px 40px rgba(0,0,0,0.4)'
+
+                  borderColor:
+                    'rgba(168, 182, 154, 0.3)',
+
+                  boxShadow:
+                    '0 15px 40px rgba(0,0,0,0.4)'
                 }}
               >
 
+
                 <div className="flex items-center space-x-3.5 min-w-0">
+
 
                   <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-lg relative group">
 
@@ -1156,7 +1865,9 @@ export const SituationBuilder = () => {
                       <span
                         className="text-[9px] uppercase tracking-widest font-bold px-1.5 py-0.5 rounded"
                         style={{
-                          color: 'var(--champagne)',
+                          color:
+                            'var(--champagne)',
+
                           backgroundColor:
                             'rgba(214,184,135,0.1)'
                         }}
@@ -1166,16 +1877,24 @@ export const SituationBuilder = () => {
 
                     </div>
 
+
                     <h4
                       className="text-xs font-medium truncate"
-                      style={{ color: 'var(--text-primary)' }}
+                      style={{
+                        color:
+                          'var(--text-primary)'
+                      }}
                     >
                       {recommendedTrack.title}
                     </h4>
 
+
                     <p
                       className="text-[10px] opacity-50 truncate"
-                      style={{ color: 'var(--text-muted)' }}
+                      style={{
+                        color:
+                          'var(--text-muted)'
+                      }}
                     >
                       {recommendedTrack.artist}
                     </p>
@@ -1185,22 +1904,29 @@ export const SituationBuilder = () => {
                 </div>
 
 
+                {/* ==================================================
+                    IDLE WAVEFORM
+                ================================================== */}
+
                 <div
-                  className="flex items-center gap-2 flex-shrink-0 px-3 py-1.5 rounded-xl border text-[10px] font-medium"
+                  className="flex items-center gap-1 flex-shrink-0 px-3 py-2 rounded-xl border"
                   style={{
                     borderColor:
                       'rgba(168, 182, 154, 0.2)',
+
                     backgroundColor:
-                      'rgba(168, 182, 154, 0.05)',
-                    color: 'var(--sage)'
+                      'rgba(168, 182, 154, 0.05)'
                   }}
+                  title="Ready to play"
                 >
 
-                  <Sparkles size={12} />
-
-                  <span>Ready to Play</span>
+                  <span className="idle-wave-bar idle-wave-1" />
+                  <span className="idle-wave-bar idle-wave-2" />
+                  <span className="idle-wave-bar idle-wave-3" />
+                  <span className="idle-wave-bar idle-wave-4" />
 
                 </div>
+
 
               </div>
 
@@ -1213,7 +1939,9 @@ export const SituationBuilder = () => {
       </div>
 
     </main>
+
   );
+
 };
 
 

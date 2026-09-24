@@ -7,25 +7,46 @@
 :root {
   --bg-primary: #0f1115;
   --surface-primary: #14171c;
-  --sage: #A8B69A;
-  --sage-soft: #BBC6AF;
-  --champagne: #D6B887;
-  --text-primary: #F4F0E6;
-  --text-muted: #969A8E;
+  --sage: #a8b69a;
+  --sage-soft: #bbc6af;
+  --champagne: #d6b887;
+
+  --text-primary: #f4f0e6;
+  --text-secondary: #c8c9c0;
+  --text-muted: #969a8e;
+
   --border-subtle: rgba(244, 240, 230, 0.08);
+
+  /* Motion */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Light/White Mode Support */
-.light, [data-theme="light"] {
+
+/* ============================================================
+   LIGHT / WHITE MODE
+   ============================================================ */
+
+.light,
+[data-theme="light"] {
   --bg-primary: #f4f5f7;
   --surface-primary: #ffffff;
+
   --sage: #7a8c6c;
   --sage-soft: #8f9e81;
   --champagne: #b59562;
+
   --text-primary: #1c1e21;
+  --text-secondary: #44474b;
   --text-muted: #65676b;
+
   --border-subtle: rgba(0, 0, 0, 0.08);
 }
+
+
+/* ============================================================
+   GLOBAL RESET
+   ============================================================ */
 
 * {
   box-sizing: border-box;
@@ -40,34 +61,60 @@ body,
 html {
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  /* Background depth with subtle vignette */
-  background-image: radial-gradient(ellipse at top, rgba(168,182,154,0.08), transparent 50%), var(--bg-primary);
+
+  background-image:
+    radial-gradient(
+      ellipse at top,
+      rgba(168, 182, 154, 0.08),
+      transparent 50%
+    ),
+    var(--bg-primary);
+
   background-repeat: no-repeat;
   background-attachment: fixed;
-  transition: background-color 0.3s ease, color 0.3s ease;
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
-/* Fixed Noise/Grain Texture Overlay (SVG feTurbulence) */
+
+/* ============================================================
+   FIXED NOISE / GRAIN TEXTURE
+   ============================================================ */
+
 body::after {
   content: "";
+
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+
   width: 100vw;
   height: 100vh;
+
   pointer-events: none;
   z-index: 9999;
+
   opacity: 0.025;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
+
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
 
 button,
 input,
@@ -85,33 +132,56 @@ img {
   display: block;
 }
 
-/* Shimmer Animation for 'moment.' text */
+
+/* ============================================================
+   SHIMMER TEXT
+   ============================================================ */
+
 @keyframes shimmer {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
 
 .shimmer-text {
-  background: linear-gradient(90deg, var(--champagne), var(--sage-soft), var(--champagne));
+  background:
+    linear-gradient(
+      90deg,
+      var(--champagne),
+      var(--sage-soft),
+      var(--champagne)
+    );
+
   background-size: 200% auto;
+
   -webkit-background-clip: text;
+  background-clip: text;
+
   -webkit-text-fill-color: transparent;
-  animation: shimmer 4s ease-in-out infinite;
+
+  animation:
+    shimmer 4s ease-in-out infinite;
 }
 
-/* Stagger Fade-Up Keyframes */
+
+/* ============================================================
+   FADE UP
+   ============================================================ */
+
 @keyframes fadeUp {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -119,36 +189,730 @@ img {
 }
 
 .animate-fade-up {
-  animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation:
+    fadeUp 600ms var(--ease-premium) forwards;
 }
 
-/* Sliders Thumb Glow & Scale on Hover */
+
+/* ============================================================
+   01 / 02 / 03 / 04
+   SECTION NUMBER — SCANNING RING
+   ============================================================ */
+
+.section-number-badge {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 34px;
+  height: 26px;
+
+  padding: 0 8px;
+
+  border-radius: 7px;
+
+  isolation: isolate;
+}
+
+
+/* Static inner surface */
+
+.section-number-badge::before {
+  content: "";
+
+  position: absolute;
+  inset: 1px;
+
+  border-radius: 6px;
+
+  background: var(--surface-primary);
+
+  z-index: -1;
+}
+
+
+/* Rotating gradient ring */
+
+.section-number-badge::after {
+  content: "";
+
+  position: absolute;
+  inset: -1px;
+
+  border-radius: 8px;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 100deg,
+      var(--champagne) 145deg,
+      var(--sage) 190deg,
+      transparent 245deg,
+      transparent 360deg
+    );
+
+  z-index: -2;
+
+  animation:
+    sectionRing 5s linear infinite;
+}
+
+
+/* Rotating scanning effect */
+
+@keyframes sectionRing {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ============================================================
+   LIVE STUDIO STATE
+   SLOW GRADIENT BORDER SWEEP
+   ============================================================ */
+
+.live-studio-panel {
+  position: relative;
+
+  isolation: isolate;
+
+  overflow: hidden;
+}
+
+
+/*
+ * Outer animated border
+ */
+
+.live-studio-panel::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  padding: 1px;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      115deg,
+      transparent 15%,
+      rgba(168, 182, 154, 0.15) 30%,
+      rgba(214, 184, 135, 0.75) 48%,
+      rgba(168, 182, 154, 0.2) 62%,
+      transparent 82%
+    );
+
+  background-size: 300% 100%;
+
+  animation:
+    studioBorderSweep 9s ease-in-out infinite;
+
+  /*
+   * Mask keeps the gradient only on the border
+   */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  -webkit-mask-composite: xor;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  mask-composite: exclude;
+
+  pointer-events: none;
+
+  z-index: 10;
+}
+
+
+@keyframes studioBorderSweep {
+  0% {
+    background-position: 100% 50%;
+    opacity: 0.35;
+  }
+
+  45% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+  }
+
+  70% {
+    background-position: -100% 50%;
+    opacity: 0.4;
+  }
+
+  100% {
+    background-position: 100% 50%;
+    opacity: 0.35;
+  }
+}
+
+
+/* ============================================================
+   SUBTLE STUDIO AMBIENT GLOW
+   ============================================================ */
+
+.live-studio-panel::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  right: -80px;
+  top: -80px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(168, 182, 154, 0.12),
+      transparent 70%
+    );
+
+  filter: blur(20px);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* ============================================================
+   SELECTED CHECKMARK — SPRING SETTLE
+   ============================================================ */
+
+.check-settle {
+  animation:
+    checkSettle 520ms var(--ease-spring) both;
+  transform-origin: center;
+}
+
+
+@keyframes checkSettle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  55% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scale(0.94);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+/* ============================================================
+   CHECK ICON MICRO ANIMATION
+   ============================================================ */
+
+.check-settle svg {
+  animation:
+    checkDraw 420ms var(--ease-premium) both;
+}
+
+
+@keyframes checkDraw {
+  from {
+    opacity: 0;
+    transform: scale(0.65) rotate(-12deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+
+/* ============================================================
+   YOUR ATMOSPHERE
+   IDLE WAVEFORM
+   ============================================================ */
+
+.atmosphere-waveform {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  width: 34px;
+  height: 28px;
+}
+
+
+.atmosphere-waveform span {
+  display: block;
+
+  width: 3px;
+
+  min-height: 6px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      to top,
+      var(--sage),
+      var(--sage-soft)
+    );
+
+  transform-origin: center;
+
+  animation:
+    waveformIdle 1.8s ease-in-out infinite;
+}
+
+
+/* Different heights / delays */
+
+.atmosphere-waveform span:nth-child(1) {
+  height: 10px;
+  animation-delay: -0.4s;
+}
+
+.atmosphere-waveform span:nth-child(2) {
+  height: 18px;
+  animation-delay: -0.2s;
+}
+
+.atmosphere-waveform span:nth-child(3) {
+  height: 13px;
+  animation-delay: -0.7s;
+}
+
+.atmosphere-waveform span:nth-child(4) {
+  height: 8px;
+  animation-delay: -0.1s;
+}
+
+
+@keyframes waveformIdle {
+  0%,
+  100% {
+    transform: scaleY(0.55);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: scaleY(1);
+    opacity: 0.9;
+  }
+}
+
+
+/* ============================================================
+   WAVEFORM — PAUSED / READY STATE
+   ============================================================ */
+
+.atmosphere-waveform.is-paused span {
+  animation-duration: 2.4s;
+}
+
+
+/* ============================================================
+   SECTION PROGRESS INDICATOR
+   ============================================================ */
+
+.section-progress {
+  position: absolute;
+
+  left: -22px;
+  top: 0;
+
+  width: 1px;
+
+  height: 100%;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(168, 182, 154, 0.05),
+      rgba(168, 182, 154, 0.18),
+      rgba(168, 182, 154, 0.05)
+    );
+
+  pointer-events: none;
+}
+
+
+/* Progress fill */
+
+.section-progress-fill {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 1px;
+
+  height: 0%;
+
+  background:
+    linear-gradient(
+      to bottom,
+      var(--champagne),
+      var(--sage)
+    );
+
+  box-shadow:
+    0 0 8px rgba(168, 182, 154, 0.35);
+
+  transition:
+    height 180ms linear;
+}
+
+
+/* Small active indicator */
+
+.section-progress-dot {
+  position: absolute;
+
+  left: 50%;
+
+  width: 5px;
+  height: 5px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background: var(--sage);
+
+  box-shadow:
+    0 0 0 3px rgba(168, 182, 154, 0.08),
+    0 0 12px rgba(168, 182, 154, 0.4);
+
+  transition:
+    top 180ms ease-out;
+}
+
+
+/* ============================================================
+   SECTION CONTENT WRAPPER
+   ============================================================ */
+
+.situation-section {
+  position: relative;
+}
+
+
+/* ============================================================
+   PREMIUM HOVER — CARDS
+   ============================================================ */
+
+.situation-card {
+  transition:
+    transform 350ms var(--ease-premium),
+    border-color 350ms ease,
+    box-shadow 350ms ease,
+    background-color 350ms ease;
+}
+
+
+.situation-card:hover {
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   SELECTED CARD MICRO GLOW
+   ============================================================ */
+
+.situation-card.is-selected {
+  box-shadow:
+    0 8px 30px rgba(168, 182, 154, 0.15);
+}
+
+
+/* ============================================================
+   SURPRISE BUTTON
+   ============================================================ */
+
+.surprise-button {
+  transition:
+    transform 250ms var(--ease-premium),
+    border-color 250ms ease,
+    background-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+
+.surprise-button:hover {
+  transform: translateY(-1px);
+
+  border-color:
+    rgba(168, 182, 154, 0.35);
+
+  background-color:
+    rgba(168, 182, 154, 0.05);
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+.surprise-button:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+
+/* ============================================================
+   ENTER ATMOSPHERE BUTTON
+   ============================================================ */
+
+.enter-button {
+  position: relative;
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+
+.enter-button::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.18) 50%,
+      transparent 75%
+    );
+
+  background-size: 250% 100%;
+
+  transform: translateX(-100%);
+
+  transition:
+    transform 700ms var(--ease-premium);
+
+  pointer-events: none;
+}
+
+
+.enter-button:hover::before {
+  transform: translateX(100%);
+}
+
+
+.enter-button:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 16px 40px rgba(168, 182, 154, 0.25);
+}
+
+
+.enter-button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+
+/* ============================================================
+   RECOMMENDED TRACK CARD
+   ============================================================ */
+
+.atmosphere-card {
+  position: relative;
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+
+.atmosphere-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(168, 182, 154, 0.08),
+      transparent 35%
+    );
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* ============================================================
+   IMAGE HOVER
+   ============================================================ */
+
+.atmosphere-artwork {
+  transition:
+    transform 500ms var(--ease-premium);
+}
+
+
+.atmosphere-card:hover .atmosphere-artwork {
+  transform: scale(1.04);
+}
+
+
+/* ============================================================
+   SLIDERS — THUMB GLOW
+   ============================================================ */
+
 .studio-slider::-webkit-slider-thumb {
   appearance: none;
+
   width: 12px;
   height: 12px;
+
   border-radius: 50%;
+
   background: var(--sage);
+
   cursor: pointer;
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+
+  transition:
+    transform 200ms var(--ease-premium),
+    box-shadow 200ms ease;
 }
+
 
 .studio-slider::-webkit-slider-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 10px rgba(168, 182, 154, 0.5);
+
+  box-shadow:
+    0 0 10px rgba(168, 182, 154, 0.5);
 }
+
 
 .studio-slider::-moz-range-thumb {
   width: 12px;
   height: 12px;
+
   border-radius: 50%;
+
   background: var(--sage);
+
   cursor: pointer;
+
   border: none;
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+
+  transition:
+    transform 200ms var(--ease-premium),
+    box-shadow 200ms ease;
 }
+
 
 .studio-slider::-moz-range-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 10px rgba(168, 182, 154, 0.5);
+
+  box-shadow:
+    0 0 10px rgba(168, 182, 154, 0.5);
+}
+
+
+/* ============================================================
+   FOCUS STATES
+   ============================================================ */
+
+button:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 2px var(--bg-primary),
+    0 0 0 4px rgba(168, 182, 154, 0.55);
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+  .section-progress {
+    display: none;
+  }
+
+  .live-studio-panel::before {
+    animation-duration: 12s;
+  }
+
+  .section-number-badge::after {
+    animation-duration: 7s;
+  }
+
+  .atmosphere-waveform {
+    width: 30px;
+  }
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 480px) {
+
+  .section-number-badge {
+    min-width: 32px;
+    height: 25px;
+  }
+
+  .atmosphere-waveform {
+    gap: 2px;
+  }
+
+  .atmosphere-waveform span {
+    width: 2.5px;
+  }
 }
