@@ -136,6 +136,7 @@ export const SituationBuilder = () => {
 
     window.addEventListener('resize', updateProgress);
 
+
     return () => {
 
       window.removeEventListener('scroll', handleScroll);
@@ -166,6 +167,7 @@ export const SituationBuilder = () => {
 
       const title = String(track.title || '').toLowerCase();
       const mood = String(track.mood || '').toLowerCase();
+
       const trackEnvironment = String(
         track.environment || ''
       ).toLowerCase();
@@ -532,10 +534,53 @@ export const SituationBuilder = () => {
 
   /* ============================================================
      PROGRESS CALCULATION
-     ============================================================ */
+  ============================================================ */
 
-  const progressPercentage =
+  /*
+    Completion based progress:
+    Activity    = 25%
+    Feeling     = 50%
+    Environment = 75%
+    Intensity   = 100%
+  */
+
+  const completedSections = [
+    Boolean(activity),
+    Boolean(feeling),
+    Boolean(environment),
+    Boolean(intensity)
+  ].filter(Boolean).length;
+
+
+  const completionProgress =
+    (completedSections / 4) * 100;
+
+
+  /*
+    Scroll based progress:
+    Section 01 = 0%
+    Section 02 = 33%
+    Section 03 = 66%
+    Section 04 = 100%
+  */
+
+  const scrollProgress =
     (activeSection / 3) * 100;
+
+
+  /*
+    Use whichever progress is further ahead.
+    This means the line reacts naturally to both
+    scrolling and making selections.
+  */
+
+  const progressPercentage = Math.min(
+    100,
+    Math.max(
+      completionProgress,
+      scrollProgress
+    )
+  );
 
 
   /* ============================================================
@@ -546,66 +591,263 @@ export const SituationBuilder = () => {
 
     <main className="min-h-screen px-6 pt-32 pb-40 max-w-7xl mx-auto animate-fade-up">
 
+
       {/* ========================================================
           LOCAL ANIMATION SYSTEM
-          ======================================================== */}
+      ======================================================== */}
 
       <style>{`
 
-        /* --------------------------------------------------------
-           SECTION BADGE — ROTATING SCANNING RING
-        -------------------------------------------------------- */
+        /* ========================================================
+           SECTION NUMBER BADGE
+           Premium glowing ring
+        ======================================================== */
 
-        @keyframes sectionRingRotate {
+        .section-number-badge {
+          position: relative;
+          isolation: isolate;
+
+          min-width: 32px;
+          height: 28px;
+
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+
+          border: 1px solid var(--sage);
+
+          box-shadow:
+            0 0 12px rgba(168, 182, 154, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+          background:
+            rgba(168, 182, 154, 0.025);
+
+          color: var(--champagne);
+
+          transition:
+            box-shadow 300ms ease,
+            border-color 300ms ease,
+            background-color 300ms ease;
+        }
+
+        .section-number-badge::before {
+          content: "";
+
+          position: absolute;
+          inset: -4px;
+
+          border-radius: inherit;
+
+          border: 1px solid rgba(168, 182, 154, 0.08);
+
+          box-shadow:
+            0 0 16px rgba(168, 182, 154, 0.08);
+
+          pointer-events: none;
+        }
+
+        .section-number-badge:hover {
+          border-color: var(--champagne);
+
+          box-shadow:
+            0 0 16px rgba(168, 182, 154, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+
+        /* ========================================================
+           SELECTED CHECKMARK — SPRING
+        ======================================================== */
+
+        @keyframes checkPop {
+
           0% {
-            transform: rotate(0deg);
+            transform: scale(0);
+            opacity: 0;
+          }
+
+          60% {
+            transform: scale(1.2);
+            opacity: 1;
           }
 
           100% {
-            transform: rotate(360deg);
+            transform: scale(1);
+            opacity: 1;
           }
+
         }
 
-        .section-ring {
-          position: relative;
-          isolation: isolate;
-        }
-
-        .section-ring::before {
-          content: "";
-          position: absolute;
-          inset: -1px;
-          border-radius: inherit;
-          background:
-            conic-gradient(
-              from 0deg,
-              transparent 0deg,
-              transparent 65deg,
-              var(--sage) 110deg,
-              var(--champagne) 145deg,
-              transparent 205deg,
-              transparent 360deg
-            );
+        .checkmark-spring {
           animation:
-            sectionRingRotate 4.5s linear infinite;
-          z-index: -2;
+            checkPop 350ms
+            cubic-bezier(
+              0.34,
+              1.56,
+              0.64,
+              1
+            );
+          transform-origin: center;
         }
 
-        .section-ring::after {
-          content: "";
+
+        /* ========================================================
+           SELECTED CARD — TACTILE SETTLE
+        ======================================================== */
+
+        @keyframes cardSettle {
+
+          0% {
+            transform: scale(0.98);
+          }
+
+          100% {
+            transform: scale(1);
+          }
+
+        }
+
+        .situation-option-selected {
+          animation:
+            cardSettle 200ms
+            ease-out;
+        }
+
+
+        /* ========================================================
+           OPTION CARD
+           ======================================================== */
+
+        .situation-option {
+          position: relative;
+
+          transition:
+            transform 200ms ease-out,
+            border-color 300ms ease,
+            background-color 300ms ease,
+            box-shadow 300ms ease;
+
+          will-change: transform, box-shadow;
+        }
+
+
+        /*
+          Glass-like hairline reflection.
+          This is intentionally extremely subtle.
+        */
+
+        .situation-option:hover {
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.04),
+            0 6px 22px rgba(0, 0, 0, 0.08);
+        }
+
+        .situation-option:active {
+          transform: scale(0.985);
+        }
+
+
+        /*
+          Selected cards keep their green glow
+          while also receiving the inner reflection.
+        */
+
+        .situation-option.selected:hover {
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.04),
+            0 8px 30px rgba(168, 182, 154, 0.15);
+        }
+
+
+        /* ========================================================
+           PROGRESS LINE
+        ======================================================== */
+
+        .studio-progress-line {
           position: absolute;
-          inset: 1px;
-          border-radius: inherit;
-          background: var(--surface-primary);
-          z-index: -1;
+
+          left: 9px;
+          top: 86px;
+          bottom: 82px;
+
+          width: 1px;
+
+          background:
+            var(--border-subtle, rgba(244, 240, 230, 0.08));
+
+          overflow: hidden;
+
+          pointer-events: none;
         }
 
 
-        /* --------------------------------------------------------
-           LIVE STUDIO STATE — SLOW GRADIENT SWEEP
-        -------------------------------------------------------- */
+        .studio-progress-fill {
+          width: 100%;
+
+          background:
+            linear-gradient(
+              to bottom,
+              var(--sage),
+              var(--champagne)
+            );
+
+          box-shadow:
+            0 0 8px rgba(168, 182, 154, 0.18);
+
+          transition:
+            height 500ms
+            cubic-bezier(
+              0.22,
+              1,
+              0.36,
+              1
+            );
+        }
+
+
+        /* ========================================================
+           PROGRESS DOT
+        ======================================================== */
+
+        .studio-progress-dot {
+          position: absolute;
+
+          left: 4px;
+
+          width: 11px;
+          height: 11px;
+
+          border-radius: 999px;
+
+          background:
+            var(--sage);
+
+          box-shadow:
+            0 0 0 4px rgba(168, 182, 154, 0.08),
+            0 0 18px rgba(168, 182, 154, 0.45);
+
+          transform: translateY(-50%);
+
+          transition:
+            top 500ms
+            cubic-bezier(
+              0.22,
+              1,
+              0.36,
+              1
+            );
+
+          pointer-events: none;
+        }
+
+
+        /* ========================================================
+           LIVE STUDIO STATE
+        ======================================================== */
 
         @keyframes studioBorderSweep {
+
           0% {
             background-position: 200% 50%;
           }
@@ -613,13 +855,19 @@ export const SituationBuilder = () => {
           100% {
             background-position: -200% 50%;
           }
+
         }
+
 
         .studio-border-shell {
           position: relative;
+
           border-radius: 24px;
+
           padding: 1px;
+
           overflow: hidden;
+
           background:
             linear-gradient(
               110deg,
@@ -631,55 +879,17 @@ export const SituationBuilder = () => {
               transparent 70%,
               transparent 100%
             );
+
           background-size: 300% 100%;
+
           animation:
             studioBorderSweep 9s linear infinite;
         }
 
 
-        /* --------------------------------------------------------
-           CHECKMARK — SPRING SETTLE
-        -------------------------------------------------------- */
-
-        @keyframes checkmarkSettle {
-
-          0% {
-            transform: scale(0);
-            opacity: 0;
-          }
-
-          55% {
-            transform: scale(1.15);
-            opacity: 1;
-          }
-
-          75% {
-            transform: scale(0.96);
-          }
-
-          100% {
-            transform: scale(1);
-            opacity: 1;
-          }
-
-        }
-
-        .checkmark-settle {
-          animation:
-            checkmarkSettle 430ms
-            cubic-bezier(
-              0.22,
-              1,
-              0.36,
-              1
-            );
-          transform-origin: center;
-        }
-
-
-        /* --------------------------------------------------------
+        /* ========================================================
            IDLE WAVEFORM
-        -------------------------------------------------------- */
+        ======================================================== */
 
         @keyframes idleWaveOne {
 
@@ -696,6 +906,7 @@ export const SituationBuilder = () => {
 
         }
 
+
         @keyframes idleWaveTwo {
 
           0%,
@@ -710,6 +921,7 @@ export const SituationBuilder = () => {
           }
 
         }
+
 
         @keyframes idleWaveThree {
 
@@ -726,6 +938,7 @@ export const SituationBuilder = () => {
 
         }
 
+
         @keyframes idleWaveFour {
 
           0%,
@@ -741,103 +954,59 @@ export const SituationBuilder = () => {
 
         }
 
+
         .idle-wave-bar {
           width: 3px;
           height: 15px;
+
           border-radius: 999px;
-          background: var(--sage);
+
+          background:
+            var(--sage);
+
           transform-origin: center;
         }
+
 
         .idle-wave-1 {
           animation:
             idleWaveOne 2.4s ease-in-out infinite;
         }
 
+
         .idle-wave-2 {
           animation:
             idleWaveTwo 2.1s ease-in-out infinite;
+
           animation-delay: 180ms;
         }
+
 
         .idle-wave-3 {
           animation:
             idleWaveThree 2.6s ease-in-out infinite;
+
           animation-delay: 320ms;
         }
+
 
         .idle-wave-4 {
           animation:
             idleWaveFour 2.2s ease-in-out infinite;
+
           animation-delay: 120ms;
         }
 
 
-        /* --------------------------------------------------------
-           PROGRESS LINE
-        -------------------------------------------------------- */
-
-        .studio-progress-line {
-          position: absolute;
-          left: 9px;
-          top: 86px;
-          bottom: 82px;
-          width: 1px;
-          background: rgba(168, 182, 154, 0.12);
-          overflow: hidden;
-          pointer-events: none;
-        }
-
-        .studio-progress-fill {
-          width: 100%;
-          background:
-            linear-gradient(
-              to bottom,
-              var(--sage),
-              var(--champagne)
-            );
-          transition:
-            height 500ms
-            cubic-bezier(
-              0.22,
-              1,
-              0.36,
-              1
-            );
-        }
-
-        .studio-progress-dot {
-          position: absolute;
-          left: 4px;
-          width: 11px;
-          height: 11px;
-          border-radius: 999px;
-          background: var(--sage);
-          box-shadow:
-            0 0 0 4px rgba(168, 182, 154, 0.08),
-            0 0 18px rgba(168, 182, 154, 0.45);
-          transform: translateY(-50%);
-          transition:
-            top 500ms
-            cubic-bezier(
-              0.22,
-              1,
-              0.36,
-              1
-            );
-          pointer-events: none;
-        }
-
-
-        /* --------------------------------------------------------
+        /* ========================================================
            REDUCED MOTION
-        -------------------------------------------------------- */
+        ======================================================== */
 
         @media (prefers-reduced-motion: reduce) {
 
-          .section-ring::before,
           .studio-border-shell,
-          .checkmark-settle,
+          .checkmark-spring,
+          .situation-option-selected,
           .idle-wave-1,
           .idle-wave-2,
           .idle-wave-3,
@@ -846,7 +1015,9 @@ export const SituationBuilder = () => {
           }
 
           .studio-progress-fill,
-          .studio-progress-dot {
+          .studio-progress-dot,
+          .situation-option,
+          .section-number-badge {
             transition: none !important;
           }
 
@@ -861,7 +1032,9 @@ export const SituationBuilder = () => {
 
       <section className="text-center max-w-3xl mx-auto mb-20 relative">
 
-        <div className="absolute inset-0 -top-10 bg-radial from-emerald-500/10 via-transparent to-transparent blur-3xl pointer-events-none" />
+        <div
+          className="absolute inset-0 -top-10 bg-radial from-emerald-500/10 via-transparent to-transparent blur-3xl pointer-events-none"
+        />
 
 
         <div
@@ -869,6 +1042,7 @@ export const SituationBuilder = () => {
           style={{
             backgroundColor:
               'rgba(168, 182, 154, 0.05)',
+
             borderColor:
               'rgba(168, 182, 154, 0.2)'
           }}
@@ -880,6 +1054,7 @@ export const SituationBuilder = () => {
               color: 'var(--sage)'
             }}
           />
+
 
           <span
             className="text-[10px] font-semibold tracking-widest uppercase"
@@ -947,14 +1122,16 @@ export const SituationBuilder = () => {
               style={{
                 background:
                   'linear-gradient(145deg, rgba(37, 38, 32, 0.96), rgba(20, 21, 17, 0.98))',
+
                 boxShadow:
                   '0 25px 60px rgba(0, 0, 0, 0.5)'
               }}
             >
 
+
               {/* -----------------------------------------------
                   SCROLL PROGRESS
-              ------------------------------------------------ */}
+              ----------------------------------------------- */}
 
               <div className="studio-progress-line">
 
@@ -968,20 +1145,25 @@ export const SituationBuilder = () => {
               </div>
 
 
+              {/* FIX:
+                  Previously this used this?.activeSection.
+                  React function components don't have `this`.
+              */}
+
               <div
                 className="studio-progress-dot"
                 style={{
                   top:
                     `${86 +
-                      ((this?.activeSection || 0) / 3) *
-                      0}px`
+                      (progressPercentage / 100) *
+                      150}px`
                 }}
               />
 
 
               {/* -----------------------------------------------
                   DECORATIVE GLOW
-              ------------------------------------------------ */}
+              ----------------------------------------------- */}
 
               <div
                 className="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
@@ -994,7 +1176,7 @@ export const SituationBuilder = () => {
 
               {/* -----------------------------------------------
                   HEADER
-              ------------------------------------------------ */}
+              ----------------------------------------------- */}
 
               <div className="flex items-center justify-between pb-5 mb-6 border-b border-white/5">
 
@@ -1026,6 +1208,7 @@ export const SituationBuilder = () => {
                   style={{
                     color:
                       'var(--champagne)',
+
                     backgroundColor:
                       'rgba(214, 184, 135, 0.1)'
                   }}
@@ -1038,10 +1221,9 @@ export const SituationBuilder = () => {
 
               {/* -----------------------------------------------
                   STATE CONTENT
-              ------------------------------------------------ */}
+              ----------------------------------------------- */}
 
               <div className="space-y-6">
-
 
                 <div>
 
@@ -1069,7 +1251,6 @@ export const SituationBuilder = () => {
 
 
                 <div className="grid grid-cols-2 gap-4 pt-2">
-
 
                   <div
                     className="p-3 rounded-xl border bg-black/20"
@@ -1173,6 +1354,7 @@ export const SituationBuilder = () => {
                             : intensity === 'Balanced'
                               ? '66%'
                               : '100%',
+
                         backgroundColor:
                           'var(--sage)'
                       }}
@@ -1187,7 +1369,7 @@ export const SituationBuilder = () => {
 
               {/* -----------------------------------------------
                   FOOTER
-              ------------------------------------------------ */}
+              ----------------------------------------------- */}
 
               <div
                 className="mt-8 pt-5 border-t border-white/5 flex items-center gap-3 text-[10px]"
@@ -1239,16 +1421,10 @@ export const SituationBuilder = () => {
             <div className="flex items-center gap-3">
 
 
-              {/* ROTATING RING */}
+              {/* SECTION NUMBER */}
 
               <span
-                className="section-ring text-xs font-mono font-bold px-2 py-0.5 rounded relative"
-                style={{
-                  color:
-                    'var(--champagne)',
-                  backgroundColor:
-                    'var(--surface-primary)'
-                }}
+                className="section-number-badge text-xs font-mono font-bold rounded"
               >
                 01
               </span>
@@ -1295,8 +1471,16 @@ export const SituationBuilder = () => {
                     onClick={() =>
                       setActivity(item.name)
                     }
-                    className="p-4 rounded-2xl border text-left transition-all duration-300 group relative flex items-center justify-between overflow-hidden cursor-pointer"
+                    className={`
+                      situation-option
+                      ${selected ? 'selected situation-option-selected' : ''}
+                      p-4 rounded-2xl border text-left
+                      group relative flex items-center
+                      justify-between overflow-hidden
+                      cursor-pointer
+                    `}
                     style={{
+
                       backgroundColor:
                         selected
                           ? 'rgba(168, 182, 154, 0.12)'
@@ -1305,12 +1489,8 @@ export const SituationBuilder = () => {
                       borderColor:
                         selected
                           ? 'var(--sage)'
-                          : 'var(--border-subtle, rgba(244,240,230,0.08))',
+                          : 'var(--border-subtle, rgba(244,240,230,0.08))'
 
-                      boxShadow:
-                        selected
-                          ? '0 8px 30px rgba(168, 182, 154, 0.15)'
-                          : '0 4px 20px rgba(0,0,0,0.05)'
                     }}
                   >
 
@@ -1338,7 +1518,7 @@ export const SituationBuilder = () => {
                     {selected && (
 
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center relative z-10 checkmark-settle"
+                        className="w-5 h-5 rounded-full flex items-center justify-center relative z-10 checkmark-spring"
                         style={{
                           backgroundColor:
                             'var(--sage)'
@@ -1381,15 +1561,8 @@ export const SituationBuilder = () => {
 
             <div className="flex items-center gap-3">
 
-
               <span
-                className="section-ring text-xs font-mono font-bold px-2 py-0.5 rounded relative"
-                style={{
-                  color:
-                    'var(--champagne)',
-                  backgroundColor:
-                    'var(--surface-primary)'
-                }}
+                className="section-number-badge text-xs font-mono font-bold rounded"
               >
                 02
               </span>
@@ -1436,8 +1609,15 @@ export const SituationBuilder = () => {
                     onClick={() =>
                       setFeeling(item.name)
                     }
-                    className="p-4 rounded-2xl border text-left transition-all duration-300 group relative flex items-center justify-between cursor-pointer"
+                    className={`
+                      situation-option
+                      ${selected ? 'selected situation-option-selected' : ''}
+                      p-4 rounded-2xl border text-left
+                      group relative flex items-center
+                      justify-between cursor-pointer
+                    `}
                     style={{
+
                       backgroundColor:
                         selected
                           ? 'rgba(168, 182, 154, 0.12)'
@@ -1446,12 +1626,8 @@ export const SituationBuilder = () => {
                       borderColor:
                         selected
                           ? 'var(--sage)'
-                          : 'var(--border-subtle, rgba(244,240,230,0.08))',
+                          : 'var(--border-subtle, rgba(244,240,230,0.08))'
 
-                      boxShadow:
-                        selected
-                          ? '0 8px 30px rgba(168, 182, 154, 0.15)'
-                          : 'none'
                     }}
                   >
 
@@ -1485,7 +1661,7 @@ export const SituationBuilder = () => {
                     {selected && (
 
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center checkmark-settle"
+                        className="w-5 h-5 rounded-full flex items-center justify-center checkmark-spring"
                         style={{
                           backgroundColor:
                             'var(--sage)'
@@ -1528,15 +1704,8 @@ export const SituationBuilder = () => {
 
             <div className="flex items-center gap-3">
 
-
               <span
-                className="section-ring text-xs font-mono font-bold px-2 py-0.5 rounded relative"
-                style={{
-                  color:
-                    'var(--champagne)',
-                  backgroundColor:
-                    'var(--surface-primary)'
-                }}
+                className="section-number-badge text-xs font-mono font-bold rounded"
               >
                 03
               </span>
@@ -1583,8 +1752,15 @@ export const SituationBuilder = () => {
                     onClick={() =>
                       setEnvironment(item.name)
                     }
-                    className="p-3.5 rounded-2xl border text-center transition-all duration-300 cursor-pointer flex flex-col justify-between h-20"
+                    className={`
+                      situation-option
+                      ${selected ? 'selected situation-option-selected' : ''}
+                      p-3.5 rounded-2xl border text-center
+                      cursor-pointer flex flex-col
+                      justify-between h-20
+                    `}
                     style={{
+
                       backgroundColor:
                         selected
                           ? 'rgba(168, 182, 154, 0.12)'
@@ -1593,12 +1769,8 @@ export const SituationBuilder = () => {
                       borderColor:
                         selected
                           ? 'var(--sage)'
-                          : 'var(--border-subtle, rgba(244,240,230,0.08))',
+                          : 'var(--border-subtle, rgba(244,240,230,0.08))'
 
-                      boxShadow:
-                        selected
-                          ? '0 8px 30px rgba(168, 182, 154, 0.15)'
-                          : 'none'
                     }}
                   >
 
@@ -1611,6 +1783,7 @@ export const SituationBuilder = () => {
                     >
                       {item.tag}
                     </span>
+
 
                     <span
                       className="text-xs font-medium"
@@ -1648,15 +1821,8 @@ export const SituationBuilder = () => {
 
             <div className="flex items-center gap-3">
 
-
               <span
-                className="section-ring text-xs font-mono font-bold px-2 py-0.5 rounded relative"
-                style={{
-                  color:
-                    'var(--champagne)',
-                  backgroundColor:
-                    'var(--surface-primary)'
-                }}
+                className="section-number-badge text-xs font-mono font-bold rounded"
               >
                 04
               </span>
@@ -1703,8 +1869,14 @@ export const SituationBuilder = () => {
                     onClick={() =>
                       setIntensity(item.name)
                     }
-                    className="p-4 rounded-2xl border text-center transition-all duration-300 cursor-pointer"
+                    className={`
+                      situation-option
+                      ${selected ? 'selected situation-option-selected' : ''}
+                      p-4 rounded-2xl border text-center
+                      cursor-pointer
+                    `}
                     style={{
+
                       backgroundColor:
                         selected
                           ? 'rgba(168, 182, 154, 0.12)'
@@ -1713,12 +1885,8 @@ export const SituationBuilder = () => {
                       borderColor:
                         selected
                           ? 'var(--sage)'
-                          : 'var(--border-subtle, rgba(244,240,230,0.08))',
+                          : 'var(--border-subtle, rgba(244,240,230,0.08))'
 
-                      boxShadow:
-                        selected
-                          ? '0 8px 30px rgba(168, 182, 154, 0.15)'
-                          : 'none'
                     }}
                   >
 
@@ -1771,6 +1939,7 @@ export const SituationBuilder = () => {
                 style={{
                   borderColor:
                     'var(--border-subtle)',
+
                   backgroundColor:
                     'rgba(255,255,255,0.02)'
                 }}
@@ -1815,7 +1984,7 @@ export const SituationBuilder = () => {
 
 
             {/* ==================================================
-                RECOMMENDED TRACK / YOUR ATMOSPHERE
+                RECOMMENDED TRACK
             ================================================== */}
 
             {recommendedTrack && (
@@ -1836,7 +2005,6 @@ export const SituationBuilder = () => {
 
 
                 <div className="flex items-center space-x-3.5 min-w-0">
-
 
                   <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-lg relative group">
 
