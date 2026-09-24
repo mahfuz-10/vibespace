@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useAudio } from './AudioManager';
+import React, { useState } from "react";
+import { useAudio } from "./AudioManager";
 import {
   Play,
   Pause,
@@ -9,10 +9,10 @@ import {
   Music2,
   Volume2,
   Sparkles,
-  SlidersHorizontal
-} from 'lucide-react';
+  SlidersHorizontal,
+} from "lucide-react";
 
-export const VibeResult = ({ onOpenStudio, onBack }) => {
+export const VibeResult = ({ onOpenStudio }) => {
   const {
     activity,
     feeling,
@@ -21,7 +21,8 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
     isPlaying,
     togglePlayPause,
     ambientLayers,
-    saveVibe
+    saveVibe,
+    setHasSubmittedSituation,
   } = useAudio();
 
   const [savedMessage, setSavedMessage] = useState(false);
@@ -30,14 +31,35 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
     `${environment} ${activity}`
   );
 
+  /* =========================================================
+     ACTIVE AMBIENT LAYERS
+  ========================================================= */
+
   const activeLayers = (ambientLayers || []).filter(
     (layer) => layer.volume > 0 && !layer.isMuted
   );
+
+  /* =========================================================
+     BACK TO SITUATION BUILDER
+  ========================================================= */
+
+  const handleBack = () => {
+    /*
+      This changes the main application state
+      back to Situation Builder.
+    */
+    setHasSubmittedSituation(false);
+  };
+
+  /* =========================================================
+     SAVE VIBE
+  ========================================================= */
 
   const handleSave = () => {
     if (!vibeName.trim()) return;
 
     saveVibe(vibeName.trim());
+
     setSavedMessage(true);
 
     setTimeout(() => {
@@ -50,12 +72,12 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
 
       {/* =====================================================
           BACK BUTTON
-          ===================================================== */}
+      ===================================================== */}
 
       <div className="max-w-3xl mx-auto mb-8">
         <button
           type="button"
-          onClick={onBack}
+          onClick={handleBack}
           className="
             group
             inline-flex
@@ -68,16 +90,21 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
             transition-all
             duration-300
             hover:scale-[1.02]
+            hover:bg-white/[0.04]
           "
           style={{
-            backgroundColor: 'rgba(255,255,255,0.025)',
-            borderColor: 'rgba(255,255,255,0.08)',
-            color: 'var(--text-muted)'
+            backgroundColor: "rgba(255,255,255,0.025)",
+            borderColor: "rgba(255,255,255,0.08)",
+            color: "var(--text-muted)",
           }}
         >
           <ArrowLeft
             size={14}
-            className="transition-transform duration-300 group-hover:-translate-x-0.5"
+            className="
+              transition-transform
+              duration-300
+              group-hover:-translate-x-0.5
+            "
           />
 
           <span className="text-[10px] uppercase tracking-[0.16em] font-medium">
@@ -86,94 +113,168 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
         </button>
       </div>
 
-
       {/* =====================================================
           HERO
       ===================================================== */}
 
       <section className="relative text-center max-w-3xl mx-auto mb-12">
 
-        {/* glow */}
+        {/* Glow */}
+
         <div
-          className="absolute left-1/2 -translate-x-1/2 -top-20 w-72 h-72 rounded-full blur-3xl pointer-events-none opacity-20"
+          className="
+            absolute
+            left-1/2
+            -translate-x-1/2
+            -top-20
+            w-72
+            h-72
+            rounded-full
+            blur-3xl
+            pointer-events-none
+            opacity-20
+          "
           style={{
             background:
-              'radial-gradient(circle, var(--sage), transparent 70%)'
+              "radial-gradient(circle, var(--sage), transparent 70%)",
           }}
         />
 
+        {/* Status */}
+
         <div
-          className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6"
+          className="
+            relative
+            inline-flex
+            items-center
+            gap-2
+            px-4
+            py-2
+            rounded-full
+            border
+            mb-6
+          "
           style={{
-            backgroundColor: 'rgba(168,182,154,0.07)',
-            borderColor: 'rgba(168,182,154,0.22)'
+            backgroundColor: "rgba(168,182,154,0.07)",
+            borderColor: "rgba(168,182,154,0.22)",
           }}
         >
           <Sparkles
             size={13}
-            style={{ color: 'var(--sage)' }}
+            style={{
+              color: "var(--sage)",
+            }}
           />
 
           <span
-            className="text-[10px] uppercase tracking-[0.2em] font-semibold"
-            style={{ color: 'var(--sage)' }}
+            className="
+              text-[10px]
+              uppercase
+              tracking-[0.2em]
+              font-semibold
+            "
+            style={{
+              color: "var(--sage)",
+            }}
           >
             Your atmosphere is ready
           </span>
         </div>
 
+        {/* Main title */}
+
         <h1
-          className="relative text-4xl sm:text-5xl md:text-6xl font-light tracking-tight leading-tight"
-          style={{ color: 'var(--text-primary)' }}
+          className="
+            relative
+            text-4xl
+            sm:text-5xl
+            md:text-6xl
+            font-light
+            tracking-tight
+            leading-tight
+          "
+          style={{
+            color: "var(--text-primary)",
+          }}
         >
-          {environment}{' '}
+          {environment}{" "}
           <em
             className="font-normal"
-            style={{ color: 'var(--champagne)' }}
+            style={{
+              color: "var(--champagne)",
+            }}
           >
             {activity}
           </em>
         </h1>
 
+        {/* Description */}
+
         <p
-          className="relative mt-5 text-sm leading-relaxed opacity-60 max-w-xl mx-auto"
-          style={{ color: 'var(--text-muted)' }}
+          className="
+            relative
+            mt-5
+            text-sm
+            leading-relaxed
+            opacity-60
+            max-w-xl
+            mx-auto
+          "
+          style={{
+            color: "var(--text-muted)",
+          }}
         >
-          A carefully selected atmosphere for your{' '}
+          A carefully selected atmosphere for your{" "}
           <span
             className="font-medium"
-            style={{ color: 'var(--text-primary)' }}
+            style={{
+              color: "var(--text-primary)",
+            }}
           >
             {feeling.toLowerCase()}
-          </span>{' '}
+          </span>{" "}
           state.
         </p>
-
       </section>
-
 
       {/* =====================================================
           MAIN ATMOSPHERE CARD
       ===================================================== */}
 
       <section
-        className="relative overflow-hidden rounded-[28px] border backdrop-blur-xl"
+        className="
+          relative
+          overflow-hidden
+          rounded-[28px]
+          border
+          backdrop-blur-xl
+        "
         style={{
           background:
-            'linear-gradient(145deg, rgba(38,40,34,0.94), rgba(22,24,20,0.97))',
-          borderColor: 'rgba(214,184,135,0.14)',
-          boxShadow: '0 30px 90px rgba(0,0,0,0.35)'
+            "linear-gradient(145deg, rgba(38,40,34,0.94), rgba(22,24,20,0.97))",
+          borderColor: "rgba(214,184,135,0.14)",
+          boxShadow: "0 30px 90px rgba(0,0,0,0.35)",
         }}
       >
 
-        {/* subtle top glow */}
+        {/* Top glow */}
+
         <div
-          className="absolute -top-32 right-0 w-80 h-80 rounded-full blur-3xl opacity-10 pointer-events-none"
+          className="
+            absolute
+            -top-32
+            right-0
+            w-80
+            h-80
+            rounded-full
+            blur-3xl
+            opacity-10
+            pointer-events-none
+          "
           style={{
-            backgroundColor: 'var(--champagne)'
+            backgroundColor: "var(--champagne)",
           }}
         />
-
 
         {/* =================================================
             CARD HEADER
@@ -183,6 +284,8 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
 
+            {/* Information */}
+
             <div>
 
               <div className="flex items-center gap-2 mb-3">
@@ -190,14 +293,19 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                 <span
                   className="w-2 h-2 rounded-full animate-pulse"
                   style={{
-                    backgroundColor: 'var(--sage)'
+                    backgroundColor: "var(--sage)",
                   }}
                 />
 
                 <span
-                  className="text-[9px] uppercase tracking-[0.2em] font-semibold"
+                  className="
+                    text-[9px]
+                    uppercase
+                    tracking-[0.2em]
+                    font-semibold
+                  "
                   style={{
-                    color: 'var(--text-muted)'
+                    color: "var(--text-muted)",
                   }}
                 >
                   Active Atmosphere
@@ -208,14 +316,14 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
               <h2
                 className="text-2xl sm:text-3xl font-light"
                 style={{
-                  color: 'var(--text-primary)'
+                  color: "var(--text-primary)",
                 }}
               >
-                {environment}{' '}
+                {environment}{" "}
                 <span
                   className="italic"
                   style={{
-                    color: 'var(--champagne)'
+                    color: "var(--champagne)",
                   }}
                 >
                   {activity}
@@ -225,37 +333,58 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
               <p
                 className="text-xs mt-2 opacity-50"
                 style={{
-                  color: 'var(--text-muted)'
+                  color: "var(--text-muted)",
                 }}
               >
                 {feeling} · {activeLayers.length} active atmosphere
-                {activeLayers.length !== 1 ? 's' : ''}
+                {activeLayers.length !== 1 ? "s" : ""}
               </p>
-
             </div>
 
-
-            {/* PLAY BUTTON */}
+            {/* =================================================
+                PLAY BUTTON
+            ================================================= */}
 
             <button
               type="button"
               onClick={togglePlayPause}
-              className="group flex items-center justify-center gap-3 px-5 py-3 rounded-full border transition-all duration-300 hover:scale-[1.02]"
+              className="
+                group
+                flex
+                items-center
+                justify-center
+                gap-3
+                px-5
+                py-3
+                rounded-full
+                border
+                transition-all
+                duration-300
+                hover:scale-[1.02]
+              "
               style={{
                 backgroundColor: isPlaying
-                  ? 'rgba(168,182,154,0.14)'
-                  : 'rgba(255,255,255,0.04)',
+                  ? "rgba(168,182,154,0.14)"
+                  : "rgba(255,255,255,0.04)",
+
                 borderColor: isPlaying
-                  ? 'rgba(168,182,154,0.4)'
-                  : 'rgba(255,255,255,0.1)'
+                  ? "rgba(168,182,154,0.4)"
+                  : "rgba(255,255,255,0.1)",
               }}
             >
 
               <span
-                className="w-8 h-8 rounded-full flex items-center justify-center"
+                className="
+                  w-8
+                  h-8
+                  rounded-full
+                  flex
+                  items-center
+                  justify-center
+                "
                 style={{
-                  backgroundColor: 'var(--sage)',
-                  color: '#151713'
+                  backgroundColor: "var(--sage)",
+                  color: "#151713",
                 }}
               >
                 {isPlaying ? (
@@ -272,22 +401,24 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
               </span>
 
               <span
-                className="text-[10px] uppercase tracking-wider font-semibold"
+                className="
+                  text-[10px]
+                  uppercase
+                  tracking-wider
+                  font-semibold
+                "
                 style={{
-                  color: 'var(--text-primary)'
+                  color: "var(--text-primary)",
                 }}
               >
                 {isPlaying
-                  ? 'Pause Experience'
-                  : 'Play Experience'}
+                  ? "Pause Experience"
+                  : "Play Experience"}
               </span>
 
             </button>
-
           </div>
-
         </div>
-
 
         {/* =================================================
             CONTENT
@@ -297,7 +428,6 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-
             {/* =================================================
                 HERO MUSIC
             ================================================= */}
@@ -305,8 +435,8 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
             <div
               className="rounded-2xl border p-5"
               style={{
-                backgroundColor: 'rgba(255,255,255,0.025)',
-                borderColor: 'rgba(255,255,255,0.06)'
+                backgroundColor: "rgba(255,255,255,0.025)",
+                borderColor: "rgba(255,255,255,0.06)",
               }}
             >
 
@@ -315,31 +445,44 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                 <Music2
                   size={14}
                   style={{
-                    color: 'var(--champagne)'
+                    color: "var(--champagne)",
                   }}
                 />
 
                 <span
-                  className="text-[10px] uppercase tracking-[0.18em] font-semibold"
+                  className="
+                    text-[10px]
+                    uppercase
+                    tracking-[0.18em]
+                    font-semibold
+                  "
                   style={{
-                    color: 'var(--text-muted)'
+                    color: "var(--text-muted)",
                   }}
                 >
                   Hero Music
                 </span>
-
               </div>
-
 
               <div className="flex items-center gap-4">
 
+                {/* Artwork */}
+
                 <div
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden flex-shrink-0"
+                  className="
+                    w-16
+                    h-16
+                    sm:w-20
+                    sm:h-20
+                    rounded-2xl
+                    overflow-hidden
+                    flex-shrink-0
+                  "
                   style={{
-                    backgroundColor: 'rgba(255,255,255,0.05)'
+                    backgroundColor:
+                      "rgba(255,255,255,0.05)",
                   }}
                 >
-
                   {currentTrack?.artwork ? (
                     <img
                       src={currentTrack.artwork}
@@ -351,67 +494,79 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                       <Music2
                         size={24}
                         style={{
-                          color: 'var(--text-muted)'
+                          color: "var(--text-muted)",
                         }}
                       />
                     </div>
                   )}
-
                 </div>
 
+                {/* Track information */}
 
                 <div className="min-w-0 flex-1">
 
                   <h3
                     className="text-sm font-medium truncate"
                     style={{
-                      color: 'var(--text-primary)'
+                      color: "var(--text-primary)",
                     }}
                   >
-                    {currentTrack?.title || 'No track selected'}
+                    {currentTrack?.title ||
+                      "No track selected"}
                   </h3>
 
                   <p
-                    className="text-[10px] mt-1 opacity-50 truncate"
+                    className="
+                      text-[10px]
+                      mt-1
+                      opacity-50
+                      truncate
+                    "
                     style={{
-                      color: 'var(--text-muted)'
+                      color: "var(--text-muted)",
                     }}
                   >
-                    {currentTrack?.artist || 'VibeSpace'}
+                    {currentTrack?.artist ||
+                      "VibeSpace"}
                   </p>
 
                   <div className="flex items-center gap-2 mt-3">
 
                     <span
-                      className={`w-1.5 h-1.5 rounded-full ${
-                        isPlaying ? 'animate-pulse' : ''
-                      }`}
+                      className={`
+                        w-1.5
+                        h-1.5
+                        rounded-full
+                        ${isPlaying ? "animate-pulse" : ""}
+                      `}
                       style={{
                         backgroundColor: isPlaying
-                          ? 'var(--sage)'
-                          : 'rgba(255,255,255,0.25)'
+                          ? "var(--sage)"
+                          : "rgba(255,255,255,0.25)",
                       }}
                     />
 
                     <span
-                      className="text-[9px] uppercase tracking-wider"
+                      className="
+                        text-[9px]
+                        uppercase
+                        tracking-wider
+                      "
                       style={{
                         color: isPlaying
-                          ? 'var(--sage)'
-                          : 'var(--text-muted)'
+                          ? "var(--sage)"
+                          : "var(--text-muted)",
                       }}
                     >
-                      {isPlaying ? 'Playing' : 'Ready'}
+                      {isPlaying
+                        ? "Playing"
+                        : "Ready"}
                     </span>
 
                   </div>
-
                 </div>
-
               </div>
-
             </div>
-
 
             {/* =================================================
                 ACTIVE LAYERS
@@ -420,8 +575,10 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
             <div
               className="rounded-2xl border p-5"
               style={{
-                backgroundColor: 'rgba(255,255,255,0.025)',
-                borderColor: 'rgba(255,255,255,0.06)'
+                backgroundColor:
+                  "rgba(255,255,255,0.025)",
+                borderColor:
+                  "rgba(255,255,255,0.06)",
               }}
             >
 
@@ -432,14 +589,19 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                   <Volume2
                     size={14}
                     style={{
-                      color: 'var(--champagne)'
+                      color: "var(--champagne)",
                     }}
                   />
 
                   <span
-                    className="text-[10px] uppercase tracking-[0.18em] font-semibold"
+                    className="
+                      text-[10px]
+                      uppercase
+                      tracking-[0.18em]
+                      font-semibold
+                    "
                     style={{
-                      color: 'var(--text-muted)'
+                      color: "var(--text-muted)",
                     }}
                   >
                     Active Layers
@@ -448,10 +610,16 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                 </div>
 
                 <span
-                  className="text-[9px] px-2 py-1 rounded-full"
+                  className="
+                    text-[9px]
+                    px-2
+                    py-1
+                    rounded-full
+                  "
                   style={{
-                    color: 'var(--sage)',
-                    backgroundColor: 'rgba(168,182,154,0.08)'
+                    color: "var(--sage)",
+                    backgroundColor:
+                      "rgba(168,182,154,0.08)",
                   }}
                 >
                   {activeLayers.length} active
@@ -459,13 +627,23 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
 
               </div>
 
-
               {activeLayers.length === 0 ? (
 
                 <div
-                  className="min-h-[80px] flex flex-col items-center justify-center text-center rounded-xl border border-dashed"
+                  className="
+                    min-h-[80px]
+                    flex
+                    flex-col
+                    items-center
+                    justify-center
+                    text-center
+                    rounded-xl
+                    border
+                    border-dashed
+                  "
                   style={{
-                    borderColor: 'rgba(255,255,255,0.08)'
+                    borderColor:
+                      "rgba(255,255,255,0.08)",
                   }}
                 >
 
@@ -477,7 +655,8 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                   <p
                     className="text-[10px] opacity-60"
                     style={{
-                      color: 'var(--text-primary)'
+                      color:
+                        "var(--text-primary)",
                     }}
                   >
                     No ambient layers active
@@ -486,10 +665,12 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                   <p
                     className="text-[9px] mt-1 opacity-40"
                     style={{
-                      color: 'var(--text-muted)'
+                      color:
+                        "var(--text-muted)",
                     }}
                   >
-                    Add ambience from Atmosphere Studio
+                    Add ambience from
+                    Atmosphere Studio
                   </p>
 
                 </div>
@@ -502,26 +683,39 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
 
                     <div
                       key={layer.id}
-                      className="flex items-center justify-between px-3 py-2.5 rounded-xl"
+                      className="
+                        flex
+                        items-center
+                        justify-between
+                        px-3
+                        py-2.5
+                        rounded-xl
+                      "
                       style={{
                         backgroundColor:
-                          'rgba(255,255,255,0.035)'
+                          "rgba(255,255,255,0.035)",
                       }}
                     >
 
                       <div className="flex items-center gap-2.5">
 
                         <span
-                          className="w-1.5 h-1.5 rounded-full"
+                          className="
+                            w-1.5
+                            h-1.5
+                            rounded-full
+                          "
                           style={{
-                            backgroundColor: 'var(--sage)'
+                            backgroundColor:
+                              "var(--sage)",
                           }}
                         />
 
                         <span
                           className="text-[11px]"
                           style={{
-                            color: 'var(--text-primary)'
+                            color:
+                              "var(--text-primary)",
                           }}
                         >
                           {layer.name}
@@ -530,12 +724,20 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                       </div>
 
                       <span
-                        className="text-[9px] font-mono opacity-60"
+                        className="
+                          text-[9px]
+                          font-mono
+                          opacity-60
+                        "
                         style={{
-                          color: 'var(--text-muted)'
+                          color:
+                            "var(--text-muted)",
                         }}
                       >
-                        {Math.round(layer.volume * 100)}%
+                        {Math.round(
+                          layer.volume * 100
+                        )}
+                        %
                       </span>
 
                     </div>
@@ -543,40 +745,56 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                   ))}
 
                 </div>
-
               )}
-
             </div>
-
           </div>
-
 
           {/* =================================================
               STUDIO CTA
           ================================================= */}
 
           <div
-            className="mt-6 rounded-2xl border p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+            className="
+              mt-6
+              rounded-2xl
+              border
+              p-5
+              flex
+              flex-col
+              sm:flex-row
+              items-start
+              sm:items-center
+              justify-between
+              gap-4
+            "
             style={{
               background:
-                'linear-gradient(120deg, rgba(168,182,154,0.07), rgba(214,184,135,0.04))',
-              borderColor: 'rgba(168,182,154,0.12)'
+                "linear-gradient(120deg, rgba(168,182,154,0.07), rgba(214,184,135,0.04))",
+              borderColor:
+                "rgba(168,182,154,0.12)",
             }}
           >
 
             <div className="flex items-center gap-3">
 
               <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center"
+                className="
+                  w-9
+                  h-9
+                  rounded-xl
+                  flex
+                  items-center
+                  justify-center
+                "
                 style={{
                   backgroundColor:
-                    'rgba(168,182,154,0.1)'
+                    "rgba(168,182,154,0.1)",
                 }}
               >
                 <SlidersHorizontal
                   size={15}
                   style={{
-                    color: 'var(--sage)'
+                    color: "var(--sage)",
                   }}
                 />
               </div>
@@ -586,42 +804,61 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
                 <h3
                   className="text-xs font-medium"
                   style={{
-                    color: 'var(--text-primary)'
+                    color:
+                      "var(--text-primary)",
                   }}
                 >
                   Fine-tune your atmosphere
                 </h3>
 
                 <p
-                  className="text-[9px] mt-1 opacity-50"
+                  className="
+                    text-[9px]
+                    mt-1
+                    opacity-50
+                  "
                   style={{
-                    color: 'var(--text-muted)'
+                    color:
+                      "var(--text-muted)",
                   }}
                 >
-                  Adjust rain, ocean, wind, fireplace and other layers.
+                  Adjust rain, ocean, wind,
+                  fireplace and other layers.
                 </p>
 
               </div>
-
             </div>
-
 
             <button
               type="button"
               onClick={onOpenStudio}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border text-[10px] uppercase tracking-wider font-semibold transition-all hover:scale-[1.02]"
+              className="
+                flex
+                items-center
+                gap-2
+                px-4
+                py-2.5
+                rounded-xl
+                border
+                text-[10px]
+                uppercase
+                tracking-wider
+                font-semibold
+                transition-all
+                hover:scale-[1.02]
+              "
               style={{
-                borderColor: 'rgba(168,182,154,0.2)',
-                backgroundColor: 'rgba(168,182,154,0.08)',
-                color: 'var(--sage)'
+                borderColor:
+                  "rgba(168,182,154,0.2)",
+                backgroundColor:
+                  "rgba(168,182,154,0.08)",
+                color: "var(--sage)",
               }}
             >
               Atmosphere Studio
               <ArrowRight size={13} />
             </button>
-
           </div>
-
 
           {/* =================================================
               SAVE
@@ -634,69 +871,99 @@ export const VibeResult = ({ onOpenStudio, onBack }) => {
               <input
                 type="text"
                 value={vibeName}
-                onChange={(e) => setVibeName(e.target.value)}
+                onChange={(e) =>
+                  setVibeName(e.target.value)
+                }
                 placeholder="Name this vibe"
                 aria-label="Vibe name"
-                className="flex-1 px-4 py-3 rounded-xl border outline-none text-xs transition-all"
+                className="
+                  flex-1
+                  px-4
+                  py-3
+                  rounded-xl
+                  border
+                  outline-none
+                  text-xs
+                  transition-all
+                "
                 style={{
                   backgroundColor:
-                    'rgba(255,255,255,0.035)',
+                    "rgba(255,255,255,0.035)",
                   borderColor:
-                    'rgba(255,255,255,0.08)',
-                  color: 'var(--text-primary)'
+                    "rgba(255,255,255,0.08)",
+                  color:
+                    "var(--text-primary)",
                 }}
               />
 
               <button
                 type="button"
                 onClick={handleSave}
-                className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-[10px] uppercase tracking-wider font-semibold transition-all hover:scale-[1.02]"
+                className="
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                  px-5
+                  py-3
+                  rounded-xl
+                  text-[10px]
+                  uppercase
+                  tracking-wider
+                  font-semibold
+                  transition-all
+                  hover:scale-[1.02]
+                "
                 style={{
-                  backgroundColor: 'var(--sage)',
-                  color: '#151713'
+                  backgroundColor:
+                    "var(--sage)",
+                  color: "#151713",
                 }}
               >
-
                 <BookmarkCheck size={14} />
-
                 Save Vibe
-
               </button>
 
             </div>
-
           </div>
-
         </div>
-
 
         {/* =================================================
             SAVED MESSAGE
         ================================================= */}
 
         {savedMessage && (
-
           <div
-            className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2.5 rounded-full border backdrop-blur-xl"
+            className="
+              absolute
+              bottom-5
+              left-1/2
+              -translate-x-1/2
+              flex
+              items-center
+              gap-2
+              px-4
+              py-2.5
+              rounded-full
+              border
+              backdrop-blur-xl
+            "
             style={{
-              backgroundColor: 'rgba(168,182,154,0.12)',
-              borderColor: 'rgba(168,182,154,0.25)',
-              color: 'var(--sage)'
+              backgroundColor:
+                "rgba(168,182,154,0.12)",
+              borderColor:
+                "rgba(168,182,154,0.25)",
+              color: "var(--sage)",
             }}
           >
-
             <BookmarkCheck size={13} />
 
             <span className="text-[10px]">
               Vibe saved successfully.
             </span>
-
           </div>
-
         )}
-
       </section>
-
     </main>
   );
 };
