@@ -260,9 +260,18 @@ export const AudioProvider = ({ children }) => {
 
   const heroAudioRef = useRef(null);
 
-  const [currentTrack, setCurrentTrack] = useState(
-    MUSIC_DATABASE[0]
-  );
+  /*
+   * IMPORTANT:
+   * No default track here.
+   *
+   * Before user selects/submits a situation:
+   * currentTrack === null
+   *
+   * This prevents Deep Sleep from appearing automatically.
+   */
+  const [currentTrack, setCurrentTrack] = useState(null);
+
+  const currentTrackRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -270,6 +279,11 @@ export const AudioProvider = ({ children }) => {
 
   const [volume, setVolumeState] = useState(0.8);
   const [masterVolume, setMasterVolumeState] = useState(1);
+
+  /* Keep currentTrackRef synchronized */
+  useEffect(() => {
+    currentTrackRef.current = currentTrack;
+  }, [currentTrack]);
 
   /* -------------------------------------------------------
      AMBIENT
@@ -323,18 +337,56 @@ export const AudioProvider = ({ children }) => {
       setIsPlaying(false);
       setCurrentTime(0);
 
-      playNextTrack();
+      const track = currentTrackRef.current;
+
+      if (!track) return;
+
+      const index = MUSIC_DATABASE.findIndex(
+        (item) => item.id === track.id
+      );
+
+      const nextIndex =
+        index === -1
+          ? 0
+          : (index + 1) % MUSIC_DATABASE.length;
+
+      const nextTrack = MUSIC_DATABASE[nextIndex];
+
+      audio.pause();
+      audio.removeAttribute("src");
+      audio.load();
+
+      setCurrentTrack(nextTrack);
+      currentTrackRef.current = nextTrack;
+
+      setCurrentTime(0);
+      setDuration(0);
+
+      audio.src = nextTrack.src;
+      audio.volume = volume * masterVolume;
+
+      audio.load();
+
+      audio
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((error) => {
+          console.error(
+            "[VibeSpace] NEXT TRACK PLAY ERROR:",
+            error
+          );
+          setIsPlaying(false);
+        });
     };
 
     const onError = () => {
-      console.error(
-        "[VibeSpace] AUDIO ERROR",
-        {
-          src: audio.src,
-          errorCode: audio.error?.code,
-          errorMessage: audio.error?.message,
-        }
-      );
+      console.error("[VibeSpace] AUDIO ERROR", {
+        src: audio.src,
+        errorCode: audio.error?.code,
+        errorMessage: audio.error?.message,
+      });
 
       setIsPlaying(false);
     };
@@ -475,10 +527,8 @@ export const AudioProvider = ({ children }) => {
         volume * masterVolume;
 
       setCurrentTrack(track);
+      currentTrackRef.current = track;
 
-      /*
-       * load() prepares the new source
-       */
       audio.load();
 
       if (autoPlay) {
@@ -516,18 +566,11 @@ export const AudioProvider = ({ children }) => {
     }
 
     try {
-      /*
-       * Same track
-       */
       if (
-        currentTrack?.id === track.id &&
+        currentTrackRef.current?.id === track.id &&
         audio.src &&
         audio.src !== window.location.href
       ) {
-        console.log(
-          "[VibeSpace] Playing existing track"
-        );
-
         await audio.play();
 
         setIsPlaying(true);
@@ -535,9 +578,6 @@ export const AudioProvider = ({ children }) => {
         return;
       }
 
-      /*
-       * New track
-       */
       await loadTrack(track, true);
     } catch (error) {
       console.error(
@@ -563,38 +603,29 @@ export const AudioProvider = ({ children }) => {
       return;
     }
 
+    /*
+     * Nothing selected yet.
+     * Do NOT automatically start Deep Sleep.
+     */
+    if (!currentTrackRef.current) {
+      console.log(
+        "[VibeSpace] No track selected yet"
+      );
+      return;
+    }
+
     try {
-      /*
-       * PAUSE
-       */
       if (!audio.paused) {
-        console.log(
-          "[VibeSpace] User clicked PAUSE"
-        );
-
         audio.pause();
-
         return;
       }
 
-      /*
-       * PLAY
-       */
-
-      console.log(
-        "[VibeSpace] User clicked PLAY:",
-        currentTrack?.title
-      );
-
-      /*
-       * No source loaded yet
-       */
       if (
         !audio.src ||
         audio.src === window.location.href
       ) {
         await loadTrack(
-          currentTrack,
+          currentTrackRef.current,
           true
         );
 
@@ -619,10 +650,21 @@ export const AudioProvider = ({ children }) => {
   ======================================================= */
 
   const playNextTrack = async () => {
+    const current = currentTrackRef.current;
+
+    /*
+     * If no track is selected, do nothing.
+     */
+    if (!current) {
+      console.log(
+        "[VibeSpace] No current track"
+      );
+      return;
+    }
+
     const index =
       MUSIC_DATABASE.findIndex(
-        (track) =>
-          track.id === currentTrack?.id
+        (track) => track.id === current.id
       );
 
     const nextIndex =
@@ -642,10 +684,18 @@ export const AudioProvider = ({ children }) => {
   ======================================================= */
 
   const playPreviousTrack = async () => {
+    const current = currentTrackRef.current;
+
+    if (!current) {
+      console.log(
+        "[VibeSpace] No current track"
+      );
+      return;
+    }
+
     const index =
       MUSIC_DATABASE.findIndex(
-        (track) =>
-          track.id === currentTrack?.id
+        (track) => track.id === current.id
       );
 
     const previousIndex =
@@ -666,7 +716,9 @@ export const AudioProvider = ({ children }) => {
   const seekTo = (time) => {
     const audio = heroAudioRef.current;
 
-    if (!audio) return;
+    if (!audio || !currentTrackRef.current) {
+      return;
+    }
 
     const safeTime = Math.max(
       0,
@@ -711,9 +763,7 @@ export const AudioProvider = ({ children }) => {
       Math.min(1, Number(value))
     );
 
-    setMasterVolumeState(
-      safeValue
-    );
+    setMasterVolumeState(safeValue);
 
     if (heroAudioRef.current) {
       heroAudioRef.current.volume =
@@ -854,9 +904,7 @@ export const AudioProvider = ({ children }) => {
      AMBIENT MUTE
   ======================================================= */
 
-  const toggleAmbientMute = async (
-    id
-  ) => {
+  const toggleAmbientMute = async (id) => {
     const layer =
       ambientLayers.find(
         (item) => item.id === id
@@ -912,21 +960,21 @@ export const AudioProvider = ({ children }) => {
     selectedEnvironment,
     selectedIntensity
   ) => {
-    const a =
-      String(selectedActivity || "")
-        .toLowerCase();
+    const a = String(
+      selectedActivity || ""
+    ).toLowerCase();
 
-    const f =
-      String(selectedFeeling || "")
-        .toLowerCase();
+    const f = String(
+      selectedFeeling || ""
+    ).toLowerCase();
 
-    const e =
-      String(selectedEnvironment || "")
-        .toLowerCase();
+    const e = String(
+      selectedEnvironment || ""
+    ).toLowerCase();
 
-    const i =
-      String(selectedIntensity || "")
-        .toLowerCase();
+    const i = String(
+      selectedIntensity || ""
+    ).toLowerCase();
 
     /* SLEEP */
 
@@ -1098,20 +1146,19 @@ export const AudioProvider = ({ children }) => {
      RECOMMENDED TRACK
   ======================================================= */
 
-  const recommendedTrack =
-    useMemo(() => {
-      return getRecommendedTrack(
-        activity,
-        feeling,
-        environment,
-        intensity
-      );
-    }, [
+  const recommendedTrack = useMemo(() => {
+    return getRecommendedTrack(
       activity,
       feeling,
       environment,
-      intensity,
-    ]);
+      intensity
+    );
+  }, [
+    activity,
+    feeling,
+    environment,
+    intensity,
+  ]);
 
   /* =======================================================
      SUBMIT SITUATION
@@ -1149,7 +1196,7 @@ export const AudioProvider = ({ children }) => {
     setIntensity(finalIntensity);
 
     /*
-     * Stop current audio.
+     * Stop current audio
      */
 
     const audio =
@@ -1167,6 +1214,8 @@ export const AudioProvider = ({ children }) => {
      */
 
     setCurrentTrack(selectedTrack);
+    currentTrackRef.current =
+      selectedTrack;
 
     setCurrentTime(0);
     setDuration(0);
@@ -1258,15 +1307,19 @@ export const AudioProvider = ({ children }) => {
 
       const vibe = {
         id: Date.now(),
+
         name:
           name ||
           `${environment} ${activity}`,
+
         activity,
         feeling,
         environment,
         intensity,
+
         track:
           currentTrack?.title || "",
+
         createdAt:
           new Date().toISOString(),
       };
@@ -1293,11 +1346,13 @@ export const AudioProvider = ({ children }) => {
   const saveCustomMix = (mixName) => {
     const mix = {
       id: Date.now(),
+
       name:
         mixName ||
         `Custom Mix ${
           savedMixes.length + 1
         }`,
+
       layers: ambientLayers.map(
         (layer) => ({
           id: layer.id,
@@ -1352,9 +1407,11 @@ export const AudioProvider = ({ children }) => {
         document.activeElement?.tagName;
 
       if (
-        ["INPUT", "TEXTAREA", "SELECT"].includes(
-          tag
-        )
+        [
+          "INPUT",
+          "TEXTAREA",
+          "SELECT",
+        ].includes(tag)
       ) {
         return;
       }
@@ -1385,7 +1442,7 @@ export const AudioProvider = ({ children }) => {
         "keydown",
         handleKeyDown
       );
-  }, [currentTrack]);
+  }, []);
 
   /* =======================================================
      CONTEXT VALUE
@@ -1393,12 +1450,16 @@ export const AudioProvider = ({ children }) => {
 
   const value = {
     /* Situation */
+
     activity,
     setActivity,
+
     feeling,
     setFeeling,
+
     environment,
     setEnvironment,
+
     intensity,
     setIntensity,
 
@@ -1409,6 +1470,7 @@ export const AudioProvider = ({ children }) => {
     surpriseMe,
 
     /* Music */
+
     currentTrack,
     setCurrentTrack,
 
@@ -1431,14 +1493,17 @@ export const AudioProvider = ({ children }) => {
     setMasterVolume,
 
     /* Ambient */
+
     ambientLayers,
     setAmbientVolume,
     toggleAmbientMute,
 
     /* Recommendation */
+
     recommendedTrack,
 
     /* Saved */
+
     saveVibe,
 
     savedMixes,
@@ -1447,10 +1512,12 @@ export const AudioProvider = ({ children }) => {
     deleteCustomMix,
 
     /* Theme */
+
     isDarkMode,
     setIsDarkMode,
 
     /* Database */
+
     MUSIC_DATABASE,
     AMBIENT_DATABASE,
   };
