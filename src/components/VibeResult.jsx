@@ -5,13 +5,14 @@ import {
   Pause,
   BookmarkCheck,
   ArrowRight,
+  ArrowLeft,
   Music2,
   Volume2,
   Sparkles,
   SlidersHorizontal
 } from 'lucide-react';
 
-export const VibeResult = ({ onOpenStudio }) => {
+export const VibeResult = ({ onOpenStudio, onBack }) => {
   const {
     activity,
     feeling,
@@ -45,7 +46,46 @@ export const VibeResult = ({ onOpenStudio }) => {
   };
 
   return (
-    <main className="min-h-screen px-5 sm:px-8 pt-28 pb-40 max-w-6xl mx-auto">
+    <main className="min-h-screen px-5 sm:px-8 pt-24 pb-40 max-w-6xl mx-auto">
+
+      {/* =====================================================
+          BACK BUTTON
+          ===================================================== */}
+
+      <div className="max-w-3xl mx-auto mb-8">
+        <button
+          type="button"
+          onClick={onBack}
+          className="
+            group
+            inline-flex
+            items-center
+            gap-2
+            px-3.5
+            py-2
+            rounded-full
+            border
+            transition-all
+            duration-300
+            hover:scale-[1.02]
+          "
+          style={{
+            backgroundColor: 'rgba(255,255,255,0.025)',
+            borderColor: 'rgba(255,255,255,0.08)',
+            color: 'var(--text-muted)'
+          }}
+        >
+          <ArrowLeft
+            size={14}
+            className="transition-transform duration-300 group-hover:-translate-x-0.5"
+          />
+
+          <span className="text-[10px] uppercase tracking-[0.16em] font-medium">
+            Back to Situation Builder
+          </span>
+        </button>
+      </div>
+
 
       {/* =====================================================
           HERO
@@ -291,8 +331,6 @@ export const VibeResult = ({ onOpenStudio }) => {
               </div>
 
 
-              {/* track */}
-
               <div className="flex items-center gap-4">
 
                 <div
@@ -341,7 +379,6 @@ export const VibeResult = ({ onOpenStudio }) => {
                   >
                     {currentTrack?.artist || 'VibeSpace'}
                   </p>
-
 
                   <div className="flex items-center gap-2 mt-3">
 
