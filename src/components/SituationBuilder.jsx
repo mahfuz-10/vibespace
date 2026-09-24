@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Sparkles,
   ArrowRight,
@@ -7,7 +7,8 @@ import {
   Compass,
   Layers,
   Flame,
-  Volume2
+  Volume2,
+  Loader2
 } from 'lucide-react';
 
 import { useAudio, MUSIC_DATABASE } from './AudioManager';
@@ -62,48 +63,50 @@ const INTENSITIES = [
    COMPONENT
    ============================================================ */
 
-export const SituationBuilder = () => {
+export const SituationBuilder = ({ onProceed }) => {
   const {
     activity,
     setActivity,
-
     feeling,
     setFeeling,
-
     environment,
     setEnvironment,
-
     intensity,
     setIntensity,
-
     setHasSubmittedSituation,
     playTrack,
     setIsPlaying
   } = useAudio();
 
+  const [isEntering, setIsEntering] = useState(false);
+
 
   /* ==========================================================
-     FIND RECOMMENDED TRACK
+     FIND RECOMMENDED TRACK (Case-Insensitive Fixed)
      ========================================================== */
 
   const recommendedTrack = useMemo(() => {
     if (!MUSIC_DATABASE || MUSIC_DATABASE.length === 0) return null;
 
+    const actLower = activity.toLowerCase();
+    const feelLower = feeling.toLowerCase();
+    const envLower = environment.toLowerCase();
+
     const exactMatch = MUSIC_DATABASE.find(track =>
-      track.situations?.includes(activity) &&
-      track.mood === feeling &&
-      track.environment === environment
+      track.situations?.some(s => s.toLowerCase() === actLower) &&
+      track.mood?.toLowerCase() === feelLower &&
+      track.environment?.toLowerCase() === envLower
     );
     if (exactMatch) return exactMatch;
 
     const activityFeelingMatch = MUSIC_DATABASE.find(track =>
-      track.situations?.includes(activity) &&
-      track.mood === feeling
+      track.situations?.some(s => s.toLowerCase() === actLower) &&
+      track.mood?.toLowerCase() === feelLower
     );
     if (activityFeelingMatch) return activityFeelingMatch;
 
     const activityMatch = MUSIC_DATABASE.find(track =>
-      track.situations?.includes(activity)
+      track.situations?.some(s => s.toLowerCase() === actLower)
     );
     if (activityMatch) return activityMatch;
 
@@ -116,11 +119,21 @@ export const SituationBuilder = () => {
      ========================================================== */
 
   const handleEnterAtmosphere = () => {
+    if (isEntering) return;
+    setIsEntering(true);
+
     if (recommendedTrack) {
       playTrack(recommendedTrack);
       setIsPlaying(true);
     }
     setHasSubmittedSituation(true);
+
+    setTimeout(() => {
+      if (typeof onProceed === 'function') {
+        onProceed();
+      }
+      setIsEntering(false);
+    }, 300);
   };
 
   const handleSurpriseMe = () => {
@@ -413,7 +426,8 @@ export const SituationBuilder = () => {
 
               <button
                 type="button"
-                className="enter-button flex-[2] py-4 rounded-xl flex items-center justify-center gap-3 text-xs font-bold tracking-wider uppercase cursor-pointer transition-all duration-300 shadow-xl"
+                disabled={isEntering}
+                className="enter-button flex-[2] py-4 rounded-xl flex items-center justify-center gap-3 text-xs font-bold tracking-wider uppercase cursor-pointer transition-all duration-300 shadow-xl disabled:opacity-70"
                 onClick={handleEnterAtmosphere}
                 style={{ 
                   background: 'linear-gradient(135deg, var(--sage), var(--accent-color))',
@@ -421,8 +435,17 @@ export const SituationBuilder = () => {
                   boxShadow: '0 12px 35px rgba(168, 182, 154, 0.2)'
                 }}
               >
-                <span>Enter Atmosphere</span>
-                <ArrowRight size={16} />
+                {isEntering ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Calibrating Atmosphere...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Enter Atmosphere</span>
+                    <ArrowRight size={16} />
+                  </>
+                )}
               </button>
             </div>
 
@@ -456,7 +479,7 @@ export const SituationBuilder = () => {
 
                 <div className="flex items-center gap-2 flex-shrink-0 px-3 py-1.5 rounded-xl border text-[10px] font-medium" 
                      style={{ borderColor: 'rgba(168, 182, 154, 0.2)', backgroundColor: 'rgba(168, 182, 154, 0.05)', color: 'var(--sage)' }}>
-                  <Sparkles size={12} />
+                  <Sparkles size=12 />
                   <span>Ready to Play</span>
                 </div>
               </div>
