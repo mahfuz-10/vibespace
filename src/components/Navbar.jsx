@@ -22,7 +22,12 @@ export const Navbar = ({
   // Ensure DOM updates data-theme attribute whenever isDarkMode changes
   useEffect(() => {
     const themeValue = isDarkMode ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', themeValue);
+
+    document.documentElement.setAttribute(
+      'data-theme',
+      themeValue
+    );
+
     if (isDarkMode) {
       document.documentElement.classList.remove('light');
     } else {
@@ -34,7 +39,9 @@ export const Navbar = ({
     if (typeof setIsDarkMode === 'function') {
       setIsDarkMode((previous) => !previous);
     } else {
-      console.error("setIsDarkMode is not available in AudioContext");
+      console.error(
+        "setIsDarkMode is not available in AudioContext"
+      );
     }
   };
 
@@ -45,6 +52,11 @@ export const Navbar = ({
 
   return (
     <>
+      {/* =====================================================
+          DESKTOP / TOP NAVBAR
+          PC VERSION UNCHANGED
+      ===================================================== */}
+
       <header
         className="
           fixed
@@ -110,16 +122,37 @@ export const Navbar = ({
                 shadow-lg
               "
               style={{
-                background: 'linear-gradient(145deg, var(--sage), var(--surface-soft))',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                boxShadow: '0 10px 30px rgba(168, 182, 154, 0.25)'
+                background:
+                  'linear-gradient(145deg, var(--sage), var(--surface-soft))',
+                border:
+                  '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow:
+                  '0 10px 30px rgba(168, 182, 154, 0.25)'
               }}
             >
               {/* Inner ambient glow */}
-              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+              <div
+                className="
+                  absolute
+                  inset-0
+                  bg-white/10
+                  opacity-0
+                  group-hover:opacity-100
+                  transition-opacity
+                  duration-500
+                "
+              />
+
               <Sparkles
-                className="w-4 h-4 relative z-10 transition-transform duration-500 group-hover:scale-110"
+                className="
+                  w-4
+                  h-4
+                  relative
+                  z-10
+                  transition-transform
+                  duration-500
+                  group-hover:scale-110
+                "
                 style={{
                   color: 'var(--bg-primary)'
                 }}
@@ -139,7 +172,15 @@ export const Navbar = ({
                   color: 'var(--text-primary)'
                 }}
               >
-                Vibe<span className="font-normal italic" style={{ color: 'var(--champagne)' }}>Space</span>
+                Vibe
+                <span
+                  className="font-normal italic"
+                  style={{
+                    color: 'var(--champagne)'
+                  }}
+                >
+                  Space
+                </span>
               </span>
 
               <span
@@ -162,7 +203,10 @@ export const Navbar = ({
           </button>
 
 
-          {/* DESKTOP NAVIGATION */}
+          {/* =====================================================
+              DESKTOP NAVIGATION
+              PC VERSION UNCHANGED
+          ===================================================== */}
 
           <nav
             className="
@@ -177,7 +221,6 @@ export const Navbar = ({
             style={{
               borderColor:
                 'var(--border-subtle)',
-
               backgroundColor:
                 'var(--surface-primary)'
             }}
@@ -207,7 +250,6 @@ export const Navbar = ({
                   ? {
                       backgroundColor:
                         'var(--text-primary)',
-
                       color:
                         'var(--bg-primary)'
                     }
@@ -245,7 +287,6 @@ export const Navbar = ({
                   ? {
                       backgroundColor:
                         'var(--text-primary)',
-
                       color:
                         'var(--bg-primary)'
                     }
@@ -261,7 +302,10 @@ export const Navbar = ({
           </nav>
 
 
-          {/* THEME SWITCHER */}
+          {/* =====================================================
+              THEME SWITCHER
+              PC VERSION UNCHANGED
+          ===================================================== */}
 
           <button
             type="button"
@@ -283,7 +327,6 @@ export const Navbar = ({
             style={{
               borderColor:
                 'var(--border-subtle)',
-
               backgroundColor:
                 'var(--surface-primary)'
             }}
@@ -321,14 +364,26 @@ export const Navbar = ({
         </div>
       </header>
 
-      {/* MOBILE FLOATING BOTTOM NAVIGATION BAR (Cleanly positioned above audio player) */}
-      <div 
+
+      {/* =========================================================
+          MOBILE NAVIGATION
+          
+          FIX:
+          - Still fixed
+          - NEVER centered vertically
+          - Anchored near bottom
+          - Above the player
+          - z-40 keeps it below player z-50
+          - No top / translateY / 50% positioning
+      ========================================================= */}
+
+      <div
         className="
           fixed
-          bottom-32
           left-1/2
           -translate-x-1/2
-          z-30
+          bottom-[6.5rem]
+          z-40
           flex
           md:hidden
           items-center
@@ -338,13 +393,20 @@ export const Navbar = ({
           border
           shadow-2xl
           backdrop-blur-2xl
+          whitespace-nowrap
         "
         style={{
-          backgroundColor: 'color-mix(in srgb, var(--surface-primary) 96%, transparent)',
-          borderColor: 'var(--border-subtle)',
-          boxShadow: '0 15px 40px rgba(0, 0, 0, 0.5)'
+          backgroundColor:
+            'color-mix(in srgb, var(--surface-primary) 96%, transparent)',
+          borderColor:
+            'var(--border-subtle)',
+          boxShadow:
+            '0 15px 40px rgba(0, 0, 0, 0.5)'
         }}
       >
+
+        {/* BUILDER */}
+
         <button
           type="button"
           onClick={handleHome}
@@ -360,15 +422,20 @@ export const Navbar = ({
             duration-300
           "
           style={
-            currentTab === 'builder' || currentTab === 'result'
+            currentTab === 'builder' ||
+            currentTab === 'result'
               ? {
-                  backgroundColor: 'var(--text-primary)',
-                  color: 'var(--bg-primary)',
+                  backgroundColor:
+                    'var(--text-primary)',
+                  color:
+                    'var(--bg-primary)',
                   fontWeight: 500
                 }
               : {
-                  color: 'var(--text-muted)',
-                  backgroundColor: 'transparent'
+                  color:
+                    'var(--text-muted)',
+                  backgroundColor:
+                    'transparent'
                 }
           }
         >
@@ -376,9 +443,14 @@ export const Navbar = ({
           <span>Builder</span>
         </button>
 
+
+        {/* STUDIO */}
+
         <button
           type="button"
-          onClick={() => setCurrentTab('studio')}
+          onClick={() =>
+            setCurrentTab('studio')
+          }
           className="
             flex
             items-center
@@ -393,19 +465,24 @@ export const Navbar = ({
           style={
             currentTab === 'studio'
               ? {
-                  backgroundColor: 'var(--text-primary)',
-                  color: 'var(--bg-primary)',
+                  backgroundColor:
+                    'var(--text-primary)',
+                  color:
+                    'var(--bg-primary)',
                   fontWeight: 500
                 }
               : {
-                  color: 'var(--text-muted)',
-                  backgroundColor: 'transparent'
+                  color:
+                    'var(--text-muted)',
+                  backgroundColor:
+                    'transparent'
                 }
           }
         >
           <SlidersHorizontal size={14} />
           <span>Studio</span>
         </button>
+
       </div>
     </>
   );
