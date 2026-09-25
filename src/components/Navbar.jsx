@@ -19,7 +19,10 @@ export const Navbar = ({
     setHasSubmittedSituation
   } = useAudio();
 
-  // Ensure DOM updates data-theme attribute whenever isDarkMode changes
+  /* =========================================================
+     THEME
+  ========================================================= */
+
   useEffect(() => {
     const themeValue = isDarkMode ? 'dark' : 'light';
 
@@ -35,6 +38,11 @@ export const Navbar = ({
     }
   }, [isDarkMode]);
 
+
+  /* =========================================================
+     THEME TOGGLE
+  ========================================================= */
+
   const handleThemeToggle = () => {
     if (typeof setIsDarkMode === 'function') {
       setIsDarkMode((previous) => !previous);
@@ -45,16 +53,23 @@ export const Navbar = ({
     }
   };
 
+
+  /* =========================================================
+     HOME
+  ========================================================= */
+
   const handleHome = () => {
     setCurrentTab('builder');
     setHasSubmittedSituation(false);
   };
 
+
   return (
     <>
       {/* =====================================================
           DESKTOP / TOP NAVBAR
-          PC VERSION UNCHANGED
+
+          PC VERSION KEPT UNCHANGED
       ===================================================== */}
 
       <header
@@ -207,7 +222,8 @@ export const Navbar = ({
 
           {/* =================================================
               DESKTOP NAVIGATION
-              PC UNCHANGED
+
+              PC VERSION UNCHANGED
           ================================================= */}
 
           <nav
@@ -306,7 +322,8 @@ export const Navbar = ({
 
           {/* =================================================
               THEME SWITCHER
-              PC UNCHANGED
+
+              PC VERSION UNCHANGED
           ================================================= */}
 
           <button
@@ -368,136 +385,161 @@ export const Navbar = ({
 
 
       {/* =====================================================
-          MOBILE BOTTOM NAVIGATION
-          
+          MOBILE NAVIGATION
+
           IMPORTANT:
-          - ONLY MOBILE
-          - NO top: 50%
-          - NO translateY
-          - Fixed at bottom
-          - Sits ABOVE player
-          - Does NOT stay in middle while scrolling
+          - NOT FIXED
+          - NOT BOTTOM
+          - NOT CENTERED IN VIEWPORT
+          - NORMAL DOCUMENT FLOW
+          - STICKY BELOW 80px NAVBAR
       ===================================================== */}
 
       <div
         className="
-          fixed
-          left-1/2
-          -translate-x-1/2
-          bottom-[96px]
-          z-40
-          flex
           md:hidden
-          items-center
-          gap-1.5
-          p-1.5
-          rounded-full
-          border
-          backdrop-blur-2xl
-          shadow-2xl
+          pt-20
+          relative
+          z-40
         "
-        style={{
-          width: 'max-content',
-          maxWidth: 'calc(100vw - 32px)',
-          backgroundColor:
-            'color-mix(in srgb, var(--surface-primary) 96%, transparent)',
-          borderColor:
-            'var(--border-subtle)',
-          boxShadow:
-            '0 12px 35px rgba(0, 0, 0, 0.35)'
-        }}
       >
-
-        {/* =================================================
-            BUILDER
-        ================================================= */}
-
-        <button
-          type="button"
-          onClick={handleHome}
+        <div
           className="
-            flex
-            items-center
-            gap-2
-            px-5
+            sticky
+            top-20
+            w-full
+            px-4
             py-2.5
-            rounded-full
-            text-xs
-            transition-all
-            duration-300
-            whitespace-nowrap
-          "
-          style={
-            currentTab === 'builder' ||
-            currentTab === 'result'
-              ? {
-                  backgroundColor:
-                    'var(--text-primary)',
-                  color:
-                    'var(--bg-primary)',
-                  fontWeight: 500
-                }
-              : {
-                  color:
-                    'var(--text-muted)',
-                  backgroundColor:
-                    'transparent'
-                }
-          }
-        >
-          <Home size={14} />
-
-          <span>
-            Builder
-          </span>
-        </button>
-
-
-        {/* =================================================
-            STUDIO
-        ================================================= */}
-
-        <button
-          type="button"
-          onClick={() =>
-            setCurrentTab('studio')
-          }
-          className="
             flex
-            items-center
-            gap-2
-            px-5
-            py-2.5
-            rounded-full
-            text-xs
-            transition-all
-            duration-300
-            whitespace-nowrap
+            justify-center
+            border-b
+            backdrop-blur-xl
           "
-          style={
-            currentTab === 'studio'
-              ? {
-                  backgroundColor:
-                    'var(--text-primary)',
-                  color:
-                    'var(--bg-primary)',
-                  fontWeight: 500
-                }
-              : {
-                  color:
-                    'var(--text-muted)',
-                  backgroundColor:
-                    'transparent'
-                }
-          }
+          style={{
+            backgroundColor:
+              'color-mix(in srgb, var(--bg-primary) 88%, transparent)',
+            borderColor:
+              'var(--border-subtle)'
+          }}
         >
-          <SlidersHorizontal size={14} />
 
-          <span>
-            Studio
-          </span>
-        </button>
+          <div
+            className="
+              flex
+              items-center
+              gap-1.5
+              p-1.5
+              rounded-full
+              border
+              shadow-lg
+              backdrop-blur-2xl
+            "
+            style={{
+              width: 'max-content',
+              maxWidth:
+                'calc(100vw - 32px)',
+              backgroundColor:
+                'color-mix(in srgb, var(--surface-primary) 96%, transparent)',
+              borderColor:
+                'var(--border-subtle)',
+              boxShadow:
+                '0 10px 30px rgba(0, 0, 0, 0.18)'
+            }}
+          >
 
+            {/* =================================================
+                BUILDER
+            ================================================= */}
+
+            <button
+              type="button"
+              onClick={handleHome}
+              className="
+                flex
+                items-center
+                gap-2
+                px-5
+                py-2.5
+                rounded-full
+                text-xs
+                transition-all
+                duration-300
+                whitespace-nowrap
+              "
+              style={
+                currentTab === 'builder' ||
+                currentTab === 'result'
+                  ? {
+                      backgroundColor:
+                        'var(--text-primary)',
+                      color:
+                        'var(--bg-primary)',
+                      fontWeight: 500
+                    }
+                  : {
+                      color:
+                        'var(--text-muted)',
+                      backgroundColor:
+                        'transparent'
+                    }
+              }
+            >
+              <Home size={14} />
+
+              <span>
+                Builder
+              </span>
+            </button>
+
+
+            {/* =================================================
+                STUDIO
+            ================================================= */}
+
+            <button
+              type="button"
+              onClick={() =>
+                setCurrentTab('studio')
+              }
+              className="
+                flex
+                items-center
+                gap-2
+                px-5
+                py-2.5
+                rounded-full
+                text-xs
+                transition-all
+                duration-300
+                whitespace-nowrap
+              "
+              style={
+                currentTab === 'studio'
+                  ? {
+                      backgroundColor:
+                        'var(--text-primary)',
+                      color:
+                        'var(--bg-primary)',
+                      fontWeight: 500
+                    }
+                  : {
+                      color:
+                        'var(--text-muted)',
+                      backgroundColor:
+                        'transparent'
+                    }
+              }
+            >
+              <SlidersHorizontal size={14} />
+
+              <span>
+                Studio
+              </span>
+            </button>
+
+          </div>
+
+        </div>
       </div>
     </>
   );

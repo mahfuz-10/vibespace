@@ -42,11 +42,12 @@ function MainContent() {
      MAIN APPLICATION
 
      Desktop:
-     - Existing layout preserved
+     - Existing desktop layout remains unchanged.
 
      Mobile:
-     - Extra bottom space prevents content from being hidden
-       behind the fixed player + mobile navigation
+     - Bottom padding remains for the fixed player.
+     - Mobile Builder/Studio navigation is handled by Navbar.
+     - No extra fixed/sticky navigation is created here.
   ========================================================= */
 
   return (
@@ -112,7 +113,8 @@ function MainContent() {
       {/* =====================================================
           FIXED BOTTOM PLAYER
 
-          PersistentPlayer handles its own fixed position.
+          PersistentPlayer is the ONLY component that should
+          remain fixed at the bottom of the viewport.
       ===================================================== */}
 
       <PersistentPlayer />
