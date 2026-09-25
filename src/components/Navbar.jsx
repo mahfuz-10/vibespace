@@ -91,6 +91,7 @@ export const Navbar = ({
             'var(--border-subtle)'
         }}
       >
+
         <div
           className="
             max-w-7xl
@@ -123,6 +124,7 @@ export const Navbar = ({
             "
             aria-label="Go to VibeSpace home"
           >
+
             <div
               className="
                 w-10
@@ -142,12 +144,15 @@ export const Navbar = ({
               style={{
                 background:
                   'linear-gradient(145deg, var(--sage), var(--surface-soft))',
+
                 border:
                   '1px solid rgba(255, 255, 255, 0.2)',
+
                 boxShadow:
                   '0 10px 30px rgba(168, 182, 154, 0.25)'
               }}
             >
+
               <div
                 className="
                   absolute
@@ -174,9 +179,12 @@ export const Navbar = ({
                   color: 'var(--bg-primary)'
                 }}
               />
+
             </div>
 
+
             <div className="flex flex-col items-start">
+
               <span
                 className="
                   font-light
@@ -200,6 +208,7 @@ export const Navbar = ({
                 </span>
               </span>
 
+
               <span
                 className="
                   hidden
@@ -216,7 +225,9 @@ export const Navbar = ({
               >
                 Acoustic World
               </span>
+
             </div>
+
           </button>
 
 
@@ -239,6 +250,7 @@ export const Navbar = ({
             style={{
               borderColor:
                 'var(--border-subtle)',
+
               backgroundColor:
                 'var(--surface-primary)'
             }}
@@ -268,6 +280,7 @@ export const Navbar = ({
                   ? {
                       backgroundColor:
                         'var(--text-primary)',
+
                       color:
                         'var(--bg-primary)'
                     }
@@ -305,6 +318,7 @@ export const Navbar = ({
                   ? {
                       backgroundColor:
                         'var(--text-primary)',
+
                       color:
                         'var(--bg-primary)'
                     }
@@ -346,6 +360,7 @@ export const Navbar = ({
             style={{
               borderColor:
                 'var(--border-subtle)',
+
               backgroundColor:
                 'var(--surface-primary)'
             }}
@@ -381,87 +396,71 @@ export const Navbar = ({
           </button>
 
         </div>
-      </header>
 
 
-      {/* =====================================================
-          MOBILE NAVIGATION
+        {/* =====================================================
+            MOBILE NAVIGATION
 
-          IMPORTANT:
-          - NOT FIXED
-          - NOT BOTTOM
-          - NOT CENTERED IN VIEWPORT
-          - NORMAL DOCUMENT FLOW
-          - STICKY BELOW 80px NAVBAR
-      ===================================================== */}
+            MOBILE ONLY
 
-      <div
-        className="
-          md:hidden
-          pt-20
-          relative
-          z-40
-        "
-      >
+            IMPORTANT:
+            - Inside the TOP navbar
+            - NOT bottom fixed
+            - NOT sticky
+            - NOT viewport centered
+            - Does NOT affect desktop
+            - Does NOT overlap page content
+        ===================================================== */}
+
         <div
           className="
-            sticky
-            top-20
-            w-full
-            px-4
-            py-2.5
+            md:hidden
+            absolute
+            inset-y-0
+            left-1/2
+            -translate-x-1/2
             flex
-            justify-center
-            border-b
-            backdrop-blur-xl
+            items-center
+            pointer-events-none
           "
-          style={{
-            backgroundColor:
-              'color-mix(in srgb, var(--bg-primary) 88%, transparent)',
-            borderColor:
-              'var(--border-subtle)'
-          }}
         >
 
-          <div
+          <nav
             className="
+              pointer-events-auto
               flex
               items-center
-              gap-1.5
-              p-1.5
+              gap-0.5
+              p-1
               rounded-full
               border
-              shadow-lg
-              backdrop-blur-2xl
+              backdrop-blur-xl
+              whitespace-nowrap
             "
             style={{
-              width: 'max-content',
-              maxWidth:
-                'calc(100vw - 32px)',
               backgroundColor:
-                'color-mix(in srgb, var(--surface-primary) 96%, transparent)',
+                'color-mix(in srgb, var(--surface-primary) 94%, transparent)',
+
               borderColor:
                 'var(--border-subtle)',
+
               boxShadow:
-                '0 10px 30px rgba(0, 0, 0, 0.18)'
+                '0 8px 24px rgba(0, 0, 0, 0.14)'
             }}
           >
 
             {/* =================================================
-                BUILDER
+                MOBILE BUILDER
             ================================================= */}
 
             <button
               type="button"
               onClick={handleHome}
               className="
-                flex
-                items-center
-                gap-2
-                px-5
-                py-2.5
+                px-3
+                py-2
                 rounded-full
-                text-xs
+                text-[10px]
                 transition-all
                 duration-300
                 whitespace-nowrap
@@ -472,28 +471,27 @@ export const Navbar = ({
                   ? {
                       backgroundColor:
                         'var(--text-primary)',
+
                       color:
                         'var(--bg-primary)',
+
                       fontWeight: 500
                     }
                   : {
                       color:
                         'var(--text-muted)',
+
                       backgroundColor:
                         'transparent'
                     }
               }
             >
-              <Home size={14} />
-
-              <span>
-                Builder
-              </span>
+              Builder
             </button>
 
 
             {/* =================================================
-                STUDIO
+                MOBILE STUDIO
             ================================================= */}
 
             <button
@@ -502,13 +500,10 @@ export const Navbar = ({
                 setCurrentTab('studio')
               }
               className="
-                flex
-                items-center
-                gap-2
-                px-5
-                py-2.5
+                px-3
+                py-2
                 rounded-full
-                text-xs
+                text-[10px]
                 transition-all
                 duration-300
                 whitespace-nowrap
@@ -518,31 +513,32 @@ export const Navbar = ({
                   ? {
                       backgroundColor:
                         'var(--text-primary)',
+
                       color:
                         'var(--bg-primary)',
+
                       fontWeight: 500
                     }
                   : {
                       color:
                         'var(--text-muted)',
+
                       backgroundColor:
                         'transparent'
                     }
               }
             >
-              <SlidersHorizontal size={14} />
-
-              <span>
-                Studio
-              </span>
+              Studio
             </button>
 
-          </div>
+          </nav>
 
         </div>
-      </div>
+
+      </header>
     </>
   );
 };
+
 
 export default Navbar;
