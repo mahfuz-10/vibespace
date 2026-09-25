@@ -534,15 +534,7 @@ export const SituationBuilder = () => {
 
   /* ============================================================
      PROGRESS CALCULATION
-  ============================================================ */
-
-  /*
-    Completion based progress:
-    Activity    = 25%
-    Feeling     = 50%
-    Environment = 75%
-    Intensity   = 100%
-  */
+     ============================================================ */
 
   const completedSections = [
     Boolean(activity),
@@ -556,23 +548,9 @@ export const SituationBuilder = () => {
     (completedSections / 4) * 100;
 
 
-  /*
-    Scroll based progress:
-    Section 01 = 0%
-    Section 02 = 33%
-    Section 03 = 66%
-    Section 04 = 100%
-  */
-
   const scrollProgress =
     (activeSection / 3) * 100;
 
-
-  /*
-    Use whichever progress is further ahead.
-    This means the line reacts naturally to both
-    scrolling and making selections.
-  */
 
   const progressPercentage = Math.min(
     100,
@@ -589,7 +567,22 @@ export const SituationBuilder = () => {
 
   return (
 
-    <main className="min-h-screen px-6 pt-32 pb-40 max-w-7xl mx-auto animate-fade-up">
+    <main
+      className="
+        min-h-screen
+        w-full
+        max-w-7xl
+        mx-auto
+        px-4
+        sm:px-6
+        pt-24
+        sm:pt-32
+        pb-28
+        sm:pb-40
+        overflow-x-hidden
+        animate-fade-up
+      "
+    >
 
 
       {/* ========================================================
@@ -599,8 +592,30 @@ export const SituationBuilder = () => {
       <style>{`
 
         /* ========================================================
+           MOBILE SAFETY
+        ======================================================== */
+
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box;
+        }
+
+        .situation-option,
+        .enter-button,
+        .surprise-button {
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+        }
+
+        .situation-option {
+          min-width: 0;
+          max-width: 100%;
+        }
+
+
+        /* ========================================================
            SECTION NUMBER BADGE
-           Premium glowing ring
         ======================================================== */
 
         .section-number-badge {
@@ -657,7 +672,7 @@ export const SituationBuilder = () => {
 
 
         /* ========================================================
-           SELECTED CHECKMARK — SPRING
+           SELECTED CHECKMARK
         ======================================================== */
 
         @keyframes checkPop {
@@ -688,12 +703,13 @@ export const SituationBuilder = () => {
               0.64,
               1
             );
+
           transform-origin: center;
         }
 
 
         /* ========================================================
-           SELECTED CARD — TACTILE SETTLE
+           SELECTED CARD
         ======================================================== */
 
         @keyframes cardSettle {
@@ -717,7 +733,7 @@ export const SituationBuilder = () => {
 
         /* ========================================================
            OPTION CARD
-           ======================================================== */
+        ======================================================== */
 
         .situation-option {
           position: relative;
@@ -732,11 +748,6 @@ export const SituationBuilder = () => {
         }
 
 
-        /*
-          Glass-like hairline reflection.
-          This is intentionally extremely subtle.
-        */
-
         .situation-option:hover {
           box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.04),
@@ -747,11 +758,6 @@ export const SituationBuilder = () => {
           transform: scale(0.985);
         }
 
-
-        /*
-          Selected cards keep their green glow
-          while also receiving the inner reflection.
-        */
 
         .situation-option.selected:hover {
           box-shadow:
@@ -774,7 +780,10 @@ export const SituationBuilder = () => {
           width: 1px;
 
           background:
-            var(--border-subtle, rgba(244, 240, 230, 0.08));
+            var(
+              --border-subtle,
+              rgba(244, 240, 230, 0.08)
+            );
 
           overflow: hidden;
 
@@ -999,6 +1008,72 @@ export const SituationBuilder = () => {
 
 
         /* ========================================================
+           MOBILE
+        ======================================================== */
+
+        @media (max-width: 639px) {
+
+          .studio-border-shell {
+            border-radius: 20px;
+          }
+
+          .studio-progress-line {
+            left: 8px;
+            top: 78px;
+            bottom: 70px;
+          }
+
+          .studio-progress-dot {
+            left: 3px;
+          }
+
+          .situation-option {
+            min-height: 58px;
+          }
+
+          .situation-option:hover {
+            box-shadow: none;
+          }
+
+          .situation-option:active {
+            transform: scale(0.975);
+          }
+
+          .enter-button,
+          .surprise-button {
+            min-height: 54px;
+          }
+
+          .idle-wave-bar {
+            width: 2.5px;
+          }
+
+        }
+
+
+        /* ========================================================
+           VERY SMALL PHONES
+        ======================================================== */
+
+        @media (max-width: 380px) {
+
+          .situation-option {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+          }
+
+          .situation-option span {
+            min-width: 0;
+          }
+
+          .studio-border-shell {
+            border-radius: 18px;
+          }
+
+        }
+
+
+        /* ========================================================
            REDUCED MOTION
         ======================================================== */
 
@@ -1030,15 +1105,49 @@ export const SituationBuilder = () => {
           HERO
       ======================================================== */}
 
-      <section className="text-center max-w-3xl mx-auto mb-20 relative">
+      <section
+        className="
+          text-center
+          w-full
+          max-w-3xl
+          mx-auto
+          mb-14
+          sm:mb-20
+          relative
+        "
+      >
 
         <div
-          className="absolute inset-0 -top-10 bg-radial from-emerald-500/10 via-transparent to-transparent blur-3xl pointer-events-none"
+          className="
+            absolute
+            inset-0
+            -top-10
+            bg-radial
+            from-emerald-500/10
+            via-transparent
+            to-transparent
+            blur-3xl
+            pointer-events-none
+          "
         />
 
 
         <div
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border mb-6 backdrop-blur-md"
+          className="
+            inline-flex
+            max-w-full
+            items-center
+            justify-center
+            gap-2.5
+            px-3
+            sm:px-4
+            py-1.5
+            rounded-full
+            border
+            mb-5
+            sm:mb-6
+            backdrop-blur-md
+          "
           style={{
             backgroundColor:
               'rgba(168, 182, 154, 0.05)',
@@ -1050,6 +1159,7 @@ export const SituationBuilder = () => {
 
           <Sparkles
             size={13}
+            className="flex-shrink-0"
             style={{
               color: 'var(--sage)'
             }}
@@ -1057,7 +1167,14 @@ export const SituationBuilder = () => {
 
 
           <span
-            className="text-[10px] font-semibold tracking-widest uppercase"
+            className="
+              text-[9px]
+              sm:text-[10px]
+              font-semibold
+              tracking-[0.16em]
+              uppercase
+              leading-tight
+            "
             style={{
               color: 'var(--sage)'
             }}
@@ -1069,7 +1186,15 @@ export const SituationBuilder = () => {
 
 
         <h1
-          className="text-4xl sm:text-6xl font-light tracking-tight mb-6"
+          className="
+            text-4xl
+            sm:text-6xl
+            font-light
+            tracking-tight
+            mb-5
+            sm:mb-6
+            leading-tight
+          "
           style={{
             color: 'var(--text-primary)'
           }}
@@ -1090,7 +1215,15 @@ export const SituationBuilder = () => {
 
 
         <p
-          className="text-sm opacity-60 leading-relaxed max-w-xl mx-auto"
+          className="
+            text-xs
+            sm:text-sm
+            opacity-60
+            leading-relaxed
+            max-w-xl
+            mx-auto
+            px-2
+          "
           style={{
             color: 'var(--text-muted)'
           }}
@@ -1106,19 +1239,39 @@ export const SituationBuilder = () => {
           MAIN GRID
       ======================================================== */}
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div
+        className="
+          grid
+          grid-cols-1
+          lg:grid-cols-12
+          gap-8
+          lg:gap-10
+          items-start
+          min-w-0
+        "
+      >
 
 
         {/* ======================================================
             LEFT HUD
         ====================================================== */}
 
-        <div className="lg:col-span-4 lg:sticky lg:top-28">
+        <div className="lg:col-span-4 lg:sticky lg:top-28 min-w-0">
 
           <div className="studio-border-shell">
 
             <div
-              className="p-6 rounded-3xl relative overflow-hidden transition-all duration-500 hover:shadow-2xl"
+              className="
+                p-5
+                sm:p-6
+                rounded-[20px]
+                sm:rounded-3xl
+                relative
+                overflow-hidden
+                transition-all
+                duration-500
+                hover:shadow-2xl
+              "
               style={{
                 background:
                   'linear-gradient(145deg, rgba(37, 38, 32, 0.96), rgba(20, 21, 17, 0.98))',
@@ -1129,9 +1282,7 @@ export const SituationBuilder = () => {
             >
 
 
-              {/* -----------------------------------------------
-                  SCROLL PROGRESS
-              ----------------------------------------------- */}
+              {/* SCROLL PROGRESS */}
 
               <div className="studio-progress-line">
 
@@ -1145,11 +1296,6 @@ export const SituationBuilder = () => {
               </div>
 
 
-              {/* FIX:
-                  Previously this used this?.activeSection.
-                  React function components don't have `this`.
-              */}
-
               <div
                 className="studio-progress-dot"
                 style={{
@@ -1161,12 +1307,20 @@ export const SituationBuilder = () => {
               />
 
 
-              {/* -----------------------------------------------
-                  DECORATIVE GLOW
-              ----------------------------------------------- */}
+              {/* DECORATIVE GLOW */}
 
               <div
-                className="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
+                className="
+                  absolute
+                  -right-10
+                  -top-10
+                  w-32
+                  h-32
+                  rounded-full
+                  blur-2xl
+                  opacity-20
+                  pointer-events-none
+                "
                 style={{
                   backgroundColor:
                     'var(--sage)'
@@ -1174,16 +1328,25 @@ export const SituationBuilder = () => {
               />
 
 
-              {/* -----------------------------------------------
-                  HEADER
-              ----------------------------------------------- */}
+              {/* HEADER */}
 
-              <div className="flex items-center justify-between pb-5 mb-6 border-b border-white/5">
+              <div
+                className="
+                  flex
+                  items-center
+                  justify-between
+                  gap-3
+                  pb-5
+                  mb-6
+                  border-b
+                  border-white/5
+                "
+              >
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 min-w-0">
 
                   <div
-                    className="w-2 h-2 rounded-full animate-ping"
+                    className="w-2 h-2 rounded-full animate-ping flex-shrink-0"
                     style={{
                       backgroundColor:
                         'var(--sage)'
@@ -1191,7 +1354,14 @@ export const SituationBuilder = () => {
                   />
 
                   <span
-                    className="text-[10px] uppercase font-bold tracking-widest"
+                    className="
+                      text-[9px]
+                      sm:text-[10px]
+                      uppercase
+                      font-bold
+                      tracking-widest
+                      truncate
+                    "
                     style={{
                       color:
                         'var(--text-muted)'
@@ -1204,7 +1374,17 @@ export const SituationBuilder = () => {
 
 
                 <span
-                  className="text-xs font-mono font-medium px-2 py-0.5 rounded-md"
+                  className="
+                    text-[9px]
+                    sm:text-xs
+                    font-mono
+                    font-medium
+                    px-2
+                    py-0.5
+                    rounded-md
+                    whitespace-nowrap
+                    flex-shrink-0
+                  "
                   style={{
                     color:
                       'var(--champagne)',
@@ -1219,16 +1399,22 @@ export const SituationBuilder = () => {
               </div>
 
 
-              {/* -----------------------------------------------
-                  STATE CONTENT
-              ----------------------------------------------- */}
+              {/* STATE CONTENT */}
 
               <div className="space-y-6">
 
                 <div>
 
                   <span
-                    className="text-[9px] uppercase tracking-wider block mb-1 opacity-50"
+                    className="
+                      text-[8px]
+                      sm:text-[9px]
+                      uppercase
+                      tracking-wider
+                      block
+                      mb-1
+                      opacity-50
+                    "
                     style={{
                       color:
                         'var(--text-muted)'
@@ -1238,7 +1424,13 @@ export const SituationBuilder = () => {
                   </span>
 
                   <h3
-                    className="text-2xl font-light tracking-tight"
+                    className="
+                      text-xl
+                      sm:text-2xl
+                      font-light
+                      tracking-tight
+                      truncate
+                    "
                     style={{
                       color:
                         'var(--champagne)'
@@ -1250,10 +1442,16 @@ export const SituationBuilder = () => {
                 </div>
 
 
-                <div className="grid grid-cols-2 gap-4 pt-2">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-2">
 
                   <div
-                    className="p-3 rounded-xl border bg-black/20"
+                    className="
+                      p-3
+                      rounded-xl
+                      border
+                      bg-black/20
+                      min-w-0
+                    "
                     style={{
                       borderColor:
                         'rgba(255,255,255,0.04)'
@@ -1261,7 +1459,15 @@ export const SituationBuilder = () => {
                   >
 
                     <span
-                      className="text-[9px] uppercase tracking-wider block opacity-40 mb-1"
+                      className="
+                        text-[8px]
+                        sm:text-[9px]
+                        uppercase
+                        tracking-wider
+                        block
+                        opacity-40
+                        mb-1
+                      "
                       style={{
                         color:
                           'var(--text-muted)'
@@ -1271,7 +1477,12 @@ export const SituationBuilder = () => {
                     </span>
 
                     <p
-                      className="text-xs font-medium truncate"
+                      className="
+                        text-[11px]
+                        sm:text-xs
+                        font-medium
+                        truncate
+                      "
                       style={{
                         color:
                           'var(--text-primary)'
@@ -1284,7 +1495,13 @@ export const SituationBuilder = () => {
 
 
                   <div
-                    className="p-3 rounded-xl border bg-black/20"
+                    className="
+                      p-3
+                      rounded-xl
+                      border
+                      bg-black/20
+                      min-w-0
+                    "
                     style={{
                       borderColor:
                         'rgba(255,255,255,0.04)'
@@ -1292,7 +1509,15 @@ export const SituationBuilder = () => {
                   >
 
                     <span
-                      className="text-[9px] uppercase tracking-wider block opacity-40 mb-1"
+                      className="
+                        text-[8px]
+                        sm:text-[9px]
+                        uppercase
+                        tracking-wider
+                        block
+                        opacity-40
+                        mb-1
+                      "
                       style={{
                         color:
                           'var(--text-muted)'
@@ -1302,7 +1527,12 @@ export const SituationBuilder = () => {
                     </span>
 
                     <p
-                      className="text-xs font-medium truncate"
+                      className="
+                        text-[11px]
+                        sm:text-xs
+                        font-medium
+                        truncate
+                      "
                       style={{
                         color:
                           'var(--text-primary)'
@@ -1321,7 +1551,13 @@ export const SituationBuilder = () => {
                   <div className="flex justify-between items-center mb-1.5">
 
                     <span
-                      className="text-[9px] uppercase tracking-wider opacity-50"
+                      className="
+                        text-[8px]
+                        sm:text-[9px]
+                        uppercase
+                        tracking-wider
+                        opacity-50
+                      "
                       style={{
                         color:
                           'var(--text-muted)'
@@ -1331,7 +1567,12 @@ export const SituationBuilder = () => {
                     </span>
 
                     <span
-                      className="text-[10px] font-mono font-medium"
+                      className="
+                        text-[9px]
+                        sm:text-[10px]
+                        font-mono
+                        font-medium
+                      "
                       style={{
                         color:
                           'var(--sage)'
@@ -1367,12 +1608,20 @@ export const SituationBuilder = () => {
               </div>
 
 
-              {/* -----------------------------------------------
-                  FOOTER
-              ----------------------------------------------- */}
+              {/* FOOTER */}
 
               <div
-                className="mt-8 pt-5 border-t border-white/5 flex items-center gap-3 text-[10px]"
+                className="
+                  mt-8
+                  pt-5
+                  border-t
+                  border-white/5
+                  flex
+                  items-start
+                  gap-3
+                  text-[9px]
+                  sm:text-[10px]
+                "
                 style={{
                   color:
                     'var(--text-muted)'
@@ -1381,6 +1630,7 @@ export const SituationBuilder = () => {
 
                 <Compass
                   size={13}
+                  className="flex-shrink-0 mt-0.5"
                   style={{
                     color:
                       'var(--sage)'
@@ -1404,7 +1654,7 @@ export const SituationBuilder = () => {
             RIGHT CONTENT
         ====================================================== */}
 
-        <div className="lg:col-span-8 space-y-14">
+        <div className="lg:col-span-8 space-y-12 sm:space-y-14 min-w-0">
 
 
           {/* ====================================================
@@ -1418,22 +1668,31 @@ export const SituationBuilder = () => {
             className="space-y-4"
           >
 
-            <div className="flex items-center gap-3">
-
-
-              {/* SECTION NUMBER */}
+            <div className="flex items-start gap-3">
 
               <span
-                className="section-number-badge text-xs font-mono font-bold rounded"
+                className="
+                  section-number-badge
+                  text-xs
+                  font-mono
+                  font-bold
+                  rounded
+                  flex-shrink-0
+                "
               >
                 01
               </span>
 
 
-              <div>
+              <div className="min-w-0">
 
                 <h2
-                  className="text-lg font-medium tracking-tight"
+                  className="
+                    text-base
+                    sm:text-lg
+                    font-medium
+                    tracking-tight
+                  "
                   style={{
                     color:
                       'var(--text-primary)'
@@ -1443,7 +1702,12 @@ export const SituationBuilder = () => {
                 </h2>
 
                 <p
-                  className="text-xs opacity-50"
+                  className="
+                    text-[11px]
+                    sm:text-xs
+                    opacity-50
+                    leading-relaxed
+                  "
                   style={{
                     color:
                       'var(--text-muted)'
@@ -1457,7 +1721,15 @@ export const SituationBuilder = () => {
             </div>
 
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div
+              className="
+                grid
+                grid-cols-2
+                sm:grid-cols-3
+                gap-2.5
+                sm:gap-3
+              "
+            >
 
               {ACTIVITIES.map(item => {
 
@@ -1474,9 +1746,17 @@ export const SituationBuilder = () => {
                     className={`
                       situation-option
                       ${selected ? 'selected situation-option-selected' : ''}
-                      p-4 rounded-2xl border text-left
-                      group relative flex items-center
-                      justify-between overflow-hidden
+                      p-3
+                      sm:p-4
+                      rounded-2xl
+                      border
+                      text-left
+                      group
+                      relative
+                      flex
+                      items-center
+                      justify-between
+                      overflow-hidden
                       cursor-pointer
                     `}
                     style={{
@@ -1494,14 +1774,19 @@ export const SituationBuilder = () => {
                     }}
                   >
 
-                    <div className="flex items-center gap-3 relative z-10">
+                    <div className="flex items-center gap-2.5 sm:gap-3 relative z-10 min-w-0">
 
-                      <span className="text-base">
+                      <span className="text-sm sm:text-base flex-shrink-0">
                         {item.icon}
                       </span>
 
                       <span
-                        className="text-xs font-medium"
+                        className="
+                          text-[11px]
+                          sm:text-xs
+                          font-medium
+                          truncate
+                        "
                         style={{
                           color:
                             selected
@@ -1518,7 +1803,19 @@ export const SituationBuilder = () => {
                     {selected && (
 
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center relative z-10 checkmark-spring"
+                        className="
+                          w-5
+                          h-5
+                          rounded-full
+                          flex
+                          items-center
+                          justify-center
+                          relative
+                          z-10
+                          checkmark-spring
+                          flex-shrink-0
+                          ml-2
+                        "
                         style={{
                           backgroundColor:
                             'var(--sage)'
@@ -1559,19 +1856,31 @@ export const SituationBuilder = () => {
             className="space-y-4"
           >
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
 
               <span
-                className="section-number-badge text-xs font-mono font-bold rounded"
+                className="
+                  section-number-badge
+                  text-xs
+                  font-mono
+                  font-bold
+                  rounded
+                  flex-shrink-0
+                "
               >
                 02
               </span>
 
 
-              <div>
+              <div className="min-w-0">
 
                 <h2
-                  className="text-lg font-medium tracking-tight"
+                  className="
+                    text-base
+                    sm:text-lg
+                    font-medium
+                    tracking-tight
+                  "
                   style={{
                     color:
                       'var(--text-primary)'
@@ -1581,7 +1890,12 @@ export const SituationBuilder = () => {
                 </h2>
 
                 <p
-                  className="text-xs opacity-50"
+                  className="
+                    text-[11px]
+                    sm:text-xs
+                    opacity-50
+                    leading-relaxed
+                  "
                   style={{
                     color:
                       'var(--text-muted)'
@@ -1595,7 +1909,15 @@ export const SituationBuilder = () => {
             </div>
 
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div
+              className="
+                grid
+                grid-cols-1
+                sm:grid-cols-2
+                gap-2.5
+                sm:gap-3
+              "
+            >
 
               {FEELINGS.map(item => {
 
@@ -1612,9 +1934,17 @@ export const SituationBuilder = () => {
                     className={`
                       situation-option
                       ${selected ? 'selected situation-option-selected' : ''}
-                      p-4 rounded-2xl border text-left
-                      group relative flex items-center
-                      justify-between cursor-pointer
+                      p-3.5
+                      sm:p-4
+                      rounded-2xl
+                      border
+                      text-left
+                      group
+                      relative
+                      flex
+                      items-center
+                      justify-between
+                      cursor-pointer
                     `}
                     style={{
 
@@ -1631,10 +1961,15 @@ export const SituationBuilder = () => {
                     }}
                   >
 
-                    <div>
+                    <div className="min-w-0">
 
                       <h4
-                        className="text-xs font-medium mb-0.5"
+                        className="
+                          text-[11px]
+                          sm:text-xs
+                          font-medium
+                          mb-0.5
+                        "
                         style={{
                           color:
                             selected
@@ -1646,7 +1981,12 @@ export const SituationBuilder = () => {
                       </h4>
 
                       <p
-                        className="text-[10px] opacity-50"
+                        className="
+                          text-[9px]
+                          sm:text-[10px]
+                          opacity-50
+                          truncate
+                        "
                         style={{
                           color:
                             'var(--text-muted)'
@@ -1661,7 +2001,17 @@ export const SituationBuilder = () => {
                     {selected && (
 
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center checkmark-spring"
+                        className="
+                          w-5
+                          h-5
+                          rounded-full
+                          flex
+                          items-center
+                          justify-center
+                          checkmark-spring
+                          flex-shrink-0
+                          ml-3
+                        "
                         style={{
                           backgroundColor:
                             'var(--sage)'
@@ -1702,19 +2052,31 @@ export const SituationBuilder = () => {
             className="space-y-4"
           >
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
 
               <span
-                className="section-number-badge text-xs font-mono font-bold rounded"
+                className="
+                  section-number-badge
+                  text-xs
+                  font-mono
+                  font-bold
+                  rounded
+                  flex-shrink-0
+                "
               >
                 03
               </span>
 
 
-              <div>
+              <div className="min-w-0">
 
                 <h2
-                  className="text-lg font-medium tracking-tight"
+                  className="
+                    text-base
+                    sm:text-lg
+                    font-medium
+                    tracking-tight
+                  "
                   style={{
                     color:
                       'var(--text-primary)'
@@ -1724,7 +2086,12 @@ export const SituationBuilder = () => {
                 </h2>
 
                 <p
-                  className="text-xs opacity-50"
+                  className="
+                    text-[11px]
+                    sm:text-xs
+                    opacity-50
+                    leading-relaxed
+                  "
                   style={{
                     color:
                       'var(--text-muted)'
@@ -1738,7 +2105,15 @@ export const SituationBuilder = () => {
             </div>
 
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div
+              className="
+                grid
+                grid-cols-2
+                sm:grid-cols-4
+                gap-2.5
+                sm:gap-3
+              "
+            >
 
               {ENVIRONMENTS.map(item => {
 
@@ -1755,9 +2130,17 @@ export const SituationBuilder = () => {
                     className={`
                       situation-option
                       ${selected ? 'selected situation-option-selected' : ''}
-                      p-3.5 rounded-2xl border text-center
-                      cursor-pointer flex flex-col
-                      justify-between h-20
+                      p-3
+                      sm:p-3.5
+                      rounded-2xl
+                      border
+                      text-center
+                      cursor-pointer
+                      flex
+                      flex-col
+                      justify-between
+                      min-h-[76px]
+                      sm:h-20
                     `}
                     style={{
 
@@ -1775,7 +2158,15 @@ export const SituationBuilder = () => {
                   >
 
                     <span
-                      className="text-[9px] uppercase tracking-widest opacity-40 font-mono"
+                      className="
+                        text-[8px]
+                        sm:text-[9px]
+                        uppercase
+                        tracking-widest
+                        opacity-40
+                        font-mono
+                        truncate
+                      "
                       style={{
                         color:
                           'var(--text-muted)'
@@ -1786,7 +2177,12 @@ export const SituationBuilder = () => {
 
 
                     <span
-                      className="text-xs font-medium"
+                      className="
+                        text-[10px]
+                        sm:text-xs
+                        font-medium
+                        leading-tight
+                      "
                       style={{
                         color:
                           selected
@@ -1819,19 +2215,31 @@ export const SituationBuilder = () => {
             className="space-y-4"
           >
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
 
               <span
-                className="section-number-badge text-xs font-mono font-bold rounded"
+                className="
+                  section-number-badge
+                  text-xs
+                  font-mono
+                  font-bold
+                  rounded
+                  flex-shrink-0
+                "
               >
                 04
               </span>
 
 
-              <div>
+              <div className="min-w-0">
 
                 <h2
-                  className="text-lg font-medium tracking-tight"
+                  className="
+                    text-base
+                    sm:text-lg
+                    font-medium
+                    tracking-tight
+                  "
                   style={{
                     color:
                       'var(--text-primary)'
@@ -1841,7 +2249,12 @@ export const SituationBuilder = () => {
                 </h2>
 
                 <p
-                  className="text-xs opacity-50"
+                  className="
+                    text-[11px]
+                    sm:text-xs
+                    opacity-50
+                    leading-relaxed
+                  "
                   style={{
                     color:
                       'var(--text-muted)'
@@ -1855,7 +2268,7 @@ export const SituationBuilder = () => {
             </div>
 
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
 
               {INTENSITIES.map(item => {
 
@@ -1872,8 +2285,13 @@ export const SituationBuilder = () => {
                     className={`
                       situation-option
                       ${selected ? 'selected situation-option-selected' : ''}
-                      p-4 rounded-2xl border text-center
+                      p-3
+                      sm:p-4
+                      rounded-2xl
+                      border
+                      text-center
                       cursor-pointer
+                      min-w-0
                     `}
                     style={{
 
@@ -1891,7 +2309,13 @@ export const SituationBuilder = () => {
                   >
 
                     <h4
-                      className="text-xs font-medium mb-1"
+                      className="
+                        text-[10px]
+                        sm:text-xs
+                        font-medium
+                        mb-1
+                        truncate
+                      "
                       style={{
                         color:
                           selected
@@ -1903,7 +2327,13 @@ export const SituationBuilder = () => {
                     </h4>
 
                     <p
-                      className="text-[9px] opacity-40 hidden sm:block"
+                      className="
+                        text-[8px]
+                        sm:text-[9px]
+                        opacity-40
+                        hidden
+                        sm:block
+                      "
                       style={{
                         color:
                           'var(--text-muted)'
@@ -1927,14 +2357,43 @@ export const SituationBuilder = () => {
               ACTIONS
           ==================================================== */}
 
-          <div className="pt-6 space-y-6">
+          <div className="pt-2 sm:pt-6 space-y-5 sm:space-y-6">
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
 
+            <div
+              className="
+                flex
+                flex-col
+                sm:flex-row
+                items-stretch
+                sm:items-center
+                gap-3
+                sm:gap-4
+              "
+            >
 
               <button
                 type="button"
-                className="surprise-button flex-1 py-4 rounded-xl border flex items-center justify-center gap-2 text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300"
+                className="
+                  surprise-button
+                  flex-1
+                  py-3.5
+                  sm:py-4
+                  rounded-xl
+                  border
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                  text-[10px]
+                  sm:text-xs
+                  font-semibold
+                  tracking-wider
+                  uppercase
+                  cursor-pointer
+                  transition-all
+                  duration-300
+                "
                 onClick={handleSurpriseMe}
                 style={{
                   borderColor:
@@ -1956,7 +2415,26 @@ export const SituationBuilder = () => {
 
               <button
                 type="button"
-                className="enter-button flex-[2] py-4 rounded-xl flex items-center justify-center gap-3 text-xs font-bold tracking-wider uppercase cursor-pointer transition-all duration-300 shadow-xl"
+                className="
+                  enter-button
+                  flex-[2]
+                  py-3.5
+                  sm:py-4
+                  rounded-xl
+                  flex
+                  items-center
+                  justify-center
+                  gap-3
+                  text-[10px]
+                  sm:text-xs
+                  font-bold
+                  tracking-wider
+                  uppercase
+                  cursor-pointer
+                  transition-all
+                  duration-300
+                  shadow-xl
+                "
                 onClick={handleEnterAtmosphere}
                 style={{
                   background:
@@ -1990,7 +2468,20 @@ export const SituationBuilder = () => {
             {recommendedTrack && (
 
               <div
-                className="p-4 rounded-2xl border flex items-center justify-between gap-4 backdrop-blur-xl animate-fade-up"
+                className="
+                  p-3.5
+                  sm:p-4
+                  rounded-2xl
+                  border
+                  flex
+                  items-center
+                  justify-between
+                  gap-3
+                  sm:gap-4
+                  backdrop-blur-xl
+                  animate-fade-up
+                  min-w-0
+                "
                 style={{
                   background:
                     'linear-gradient(145deg, rgba(37, 38, 32, 0.95), rgba(20, 21, 17, 0.98))',
@@ -2004,9 +2495,31 @@ export const SituationBuilder = () => {
               >
 
 
-                <div className="flex items-center space-x-3.5 min-w-0">
+                <div
+                  className="
+                    flex
+                    items-center
+                    space-x-3
+                    sm:space-x-3.5
+                    min-w-0
+                    flex-1
+                  "
+                >
 
-                  <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-lg relative group">
+                  <div
+                    className="
+                      w-11
+                      h-11
+                      sm:w-12
+                      sm:h-12
+                      rounded-xl
+                      overflow-hidden
+                      flex-shrink-0
+                      shadow-lg
+                      relative
+                      group
+                    "
+                  >
 
                     <img
                       src={recommendedTrack.artwork}
@@ -2014,7 +2527,19 @@ export const SituationBuilder = () => {
                       className="w-full h-full object-cover"
                     />
 
-                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div
+                      className="
+                        absolute
+                        inset-0
+                        bg-black/30
+                        flex
+                        items-center
+                        justify-center
+                        opacity-0
+                        group-hover:opacity-100
+                        transition-opacity
+                      "
+                    >
 
                       <Volume2
                         size={16}
@@ -2026,12 +2551,22 @@ export const SituationBuilder = () => {
                   </div>
 
 
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
 
                     <div className="flex items-center gap-2 mb-0.5">
 
                       <span
-                        className="text-[9px] uppercase tracking-widest font-bold px-1.5 py-0.5 rounded"
+                        className="
+                          text-[8px]
+                          sm:text-[9px]
+                          uppercase
+                          tracking-widest
+                          font-bold
+                          px-1.5
+                          py-0.5
+                          rounded
+                          whitespace-nowrap
+                        "
                         style={{
                           color:
                             'var(--champagne)',
@@ -2047,7 +2582,12 @@ export const SituationBuilder = () => {
 
 
                     <h4
-                      className="text-xs font-medium truncate"
+                      className="
+                        text-[11px]
+                        sm:text-xs
+                        font-medium
+                        truncate
+                      "
                       style={{
                         color:
                           'var(--text-primary)'
@@ -2058,7 +2598,12 @@ export const SituationBuilder = () => {
 
 
                     <p
-                      className="text-[10px] opacity-50 truncate"
+                      className="
+                        text-[9px]
+                        sm:text-[10px]
+                        opacity-50
+                        truncate
+                      "
                       style={{
                         color:
                           'var(--text-muted)'
@@ -2072,12 +2617,20 @@ export const SituationBuilder = () => {
                 </div>
 
 
-                {/* ==================================================
-                    IDLE WAVEFORM
-                ================================================== */}
+                {/* IDLE WAVEFORM */}
 
                 <div
-                  className="flex items-center gap-1 flex-shrink-0 px-3 py-2 rounded-xl border"
+                  className="
+                    flex
+                    items-center
+                    gap-1
+                    flex-shrink-0
+                    px-2.5
+                    sm:px-3
+                    py-2
+                    rounded-xl
+                    border
+                  "
                   style={{
                     borderColor:
                       'rgba(168, 182, 154, 0.2)',
