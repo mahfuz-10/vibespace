@@ -40,7 +40,7 @@ export const Navbar = ({
       setIsDarkMode((previous) => !previous);
     } else {
       console.error(
-        "setIsDarkMode is not available in AudioContext"
+        'setIsDarkMode is not available in AudioContext'
       );
     }
   };
@@ -89,7 +89,10 @@ export const Navbar = ({
           "
         >
 
-          {/* ULTRA-PREMIUM LOGO */}
+          {/* =================================================
+              LOGO
+          ================================================= */}
+
           <button
             type="button"
             onClick={handleHome}
@@ -130,7 +133,6 @@ export const Navbar = ({
                   '0 10px 30px rgba(168, 182, 154, 0.25)'
               }}
             >
-              {/* Inner ambient glow */}
               <div
                 className="
                   absolute
@@ -203,10 +205,10 @@ export const Navbar = ({
           </button>
 
 
-          {/* =====================================================
+          {/* =================================================
               DESKTOP NAVIGATION
-              PC VERSION UNCHANGED
-          ===================================================== */}
+              PC UNCHANGED
+          ================================================= */}
 
           <nav
             className="
@@ -302,10 +304,10 @@ export const Navbar = ({
           </nav>
 
 
-          {/* =====================================================
+          {/* =================================================
               THEME SWITCHER
-              PC VERSION UNCHANGED
-          ===================================================== */}
+              PC UNCHANGED
+          ================================================= */}
 
           <button
             type="button"
@@ -365,47 +367,50 @@ export const Navbar = ({
       </header>
 
 
-      {/* =========================================================
-          MOBILE NAVIGATION
+      {/* =====================================================
+          MOBILE BOTTOM NAVIGATION
           
-          FIX:
-          - Still fixed
-          - NEVER centered vertically
-          - Anchored near bottom
-          - Above the player
-          - z-40 keeps it below player z-50
-          - No top / translateY / 50% positioning
-      ========================================================= */}
+          IMPORTANT:
+          - ONLY MOBILE
+          - NO top: 50%
+          - NO translateY
+          - Fixed at bottom
+          - Sits ABOVE player
+          - Does NOT stay in middle while scrolling
+      ===================================================== */}
 
       <div
         className="
           fixed
           left-1/2
           -translate-x-1/2
-          bottom-[6.5rem]
+          bottom-[96px]
           z-40
           flex
           md:hidden
           items-center
-          gap-2
+          gap-1.5
           p-1.5
           rounded-full
           border
-          shadow-2xl
           backdrop-blur-2xl
-          whitespace-nowrap
+          shadow-2xl
         "
         style={{
+          width: 'max-content',
+          maxWidth: 'calc(100vw - 32px)',
           backgroundColor:
             'color-mix(in srgb, var(--surface-primary) 96%, transparent)',
           borderColor:
             'var(--border-subtle)',
           boxShadow:
-            '0 15px 40px rgba(0, 0, 0, 0.5)'
+            '0 12px 35px rgba(0, 0, 0, 0.35)'
         }}
       >
 
-        {/* BUILDER */}
+        {/* =================================================
+            BUILDER
+        ================================================= */}
 
         <button
           type="button"
@@ -420,6 +425,7 @@ export const Navbar = ({
             text-xs
             transition-all
             duration-300
+            whitespace-nowrap
           "
           style={
             currentTab === 'builder' ||
@@ -440,11 +446,16 @@ export const Navbar = ({
           }
         >
           <Home size={14} />
-          <span>Builder</span>
+
+          <span>
+            Builder
+          </span>
         </button>
 
 
-        {/* STUDIO */}
+        {/* =================================================
+            STUDIO
+        ================================================= */}
 
         <button
           type="button"
@@ -461,6 +472,7 @@ export const Navbar = ({
             text-xs
             transition-all
             duration-300
+            whitespace-nowrap
           "
           style={
             currentTab === 'studio'
@@ -480,7 +492,10 @@ export const Navbar = ({
           }
         >
           <SlidersHorizontal size={14} />
-          <span>Studio</span>
+
+          <span>
+            Studio
+          </span>
         </button>
 
       </div>
