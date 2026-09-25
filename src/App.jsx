@@ -10,122 +10,88 @@ import VibeIntro from './components/VibeIntro';
 
 
 function MainContent() {
-  const [currentTab, setCurrentTab] = useState('builder');
+  const [currentTab, setCurrentTab] = useState('builder');
 
-  const [showIntro, setShowIntro] = useState(() => {
-    return sessionStorage.getItem('vibespace-intro-seen') !== 'true';
-  });
+  const [showIntro, setShowIntro] = useState(() => {
+    return sessionStorage.getItem('vibespace-intro-seen') !== 'true';
+  });
 
-  const { hasSubmittedSituation } = useAudio();
-
-
-  const handleEnterSpace = () => {
-    setShowIntro(false);
-    sessionStorage.setItem('vibespace-intro-seen', 'true');
-  };
+  const { hasSubmittedSituation } = useAudio();
 
 
-  /* =========================================================
-     INTRO SCREEN
-  ========================================================= */
-
-  if (showIntro) {
-    return (
-      <VibeIntro
-        onEnter={handleEnterSpace}
-      />
-    );
-  }
+  const handleEnterSpace = () => {
+    setShowIntro(false);
+    sessionStorage.setItem('vibespace-intro-seen', 'true');
+  };
 
 
-  /* =========================================================
-     MAIN APPLICATION
+  /*
+   * INTRO SCREEN
+   */
 
-     Desktop:
-     - Existing layout preserved
-
-     Mobile:
-     - Extra bottom space prevents content from being hidden
-       behind the fixed player + mobile navigation
-  ========================================================= */
-
-  return (
-    <div
-      className="
-        min-h-screen
-        transition-colors
-        duration-500
-        pb-44
-        md:pb-44
-      "
-    >
-
-      {/* =====================================================
-          TOP NAVBAR
-      ===================================================== */}
-
-      <Navbar
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-      />
+  if (showIntro) {
+    return (
+      <VibeIntro
+        onEnter={handleEnterSpace}
+      />
+    );
+  }
 
 
-      {/* =====================================================
-          MAIN CONTENT
-      ===================================================== */}
+  /*
+   * MAIN APPLICATION
+   * Added pb-44 to prevent the fixed bottom player bar from overlapping content.
+   */
 
-      <main>
+  return (
+    <div className="min-h-screen transition-colors duration-500 pb-44">
 
-        {currentTab === 'builder' && (
-          !hasSubmittedSituation ? (
-            <SituationBuilder
-              onProceed={() =>
-                setCurrentTab('result')
-              }
-            />
-          ) : (
-            <VibeResult
-              onOpenStudio={() =>
-                setCurrentTab('studio')
-              }
-            />
-          )
-        )}
+      <Navbar
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+      />
 
 
-        {currentTab === 'result' && (
-          <VibeResult
-            onOpenStudio={() =>
-              setCurrentTab('studio')
-            }
-          />
-        )}
+      <main>
+
+        {currentTab === 'builder' && (
+          !hasSubmittedSituation ? (
+            <SituationBuilder
+              onProceed={() => setCurrentTab('result')}
+            />
+          ) : (
+            <VibeResult
+              onOpenStudio={() => setCurrentTab('studio')}
+            />
+          )
+        )}
 
 
-        {currentTab === 'studio' && (
-          <AtmosphereStudio />
-        )}
+        {currentTab === 'result' && (
+          <VibeResult
+            onOpenStudio={() => setCurrentTab('studio')}
+          />
+        )}
 
-      </main>
+
+        {currentTab === 'studio' && (
+          <AtmosphereStudio />
+        )}
+
+      </main>
 
 
-      {/* =====================================================
-          FIXED BOTTOM PLAYER
+      <PersistentPlayer />
 
-          PersistentPlayer handles its own fixed position.
-      ===================================================== */}
-
-      <PersistentPlayer />
-
-    </div>
-  );
+    </div>
+  );
 }
 
 
 export default function App() {
-  return (
-    <AudioProvider>
-      <MainContent />
-    </AudioProvider>
-  );
+  return (
+    <AudioProvider>
+      <MainContent />
+    </AudioProvider>
+  );
 }
