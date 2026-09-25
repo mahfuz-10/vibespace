@@ -19,7 +19,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/deep sleep.mp3",
     tags: ["sleeping", "sleep", "peaceful", "relax", "night", "calm"],
     artwork:
-      "https://images.unsplash.com/photo-1532763303805-529d595877c5?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1532763303805-529d595877c5?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "lofi-song",
@@ -28,7 +28,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/lofi-song.mp3",
     tags: ["coding", "deep focus", "study", "relax", "working"],
     artwork:
-      "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "peaceful-music",
@@ -37,7 +37,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/peaceful-music-.mp3",
     tags: ["relax", "peaceful", "calm", "quiet", "sleeping"],
     artwork:
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "road-trp",
@@ -46,7 +46,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/road trp.mp3",
     tags: ["driving", "chilling", "relax", "road trip", "midnight city"],
     artwork:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "alone",
@@ -55,7 +55,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/alone.mp3",
     tags: ["night", "dreamy", "melancholic", "alone", "midnight"],
     artwork:
-      "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "taly-coffee",
@@ -64,7 +64,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/taly-coffee-music.mp3",
     tags: ["coffee", "reading", "study", "cozy", "coffee shop"],
     artwork:
-      "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "evening-sun",
@@ -73,7 +73,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/evening-sun.mp3",
     tags: ["sunset", "relax", "calm", "evening", "peaceful"],
     artwork:
-      "https://images.unsplash.com/photo-1532763303805-529d595877c5?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1532763303805-529d595877c5?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "dreamy-evening",
@@ -82,7 +82,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/dreamy-evening.mp3",
     tags: ["dreamy", "creative", "relax", "creating", "romantic"],
     artwork:
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "deep-focus",
@@ -91,7 +91,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/deep-focus.mp3",
     tags: ["focus", "coding", "studying", "working", "deep focus"],
     artwork:
-      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "study-music1",
@@ -100,7 +100,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/study-music1.mp3",
     tags: ["study", "reading", "focus", "studying", "quiet"],
     artwork:
-      "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "study-music",
@@ -109,7 +109,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/study-music.mp3",
     tags: ["study", "quiet", "reading", "calm"],
     artwork:
-      "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "night-piano",
@@ -118,7 +118,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/night-piano-midnight.mp3",
     tags: ["midnight", "piano", "sleep", "relax", "night", "calm"],
     artwork:
-      "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "lofi-midnight",
@@ -127,7 +127,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/lofi-midnight.mp3",
     tags: ["midnight", "coding", "relax", "night", "deep focus"],
     artwork:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=85",
   },
   {
     id: "relax-music-1",
@@ -136,7 +136,7 @@ export const MUSIC_DATABASE = [
     src: "/audio/relax-music-1.mp3",
     tags: ["relax", "calm", "sleep", "peaceful", "quiet"],
     artwork:
-      "https://images.unsplash.com/photo-1532763303805-529d595877c5?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1532763303805-529d595877c5?auto=format&fit=crop&w=900&q=85",
   },
 ];
 
@@ -203,10 +203,6 @@ const AudioContext = createContext(null);
 ========================================================= */
 
 export const AudioProvider = ({ children }) => {
-  /* -------------------------------------------------------
-     SITUATION
-  ------------------------------------------------------- */
-
   const [activity, setActivity] = useState("Coding");
   const [feeling, setFeeling] = useState("Deep Focus");
   const [environment, setEnvironment] = useState("Rainy Window");
@@ -215,9 +211,17 @@ export const AudioProvider = ({ children }) => {
   const [hasSubmittedSituation, setHasSubmittedSituation] =
     useState(false);
 
-  /* -------------------------------------------------------
+  /* =======================================================
+     WOW MOMENT STATE
+  ======================================================= */
+
+  const [isVibeRevealing, setIsVibeRevealing] = useState(false);
+
+  const [vibeRevealData, setVibeRevealData] = useState(null);
+
+  /* =======================================================
      THEME
-  ------------------------------------------------------- */
+  ======================================================= */
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
     try {
@@ -241,9 +245,9 @@ export const AudioProvider = ({ children }) => {
     }
   }, [isDarkMode]);
 
-  /* -------------------------------------------------------
+  /* =======================================================
      SAVED MIXES
-  ------------------------------------------------------- */
+  ======================================================= */
 
   const [savedMixes, setSavedMixes] = useState(() => {
     try {
@@ -254,23 +258,13 @@ export const AudioProvider = ({ children }) => {
     }
   });
 
-  /* -------------------------------------------------------
+  /* =======================================================
      HERO AUDIO
-  ------------------------------------------------------- */
+  ======================================================= */
 
   const heroAudioRef = useRef(null);
 
-  /*
-   * IMPORTANT:
-   * No default track here.
-   *
-   * Before user selects/submits a situation:
-   * currentTrack === null
-   *
-   * This prevents Deep Sleep from appearing automatically.
-   */
   const [currentTrack, setCurrentTrack] = useState(null);
-
   const currentTrackRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -280,14 +274,13 @@ export const AudioProvider = ({ children }) => {
   const [volume, setVolumeState] = useState(0.8);
   const [masterVolume, setMasterVolumeState] = useState(1);
 
-  /* Keep currentTrackRef synchronized */
   useEffect(() => {
     currentTrackRef.current = currentTrack;
   }, [currentTrack]);
 
-  /* -------------------------------------------------------
+  /* =======================================================
      AMBIENT
-  ------------------------------------------------------- */
+  ======================================================= */
 
   const ambientRefs = useRef({});
 
@@ -300,7 +293,7 @@ export const AudioProvider = ({ children }) => {
   );
 
   /* =======================================================
-     CREATE HERO AUDIO
+     HERO AUDIO ENGINE
   ======================================================= */
 
   useEffect(() => {
@@ -313,9 +306,7 @@ export const AudioProvider = ({ children }) => {
 
     const onLoadedMetadata = () => {
       setDuration(
-        Number.isFinite(audio.duration)
-          ? audio.duration
-          : 0
+        Number.isFinite(audio.duration) ? audio.duration : 0
       );
     };
 
@@ -324,12 +315,10 @@ export const AudioProvider = ({ children }) => {
     };
 
     const onPlay = () => {
-      console.log("[VibeSpace] PLAY:", audio.src);
       setIsPlaying(true);
     };
 
     const onPause = () => {
-      console.log("[VibeSpace] PAUSE");
       setIsPlaying(false);
     };
 
@@ -369,69 +358,25 @@ export const AudioProvider = ({ children }) => {
 
       audio
         .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch((error) => {
-          console.error(
-            "[VibeSpace] NEXT TRACK PLAY ERROR:",
-            error
-          );
-          setIsPlaying(false);
-        });
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
     };
 
     const onError = () => {
       console.error("[VibeSpace] AUDIO ERROR", {
         src: audio.src,
-        errorCode: audio.error?.code,
-        errorMessage: audio.error?.message,
+        error: audio.error,
       });
 
       setIsPlaying(false);
     };
 
-    const onCanPlay = () => {
-      console.log(
-        "[VibeSpace] CAN PLAY:",
-        audio.src
-      );
-    };
-
-    audio.addEventListener(
-      "loadedmetadata",
-      onLoadedMetadata
-    );
-
-    audio.addEventListener(
-      "timeupdate",
-      onTimeUpdate
-    );
-
-    audio.addEventListener(
-      "play",
-      onPlay
-    );
-
-    audio.addEventListener(
-      "pause",
-      onPause
-    );
-
-    audio.addEventListener(
-      "ended",
-      onEnded
-    );
-
-    audio.addEventListener(
-      "error",
-      onError
-    );
-
-    audio.addEventListener(
-      "canplay",
-      onCanPlay
-    );
+    audio.addEventListener("loadedmetadata", onLoadedMetadata);
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+    audio.addEventListener("ended", onEnded);
+    audio.addEventListener("error", onError);
 
     return () => {
       audio.pause();
@@ -442,36 +387,11 @@ export const AudioProvider = ({ children }) => {
         "loadedmetadata",
         onLoadedMetadata
       );
-
-      audio.removeEventListener(
-        "timeupdate",
-        onTimeUpdate
-      );
-
-      audio.removeEventListener(
-        "play",
-        onPlay
-      );
-
-      audio.removeEventListener(
-        "pause",
-        onPause
-      );
-
-      audio.removeEventListener(
-        "ended",
-        onEnded
-      );
-
-      audio.removeEventListener(
-        "error",
-        onError
-      );
-
-      audio.removeEventListener(
-        "canplay",
-        onCanPlay
-      );
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("ended", onEnded);
+      audio.removeEventListener("error", onError);
 
       heroAudioRef.current = null;
     };
@@ -484,34 +404,19 @@ export const AudioProvider = ({ children }) => {
   useEffect(() => {
     if (!heroAudioRef.current) return;
 
-    heroAudioRef.current.volume =
-      volume * masterVolume;
+    heroAudioRef.current.volume = volume * masterVolume;
   }, [volume, masterVolume]);
 
   /* =======================================================
      LOAD TRACK
   ======================================================= */
 
-  const loadTrack = async (
-    track,
-    autoPlay = false
-  ) => {
+  const loadTrack = async (track, autoPlay = false) => {
     const audio = heroAudioRef.current;
 
-    if (!audio || !track) {
-      console.error(
-        "[VibeSpace] Audio or track missing"
-      );
-      return false;
-    }
+    if (!audio || !track) return false;
 
     try {
-      console.log(
-        "[VibeSpace] Loading:",
-        track.title,
-        track.src
-      );
-
       audio.pause();
 
       audio.removeAttribute("src");
@@ -522,9 +427,7 @@ export const AudioProvider = ({ children }) => {
       setDuration(0);
 
       audio.src = track.src;
-
-      audio.volume =
-        volume * masterVolume;
+      audio.volume = volume * masterVolume;
 
       setCurrentTrack(track);
       currentTrackRef.current = track;
@@ -538,14 +441,75 @@ export const AudioProvider = ({ children }) => {
 
       return true;
     } catch (error) {
+      console.error("[VibeSpace] LOAD ERROR:", error);
+      setIsPlaying(false);
+      return false;
+    }
+  };
+
+  /* =======================================================
+     FADE HERO MUSIC
+  ======================================================= */
+
+  const fadeInHeroMusic = async (
+    track,
+    durationMs = 1800
+  ) => {
+    const audio = heroAudioRef.current;
+
+    if (!audio || !track) return;
+
+    try {
+      audio.pause();
+
+      audio.removeAttribute("src");
+      audio.load();
+
+      setCurrentTime(0);
+      setDuration(0);
+
+      audio.src = track.src;
+      audio.volume = 0;
+
+      setCurrentTrack(track);
+      currentTrackRef.current = track;
+
+      audio.load();
+
+      await audio.play();
+
+      setIsPlaying(true);
+
+      const targetVolume = volume * masterVolume;
+      const steps = 36;
+      const stepTime = durationMs / steps;
+
+      for (let step = 1; step <= steps; step++) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, stepTime)
+        );
+
+        if (!heroAudioRef.current) return;
+
+        audio.volume =
+          targetVolume * (step / steps);
+      }
+
+      audio.volume = targetVolume;
+    } catch (error) {
       console.error(
-        "[VibeSpace] LOAD/PLAY FAILED:",
+        "[VibeSpace] Fade music error:",
         error
       );
 
-      setIsPlaying(false);
+      audio.volume = volume * masterVolume;
 
-      return false;
+      try {
+        await audio.play();
+        setIsPlaying(true);
+      } catch {
+        setIsPlaying(false);
+      }
     }
   };
 
@@ -558,12 +522,7 @@ export const AudioProvider = ({ children }) => {
 
     const audio = heroAudioRef.current;
 
-    if (!audio) {
-      console.error(
-        "[VibeSpace] Audio element not ready"
-      );
-      return;
-    }
+    if (!audio) return;
 
     try {
       if (
@@ -572,19 +531,13 @@ export const AudioProvider = ({ children }) => {
         audio.src !== window.location.href
       ) {
         await audio.play();
-
         setIsPlaying(true);
-
         return;
       }
 
       await loadTrack(track, true);
     } catch (error) {
-      console.error(
-        "[VibeSpace] playTrack ERROR:",
-        error
-      );
-
+      console.error("[VibeSpace] playTrack ERROR:", error);
       setIsPlaying(false);
     }
   };
@@ -596,23 +549,7 @@ export const AudioProvider = ({ children }) => {
   const togglePlayPause = async () => {
     const audio = heroAudioRef.current;
 
-    if (!audio) {
-      console.error(
-        "[VibeSpace] Audio element missing"
-      );
-      return;
-    }
-
-    /*
-     * Nothing selected yet.
-     * Do NOT automatically start Deep Sleep.
-     */
-    if (!currentTrackRef.current) {
-      console.log(
-        "[VibeSpace] No track selected yet"
-      );
-      return;
-    }
+    if (!audio || !currentTrackRef.current) return;
 
     try {
       if (!audio.paused) {
@@ -636,11 +573,7 @@ export const AudioProvider = ({ children }) => {
 
       setIsPlaying(true);
     } catch (error) {
-      console.error(
-        "[VibeSpace] PLAY ERROR:",
-        error
-      );
-
+      console.error("[VibeSpace] PLAY ERROR:", error);
       setIsPlaying(false);
     }
   };
@@ -652,26 +585,16 @@ export const AudioProvider = ({ children }) => {
   const playNextTrack = async () => {
     const current = currentTrackRef.current;
 
-    /*
-     * If no track is selected, do nothing.
-     */
-    if (!current) {
-      console.log(
-        "[VibeSpace] No current track"
-      );
-      return;
-    }
+    if (!current) return;
 
-    const index =
-      MUSIC_DATABASE.findIndex(
-        (track) => track.id === current.id
-      );
+    const index = MUSIC_DATABASE.findIndex(
+      (track) => track.id === current.id
+    );
 
     const nextIndex =
       index === -1
         ? 0
-        : (index + 1) %
-          MUSIC_DATABASE.length;
+        : (index + 1) % MUSIC_DATABASE.length;
 
     await loadTrack(
       MUSIC_DATABASE[nextIndex],
@@ -686,17 +609,11 @@ export const AudioProvider = ({ children }) => {
   const playPreviousTrack = async () => {
     const current = currentTrackRef.current;
 
-    if (!current) {
-      console.log(
-        "[VibeSpace] No current track"
-      );
-      return;
-    }
+    if (!current) return;
 
-    const index =
-      MUSIC_DATABASE.findIndex(
-        (track) => track.id === current.id
-      );
+    const index = MUSIC_DATABASE.findIndex(
+      (track) => track.id === current.id
+    );
 
     const previousIndex =
       index <= 0
@@ -716,9 +633,7 @@ export const AudioProvider = ({ children }) => {
   const seekTo = (time) => {
     const audio = heroAudioRef.current;
 
-    if (!audio || !currentTrackRef.current) {
-      return;
-    }
+    if (!audio || !currentTrackRef.current) return;
 
     const safeTime = Math.max(
       0,
@@ -773,10 +688,9 @@ export const AudioProvider = ({ children }) => {
     Object.entries(
       ambientRefs.current
     ).forEach(([id, audio]) => {
-      const layer =
-        ambientLayers.find(
-          (item) => item.id === id
-        );
+      const layer = ambientLayers.find(
+        (item) => item.id === id
+      );
 
       if (!layer || !audio) return;
 
@@ -788,7 +702,7 @@ export const AudioProvider = ({ children }) => {
   };
 
   /* =======================================================
-     CREATE AMBIENT AUDIO
+     AMBIENT AUDIO
   ======================================================= */
 
   useEffect(() => {
@@ -802,17 +716,13 @@ export const AudioProvider = ({ children }) => {
       audio.volume = 0;
       audio.src = layer.src;
 
-      audio.addEventListener(
-        "error",
-        () => {
-          console.error(
-            "[VibeSpace] Ambient ERROR:",
-            layer.name,
-            layer.src,
-            audio.error
-          );
-        }
-      );
+      audio.addEventListener("error", () => {
+        console.error(
+          "[VibeSpace] Ambient ERROR:",
+          layer.name,
+          layer.src
+        );
+      });
 
       refs[layer.id] = audio;
     });
@@ -820,13 +730,11 @@ export const AudioProvider = ({ children }) => {
     ambientRefs.current = refs;
 
     return () => {
-      Object.values(refs).forEach(
-        (audio) => {
-          audio.pause();
-          audio.removeAttribute("src");
-          audio.load();
-        }
-      );
+      Object.values(refs).forEach((audio) => {
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+      });
 
       ambientRefs.current = {};
     };
@@ -845,21 +753,13 @@ export const AudioProvider = ({ children }) => {
       Math.min(1, Number(value))
     );
 
-    const audio =
-      ambientRefs.current[id];
+    const audio = ambientRefs.current[id];
 
-    if (!audio) {
-      console.error(
-        "[VibeSpace] Ambient audio missing:",
-        id
-      );
-      return;
-    }
+    if (!audio) return;
 
-    const layer =
-      ambientLayers.find(
-        (item) => item.id === id
-      );
+    const layer = ambientLayers.find(
+      (item) => item.id === id
+    );
 
     if (!layer) return;
 
@@ -905,18 +805,15 @@ export const AudioProvider = ({ children }) => {
   ======================================================= */
 
   const toggleAmbientMute = async (id) => {
-    const layer =
-      ambientLayers.find(
-        (item) => item.id === id
-      );
+    const layer = ambientLayers.find(
+      (item) => item.id === id
+    );
 
-    const audio =
-      ambientRefs.current[id];
+    const audio = ambientRefs.current[id];
 
     if (!layer || !audio) return;
 
-    const newMuted =
-      !layer.isMuted;
+    const newMuted = !layer.isMuted;
 
     setAmbientLayers((prev) =>
       prev.map((item) =>
@@ -934,8 +831,7 @@ export const AudioProvider = ({ children }) => {
       audio.pause();
     } else {
       audio.volume =
-        layer.volume *
-        masterVolume;
+        layer.volume * masterVolume;
 
       if (layer.volume > 0) {
         try {
@@ -976,15 +872,11 @@ export const AudioProvider = ({ children }) => {
       selectedIntensity || ""
     ).toLowerCase();
 
-    /* SLEEP */
-
     if (a.includes("sleep")) {
       return MUSIC_DATABASE.find(
         (x) => x.id === "deep-sleep"
       );
     }
-
-    /* CODING + DEEP FOCUS */
 
     if (
       a.includes("coding") &&
@@ -994,8 +886,6 @@ export const AudioProvider = ({ children }) => {
         (x) => x.id === "deep-focus"
       );
     }
-
-    /* STUDY */
 
     if (a.includes("stud")) {
       if (
@@ -1020,8 +910,6 @@ export const AudioProvider = ({ children }) => {
       );
     }
 
-    /* READING + COFFEE */
-
     if (
       a.includes("read") &&
       e.includes("coffee")
@@ -1030,8 +918,6 @@ export const AudioProvider = ({ children }) => {
         (x) => x.id === "taly-coffee"
       );
     }
-
-    /* READING */
 
     if (a.includes("read")) {
       return (
@@ -1044,15 +930,11 @@ export const AudioProvider = ({ children }) => {
       );
     }
 
-    /* DRIVING */
-
     if (a.includes("driv")) {
       return MUSIC_DATABASE.find(
         (x) => x.id === "road-trp"
       );
     }
-
-    /* CREATING */
 
     if (a.includes("creat")) {
       return MUSIC_DATABASE.find(
@@ -1060,15 +942,11 @@ export const AudioProvider = ({ children }) => {
       );
     }
 
-    /* COFFEE */
-
     if (e.includes("coffee")) {
       return MUSIC_DATABASE.find(
         (x) => x.id === "taly-coffee"
       );
     }
-
-    /* MIDNIGHT */
 
     if (
       e.includes("midnight") ||
@@ -1084,15 +962,11 @@ export const AudioProvider = ({ children }) => {
       );
     }
 
-    /* DREAMY */
-
     if (f.includes("dreamy")) {
       return MUSIC_DATABASE.find(
         (x) => x.id === "dreamy-evening"
       );
     }
-
-    /* CALM / PEACEFUL */
 
     if (
       f.includes("calm") ||
@@ -1107,8 +981,6 @@ export const AudioProvider = ({ children }) => {
         )
       );
     }
-
-    /* FALLBACK */
 
     const words =
       `${a} ${f} ${e} ${i}`;
@@ -1142,10 +1014,6 @@ export const AudioProvider = ({ children }) => {
     return bestTrack;
   };
 
-  /* =======================================================
-     RECOMMENDED TRACK
-  ======================================================= */
-
   const recommendedTrack = useMemo(() => {
     return getRecommendedTrack(
       activity,
@@ -1161,10 +1029,229 @@ export const AudioProvider = ({ children }) => {
   ]);
 
   /* =======================================================
+     AMBIENT PRESETS FOR WOW MOMENT
+  ======================================================= */
+
+  const getAtmospherePreset = (
+    selectedEnvironment,
+    selectedIntensity
+  ) => {
+    const e = String(
+      selectedEnvironment || ""
+    ).toLowerCase();
+
+    const immersive =
+      String(selectedIntensity || "")
+        .toLowerCase()
+        .includes("immersive");
+
+    const presets = {
+      rain: {
+        rain: immersive ? 0.55 : 0.42,
+        wind: immersive ? 0.14 : 0.08,
+      },
+
+      coffee: {
+        coffee: immersive ? 0.38 : 0.28,
+      },
+
+      fireplace: {
+        fireplace: immersive ? 0.48 : 0.35,
+      },
+
+      ocean: {
+        ocean: immersive ? 0.52 : 0.38,
+        wind: 0.08,
+      },
+
+      forest: {
+        forest: immersive ? 0.42 : 0.3,
+        birds: 0.12,
+      },
+
+      midnight: {
+        city: immersive ? 0.32 : 0.22,
+        wind: 0.06,
+      },
+
+      rooftop: {
+        wind: immersive ? 0.35 : 0.24,
+        city: 0.14,
+      },
+
+      library: {
+        wind: 0.04,
+      },
+    };
+
+    if (e.includes("rain")) {
+      return presets.rain;
+    }
+
+    if (e.includes("coffee")) {
+      return presets.coffee;
+    }
+
+    if (e.includes("fire")) {
+      return presets.fireplace;
+    }
+
+    if (e.includes("ocean")) {
+      return presets.ocean;
+    }
+
+    if (e.includes("forest")) {
+      return presets.forest;
+    }
+
+    if (e.includes("midnight")) {
+      return presets.midnight;
+    }
+
+    if (e.includes("rooftop")) {
+      return presets.rooftop;
+    }
+
+    if (e.includes("library")) {
+      return presets.library;
+    }
+
+    return {};
+  };
+
+  /* =======================================================
+     FADE AMBIENT LAYERS
+  ======================================================= */
+
+  const fadeInAtmosphere = async (
+    preset,
+    durationMs = 1800
+  ) => {
+    const entries = Object.entries(preset);
+
+    if (!entries.length) return;
+
+    const steps = 30;
+
+    entries.forEach(([id]) => {
+      const audio = ambientRefs.current[id];
+
+      if (audio) {
+        audio.volume = 0;
+      }
+    });
+
+    for (const [id, target] of entries) {
+      const audio = ambientRefs.current[id];
+
+      if (!audio) continue;
+
+      try {
+        await audio.play();
+      } catch (error) {
+        console.error(
+          "[VibeSpace] Atmosphere play error:",
+          id,
+          error
+        );
+      }
+
+      const stepTime = durationMs / steps;
+
+      for (let step = 1; step <= steps; step++) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, stepTime)
+        );
+
+        if (!ambientRefs.current[id]) return;
+
+        audio.volume =
+          target *
+          masterVolume *
+          (step / steps);
+      }
+
+      audio.volume =
+        target * masterVolume;
+
+      setAmbientLayers((prev) =>
+        prev.map((layer) =>
+          layer.id === id
+            ? {
+                ...layer,
+                volume: target,
+                isMuted: false,
+              }
+            : layer
+        )
+      );
+    }
+  };
+
+  /* =======================================================
+     WOW MOMENT
+  ======================================================= */
+
+  const revealVibe = async ({
+    activity: nextActivity,
+    feeling: nextFeeling,
+    environment: nextEnvironment,
+    intensity: nextIntensity,
+    selectedTrack,
+  }) => {
+    const atmospherePreset =
+      getAtmospherePreset(
+        nextEnvironment,
+        nextIntensity
+      );
+
+    setVibeRevealData({
+      activity: nextActivity,
+      feeling: nextFeeling,
+      environment: nextEnvironment,
+      intensity: nextIntensity,
+      track: selectedTrack,
+    });
+
+    setIsVibeRevealing(true);
+
+    /*
+     * Small pause before audio starts.
+     * This creates the cinematic reveal feeling.
+     */
+    await new Promise((resolve) =>
+      setTimeout(resolve, 700)
+    );
+
+    /*
+     * Start music + ambience together.
+     */
+    await Promise.all([
+      fadeInHeroMusic(
+        selectedTrack,
+        1800
+      ),
+      fadeInAtmosphere(
+        atmospherePreset,
+        1800
+      ),
+    ]);
+
+    /*
+     * Let the visual reveal breathe.
+     */
+    await new Promise((resolve) =>
+      setTimeout(resolve, 900)
+    );
+
+    setIsVibeRevealing(false);
+  };
+
+  /* =======================================================
      SUBMIT SITUATION
   ======================================================= */
 
-  const submitSituation = (
+  const submitSituation = async (
     newActivity,
     newFeeling,
     newEnvironment,
@@ -1196,9 +1283,8 @@ export const AudioProvider = ({ children }) => {
     setIntensity(finalIntensity);
 
     /*
-     * Stop current audio
+     * Stop previous audio.
      */
-
     const audio =
       heroAudioRef.current;
 
@@ -1209,10 +1295,26 @@ export const AudioProvider = ({ children }) => {
     }
 
     /*
-     * Select recommended track
-     * but DO NOT autoplay.
+     * Reset ambient layers.
      */
+    Object.values(
+      ambientRefs.current
+    ).forEach((audio) => {
+      audio.pause();
+      audio.volume = 0;
+    });
 
+    setAmbientLayers((prev) =>
+      prev.map((layer) => ({
+        ...layer,
+        volume: 0,
+        isMuted: false,
+      }))
+    );
+
+    /*
+     * Set track before reveal.
+     */
     setCurrentTrack(selectedTrack);
     currentTrackRef.current =
       selectedTrack;
@@ -1221,7 +1323,21 @@ export const AudioProvider = ({ children }) => {
     setDuration(0);
     setIsPlaying(false);
 
+    /*
+     * Move to result screen.
+     */
     setHasSubmittedSituation(true);
+
+    /*
+     * Cinematic VibeSpace moment.
+     */
+    await revealVibe({
+      activity: finalActivity,
+      feeling: finalFeeling,
+      environment: finalEnvironment,
+      intensity: finalIntensity,
+      selectedTrack,
+    });
   };
 
   /* =======================================================
@@ -1468,6 +1584,11 @@ export const AudioProvider = ({ children }) => {
 
     submitSituation,
     surpriseMe,
+
+    /* WOW MOMENT */
+
+    isVibeRevealing,
+    vibeRevealData,
 
     /* Music */
 
