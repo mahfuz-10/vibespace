@@ -45,9 +45,10 @@ function MainContent() {
      - Existing desktop layout remains unchanged.
 
      Mobile:
-     - Bottom padding remains for the fixed player.
-     - Mobile Builder/Studio navigation is handled by Navbar.
-     - No extra fixed/sticky navigation is created here.
+     - Content starts below the fixed Navbar.
+     - Builder/Studio navigation is inside Navbar.
+     - No separate mobile navigation here.
+     - Bottom padding remains for PersistentPlayer.
   ========================================================= */
 
   return (
@@ -56,6 +57,8 @@ function MainContent() {
         min-h-screen
         transition-colors
         duration-500
+        pt-20
+        md:pt-0
         pb-44
         md:pb-44
       "
@@ -73,6 +76,12 @@ function MainContent() {
 
       {/* =====================================================
           MAIN CONTENT
+
+          Mobile:
+          pt-20 above keeps this content below the fixed Navbar.
+
+          Desktop:
+          md:pt-0 means NO CHANGE to PC layout.
       ===================================================== */}
 
       <main>
