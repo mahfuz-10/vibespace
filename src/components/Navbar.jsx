@@ -89,7 +89,7 @@ export const Navbar = ({
           className="
             max-w-7xl
             mx-auto
-            px-4
+            px-3
             sm:px-8
             h-20
             flex
@@ -107,10 +107,11 @@ export const Navbar = ({
             className="
               flex
               items-center
-              gap-3
+              gap-2
               sm:gap-4
               min-w-0
               flex-shrink-0
+              z-20
             "
           >
 
@@ -145,8 +146,7 @@ export const Navbar = ({
                 alt="VibeSpace"
                 draggable="false"
                 className="
-                  h-8
-                  xs:h-9
+                  h-9
                   sm:h-12
                   w-auto
                   object-contain
@@ -164,12 +164,13 @@ export const Navbar = ({
 
 
               {/* =============================================
-                  BRAND TEXT (Responsive: visible on mobile & desktop)
+                  BRAND TEXT (Hidden on mobile to prevent overlap, visible on sm+ screens)
               ============================================= */}
 
               <div
                 className="
-                  flex
+                  hidden
+                  sm:flex
                   flex-col
                   items-start
                   min-w-0
@@ -180,8 +181,7 @@ export const Navbar = ({
                   className="
                     font-light
                     tracking-tight
-                    text-xs
-                    sm:text-sm
+                    text-sm
                     transition-colors
                     duration-300
                     whitespace-nowrap
@@ -206,11 +206,9 @@ export const Navbar = ({
 
                 <span
                   className="
-                    text-[7px]
-                    sm:text-[8px]
+                    text-[8px]
                     uppercase
-                    tracking-[0.2em]
-                    sm:tracking-[0.25em]
+                    tracking-[0.25em]
                     font-mono
                     opacity-60
                     whitespace-nowrap
@@ -399,6 +397,7 @@ export const Navbar = ({
               hover:scale-105
               active:scale-95
               flex-shrink-0
+              z-20
             "
             style={{
               borderColor:
@@ -455,6 +454,7 @@ export const Navbar = ({
             flex
             items-center
             pointer-events-none
+            z-10
           "
         >
 
