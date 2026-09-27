@@ -234,13 +234,14 @@ export const VibeResult = ({ onOpenStudio }) => {
               <span className="w-10 h-px bg-white/25" />
             </div>
 
-            {/* SPARKLE */}
+            {/* LOGO ICON */}
 
             <div className="flex justify-center mb-8">
               <div className="w-14 h-14 rounded-full border border-white/15 bg-white/10 backdrop-blur-xl flex items-center justify-center animate-[vibePulse_2s_ease-in-out_infinite]">
-                <Sparkles
-                  size={20}
-                  className="text-white"
+                <img 
+                  src="/vibespace-logo-icon.png" 
+                  alt="VibeSpace Logo" 
+                  className="w-6 h-6 object-contain"
                 />
               </div>
             </div>
@@ -421,11 +422,10 @@ export const VibeResult = ({ onOpenStudio }) => {
               "rgba(168,182,154,0.22)",
           }}
         >
-          <Sparkles
-            size={13}
-            style={{
-              color: "var(--sage)",
-            }}
+          <img 
+            src="/vibespace-logo-icon.png" 
+            alt="VibeSpace Logo" 
+            className="w-4 h-4 object-contain"
           />
 
           <span
@@ -926,153 +926,155 @@ export const VibeResult = ({ onOpenStudio }) => {
 
           </div>
 
-          {/* STUDIO CTA */}
+        </div>
 
-          <div
-            className="mt-6 rounded-2xl border p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-            style={{
-              background:
-                "linear-gradient(120deg, rgba(168,182,154,0.07), rgba(214,184,135,0.04))",
-              borderColor:
-                "rgba(168,182,154,0.12)",
-            }}
-          >
+        {/* STUDIO CTA */}
 
-            <div className="flex items-center gap-3">
+        <div
+          className="mt-6 rounded-2xl border p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          style={{
+            background:
+              "linear-gradient(120deg, rgba(168,182,154,0.07), rgba(214,184,135,0.04))",
+            borderColor:
+              "rgba(168,182,154,0.12)",
+          }}
+        >
 
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{
-                  backgroundColor:
-                    "rgba(168,182,154,0.1)",
-                }}
-              >
-                <SlidersHorizontal
-                  size={15}
-                  style={{
-                    color:
-                      "var(--sage)",
-                  }}
-                />
-              </div>
+          <div className="flex items-center gap-3">
 
-              <div>
-
-                <h3
-                  className="text-xs font-medium"
-                  style={{
-                    color:
-                      "var(--text-primary)",
-                  }}
-                >
-                  Fine-tune your atmosphere
-                </h3>
-
-                <p
-                  className="text-[9px] mt-1 opacity-50"
-                  style={{
-                    color:
-                      "var(--text-muted)",
-                  }}
-                >
-                  Adjust rain, ocean, wind,
-                  fireplace and other layers.
-                </p>
-
-              </div>
-
-            </div>
-
-            <button
-              type="button"
-              onClick={onOpenStudio}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border text-[10px] uppercase tracking-wider font-semibold transition-all hover:scale-[1.02]"
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center"
               style={{
-                borderColor:
-                  "rgba(168,182,154,0.2)",
                 backgroundColor:
-                  "rgba(168,182,154,0.08)",
-                color:
-                  "var(--sage)",
+                  "rgba(168,182,154,0.1)",
               }}
             >
-              Atmosphere Studio
-              <ArrowRight size={13} />
-            </button>
-
-          </div>
-
-          {/* SAVE */}
-
-          <div className="mt-8 pt-6 border-t border-white/5">
-
-            <div className="flex flex-col sm:flex-row gap-3">
-
-              <input
-                type="text"
-                value={vibeName}
-                onChange={(e) =>
-                  setVibeName(
-                    e.target.value
-                  )
-                }
-                placeholder="Name this vibe"
-                aria-label="Vibe name"
-                className="flex-1 px-4 py-3 rounded-xl border outline-none text-xs transition-all"
+              <SlidersHorizontal
+                size={15}
                 style={{
-                  backgroundColor:
-                    "rgba(255,255,255,0.035)",
-                  borderColor:
-                    "rgba(255,255,255,0.08)",
+                  color:
+                    "var(--sage)",
+                }}
+              />
+            </div>
+
+            <div>
+
+              <h3
+                className="text-xs font-medium"
+                style={{
                   color:
                     "var(--text-primary)",
                 }}
-              />
+              >
+                Fine-tune your atmosphere
+              </h3>
 
-              <button
-                type="button"
-                onClick={handleSave}
-                className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-[10px] uppercase tracking-wider font-semibold transition-all hover:scale-[1.02]"
+              <p
+                className="text-[9px] mt-1 opacity-50"
                 style={{
-                  backgroundColor:
-                    "var(--sage)",
                   color:
-                    "#151713",
+                    "var(--text-muted)",
                 }}
               >
-                <BookmarkCheck size={14} />
-                Save Vibe
-              </button>
+                Adjust rain, ocean, wind,
+                fireplace and other layers.
+              </p>
 
             </div>
+
+          </div>
+
+          <button
+            type="button"
+            onClick={onOpenStudio}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border text-[10px] uppercase tracking-wider font-semibold transition-all hover:scale-[1.02]"
+            style={{
+              borderColor:
+                "rgba(168,182,154,0.2)",
+              backgroundColor:
+                "rgba(168,182,154,0.08)",
+              color:
+                "var(--sage)",
+            }}
+          >
+            Atmosphere Studio
+            <ArrowRight size={13} />
+          </button>
+
+        </div>
+
+        {/* SAVE */}
+
+        <div className="mt-8 pt-6 border-t border-white/5">
+
+          <div className="flex flex-col sm:flex-row gap-3">
+
+            <input
+              type="text"
+              value={vibeName}
+              onChange={(e) =>
+                setVibeName(
+                  e.target.value
+                )
+              }
+              placeholder="Name this vibe"
+              aria-label="Vibe name"
+              className="flex-1 px-4 py-3 rounded-xl border outline-none text-xs transition-all"
+              style={{
+                backgroundColor:
+                  "rgba(255,255,255,0.035)",
+                borderColor:
+                  "rgba(255,255,255,0.08)",
+                color:
+                  "var(--text-primary)",
+              }}
+            />
+
+            <button
+              type="button"
+              onClick={handleSave}
+              className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-[10px] uppercase tracking-wider font-semibold transition-all hover:scale-[1.02]"
+              style={{
+                backgroundColor:
+                  "var(--sage)",
+                color:
+                  "#151713",
+              }}
+            >
+              <BookmarkCheck size={14} />
+              Save Vibe
+            </button>
 
           </div>
 
         </div>
 
-        {/* SAVED MESSAGE */}
-
-        {savedMessage && (
-          <div
-            className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2.5 rounded-full border backdrop-blur-xl"
-            style={{
-              backgroundColor:
-                "rgba(168,182,154,0.12)",
-              borderColor:
-                "rgba(168,182,154,0.25)",
-              color:
-                "var(--sage)",
-            }}
-          >
-            <BookmarkCheck size={13} />
-
-            <span className="text-[10px]">
-              Vibe saved successfully.
-            </span>
-          </div>
-        )}
-
       </section>
+
+      {/* SAVED MESSAGE */}
+
+      {savedMessage && (
+        <div
+          className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2.5 rounded-full border backdrop-blur-xl"
+          style={{
+            backgroundColor:
+              "rgba(168,182,154,0.12)",
+            borderColor:
+              "rgba(168,182,154,0.25)",
+            color:
+              "var(--sage)",
+          }}
+        >
+          <BookmarkCheck size={13} />
+
+          <span className="text-[10px]">
+            Vibe saved successfully.
+          </span>
+
+        </div>
+      )}
+
     </main>
   );
 };
