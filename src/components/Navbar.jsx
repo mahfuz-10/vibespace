@@ -161,18 +161,24 @@ export const Navbar = ({
                 "
               />
 
-              {/* MUSIC & VIBE CONNECTED ACOUSTIC LOGO SVG */}
+              {/* BOLD, VISIBLE & PROFESSIONAL MUSIC VINYL EQUALIZER LOGO */}
 
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110">
-                <circle cx="12" cy="12" r="9.5" stroke="url(#paint_vibe_ring)" strokeWidth="1" strokeOpacity="0.5" />
-                <circle cx="12" cy="12" r="7" stroke="url(#paint_vibe_ring)" strokeWidth="0.8" strokeOpacity="0.3" strokeDasharray="3 2" />
-                <path d="M7 12H9.5L10.5 8L13.5 16L14.5 12H17" stroke="url(#paint_vibe_wave)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                <circle cx="12" cy="12" r="11" stroke="url(#paint_outer_glow)" strokeWidth="0.8" strokeOpacity="0.6" strokeDasharray="2 2" />
+                <circle cx="12" cy="12" r="9" fill="var(--surface-primary, #2E2C26)" stroke="url(#paint_ring)" strokeWidth="1.5" />
+                <circle cx="12" cy="12" r="6" stroke="url(#paint_ring)" strokeWidth="0.8" strokeOpacity="0.5" />
+                <path d="M8 13V11M10 15V9M12 16V8M14 14V10M16 12V12" stroke="url(#paint_wave)" strokeWidth="1.8" strokeLinecap="round" />
+                <circle cx="12" cy="12" r="1" fill="var(--champagne, #D6B887)" />
                 <defs>
-                  <linearGradient id="paint_vibe_ring" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_outer_glow" x1="1" y1="1" x2="23" y2="23" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
-                  <linearGradient id="paint_vibe_wave" x1="7" y1="8" x2="17" y2="16" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_ring" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="var(--sage, #A8B69A)" />
+                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
+                  </linearGradient>
+                  <linearGradient id="paint_wave" x1="8" y1="8" x2="16" y2="16" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
