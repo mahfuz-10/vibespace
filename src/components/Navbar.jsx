@@ -89,7 +89,7 @@ export const Navbar = ({
           className="
             max-w-7xl
             mx-auto
-            px-5
+            px-4
             sm:px-8
             h-20
             flex
@@ -107,7 +107,8 @@ export const Navbar = ({
             className="
               flex
               items-center
-              gap-4
+              gap-3
+              sm:gap-4
               min-w-0
               flex-shrink-0
             "
@@ -120,7 +121,8 @@ export const Navbar = ({
                 relative
                 flex
                 items-center
-                gap-3.5
+                gap-2.5
+                sm:gap-3.5
                 cursor-pointer
                 group
                 bg-transparent
@@ -128,15 +130,14 @@ export const Navbar = ({
                 text-left
                 min-w-0
                 flex-shrink-0
-                pb-2
+                pb-1
+                sm:pb-2
               "
               aria-label="Go to VibeSpace home"
             >
 
               {/* =============================================
                   ACTUAL VIBESPACE LOGO IMAGE
-                  (no box, no background, no crop —
-                   full landscape logo with ambient glow)
               ============================================= */}
 
               <img
@@ -144,7 +145,8 @@ export const Navbar = ({
                 alt="VibeSpace"
                 draggable="false"
                 className="
-                  h-11
+                  h-8
+                  xs:h-9
                   sm:h-12
                   w-auto
                   object-contain
@@ -156,27 +158,18 @@ export const Navbar = ({
                 "
                 style={{
                   filter:
-                    'drop-shadow(0 0 12px rgba(168, 182, 154, 0.25)) drop-shadow(0 0 24px rgba(214, 184, 135, 0.12))'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.filter =
-                    'drop-shadow(0 0 18px rgba(168, 182, 154, 0.38)) drop-shadow(0 0 34px rgba(214, 184, 135, 0.20))';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.filter =
-                    'drop-shadow(0 0 12px rgba(168, 182, 154, 0.25)) drop-shadow(0 0 24px rgba(214, 184, 135, 0.12))';
+                    'drop-shadow(0 0 10px rgba(168, 182, 154, 0.25)) drop-shadow(0 0 20px rgba(214, 184, 135, 0.12))'
                 }}
               />
 
 
               {/* =============================================
-                  BRAND TEXT
+                  BRAND TEXT (Responsive: visible on mobile & desktop)
               ============================================= */}
 
               <div
                 className="
-                  hidden
-                  sm:flex
+                  flex
                   flex-col
                   items-start
                   min-w-0
@@ -187,7 +180,8 @@ export const Navbar = ({
                   className="
                     font-light
                     tracking-tight
-                    text-sm
+                    text-xs
+                    sm:text-sm
                     transition-colors
                     duration-300
                     whitespace-nowrap
@@ -212,9 +206,11 @@ export const Navbar = ({
 
                 <span
                   className="
-                    text-[8px]
+                    text-[7px]
+                    sm:text-[8px]
                     uppercase
-                    tracking-[0.25em]
+                    tracking-[0.2em]
+                    sm:tracking-[0.25em]
                     font-mono
                     opacity-60
                     whitespace-nowrap
@@ -389,8 +385,10 @@ export const Navbar = ({
             onClick={handleThemeToggle}
             className="
               relative
-              w-10
-              h-10
+              w-9
+              h-9
+              sm:w-10
+              sm:h-10
               rounded-xl
               border
               flex
@@ -488,8 +486,10 @@ export const Navbar = ({
               type="button"
               onClick={handleHome}
               className="
-                px-3
-                py-2
+                px-2.5
+                py-1.5
+                sm:px-3
+                sm:py-2
                 rounded-full
                 text-[10px]
                 transition-all
@@ -527,8 +527,10 @@ export const Navbar = ({
                 setCurrentTab('studio')
               }
               className="
-                px-3
-                py-2
+                px-2.5
+                py-1.5
+                sm:px-3
+                sm:py-2
                 rounded-full
                 text-[10px]
                 transition-all
