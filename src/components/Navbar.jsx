@@ -103,109 +103,176 @@ export const Navbar = ({
               LOGO / BRAND
           ================================================= */}
 
-          <button
-            type="button"
-            onClick={handleHome}
+          <div
             className="
               flex
               items-center
-              gap-3.5
-              cursor-pointer
-              group
-              bg-transparent
-              border-0
-              text-left
+              gap-4
               min-w-0
               flex-shrink-0
             "
-            aria-label="Go to VibeSpace home"
           >
 
-            {/* =================================================
-                ACTUAL VIBESPACE LOGO IMAGE
-                (no box, no background, no crop —
-                 shows full landscape logo as-is)
-            ================================================= */}
-
-            <img
-              src="/vibespace-logo-transparent.png"
-              alt="VibeSpace"
-              draggable="false"
+            <button
+              type="button"
+              onClick={handleHome}
               className="
-                h-11
-                sm:h-12
-                w-auto
-                object-contain
-                flex-shrink-0
-                transition-transform
-                duration-500
-                ease-out
-                group-hover:scale-105
-              "
-            />
-
-
-            {/* =================================================
-                BRAND TEXT
-            ================================================= */}
-
-            <div
-              className="
-                hidden
-                sm:flex
-                flex-col
-                items-start
+                relative
+                flex
+                items-center
+                gap-3.5
+                cursor-pointer
+                group
+                bg-transparent
+                border-0
+                text-left
                 min-w-0
+                flex-shrink-0
+                pb-2
               "
+              aria-label="Go to VibeSpace home"
             >
 
-              <span
+              {/* =============================================
+                  ACTUAL VIBESPACE LOGO IMAGE
+                  (no box, no background, no crop —
+                   full landscape logo with ambient glow)
+              ============================================= */}
+
+              <img
+                src="/vibespace-logo-transparent.png"
+                alt="VibeSpace"
+                draggable="false"
                 className="
-                  font-light
-                  tracking-tight
-                  text-sm
-                  transition-colors
-                  duration-300
-                  whitespace-nowrap
+                  h-11
+                  sm:h-12
+                  w-auto
+                  object-contain
+                  flex-shrink-0
+                  transition-all
+                  duration-500
+                  ease-out
+                  group-hover:scale-105
                 "
                 style={{
-                  color:
-                    'var(--text-primary)'
+                  filter:
+                    'drop-shadow(0 0 12px rgba(168, 182, 154, 0.25)) drop-shadow(0 0 24px rgba(214, 184, 135, 0.12))'
                 }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.filter =
+                    'drop-shadow(0 0 18px rgba(168, 182, 154, 0.38)) drop-shadow(0 0 34px rgba(214, 184, 135, 0.20))';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.filter =
+                    'drop-shadow(0 0 12px rgba(168, 182, 154, 0.25)) drop-shadow(0 0 24px rgba(214, 184, 135, 0.12))';
+                }}
+              />
+
+
+              {/* =============================================
+                  BRAND TEXT
+              ============================================= */}
+
+              <div
+                className="
+                  hidden
+                  sm:flex
+                  flex-col
+                  items-start
+                  min-w-0
+                "
               >
-                Vibe
+
                 <span
-                  className="font-normal italic"
+                  className="
+                    font-light
+                    tracking-tight
+                    text-sm
+                    transition-colors
+                    duration-300
+                    whitespace-nowrap
+                  "
                   style={{
                     color:
-                      'var(--champagne)'
+                      'var(--text-primary)'
                   }}
                 >
-                  Space
+                  Vibe
+                  <span
+                    className="font-normal italic"
+                    style={{
+                      color:
+                        'var(--champagne)'
+                    }}
+                  >
+                    Space
+                  </span>
                 </span>
-              </span>
 
+
+                <span
+                  className="
+                    text-[8px]
+                    uppercase
+                    tracking-[0.25em]
+                    font-mono
+                    opacity-60
+                    whitespace-nowrap
+                  "
+                  style={{
+                    color:
+                      'var(--text-muted)'
+                  }}
+                >
+                  Acoustic World
+                </span>
+
+              </div>
+
+
+              {/* =============================================
+                  BOTTOM ANCHOR LINE
+              ============================================= */}
 
               <span
                 className="
-                  text-[8px]
-                  uppercase
-                  tracking-[0.25em]
-                  font-mono
-                  opacity-60
-                  whitespace-nowrap
+                  absolute
+                  bottom-0
+                  left-0
+                  h-px
+                  transition-all
+                  duration-500
+                  group-hover:opacity-70
                 "
                 style={{
-                  color:
-                    'var(--text-muted)'
+                  width: '90%',
+                  opacity: 0.4,
+                  background:
+                    'linear-gradient(90deg, transparent, var(--champagne), transparent)'
                 }}
-              >
-                Acoustic World
-              </span>
+              />
 
-            </div>
+            </button>
 
-          </button>
+
+            {/* =================================================
+                VERTICAL SEPARATOR
+            ================================================= */}
+
+            <span
+              className="
+                hidden
+                md:block
+                flex-shrink-0
+              "
+              style={{
+                width: '1px',
+                height: '28px',
+                background: 'var(--border-subtle)'
+              }}
+            />
+
+          </div>
 
 
           {/* =================================================
