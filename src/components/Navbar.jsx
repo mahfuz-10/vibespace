@@ -144,7 +144,8 @@ export const Navbar = ({
                 alt="VibeSpace"
                 draggable="false"
                 className="
-                  h-8
+                  h-7
+                  xs:h-8
                   sm:h-12
                   w-auto
                   object-contain
@@ -161,12 +162,11 @@ export const Navbar = ({
               />
 
 
-              {/* BRAND TEXT (Hidden on very small screens to fit cleanly, visible on sm+) */}
+              {/* BRAND TEXT (Visible on both Mobile & PC) */}
 
               <div
                 className="
-                  hidden
-                  sm:flex
+                  flex
                   flex-col
                   items-start
                   min-w-0
@@ -177,7 +177,8 @@ export const Navbar = ({
                   className="
                     font-light
                     tracking-tight
-                    text-sm
+                    text-xs
+                    sm:text-sm
                     transition-colors
                     duration-300
                     whitespace-nowrap
@@ -202,9 +203,11 @@ export const Navbar = ({
 
                 <span
                   className="
-                    text-[8px]
+                    text-[7px]
+                    sm:text-[8px]
                     uppercase
-                    tracking-[0.25em]
+                    tracking-[0.2em]
+                    sm:tracking-[0.25em]
                     font-mono
                     opacity-60
                     whitespace-nowrap
@@ -262,7 +265,7 @@ export const Navbar = ({
 
 
           {/* =================================================
-              NAVIGATION (Unified responsive view for Mobile & PC)
+              NAVIGATION (Unified for Mobile & PC)
           ================================================= */}
 
           <nav
@@ -297,12 +300,12 @@ export const Navbar = ({
               type="button"
               onClick={handleHome}
               className={`
-                px-3
+                px-2.5
                 py-1.5
                 sm:px-4
                 sm:py-2
                 rounded-full
-                text-[11px]
+                text-[10px]
                 sm:text-xs
                 transition-all
                 duration-300
@@ -345,12 +348,12 @@ export const Navbar = ({
                 setCurrentTab('studio')
               }
               className={`
-                px-3
+                px-2.5
                 py-1.5
                 sm:px-4
                 sm:py-2
                 rounded-full
-                text-[11px]
+                text-[10px]
                 sm:text-xs
                 transition-all
                 duration-300
