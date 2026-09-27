@@ -132,11 +132,10 @@ export const PersistentPlayer = () => {
             {/* Text */}
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <Sparkles
-                  size={11}
-                  style={{
-                    color: "var(--sage)",
-                  }}
+                <img 
+                  src="/vibespace-logo-icon.png" 
+                  alt="VibeSpace Icon" 
+                  className="w-4 h-4 object-contain flex-shrink-0"
                 />
 
                 <p
