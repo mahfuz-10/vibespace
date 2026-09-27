@@ -26,21 +26,9 @@ export const LiveMixBar = ({ activeLayers = [] }) => {
       }}
     >
       <div className="flex items-center justify-between mb-2">
-        
-        {/* =========================================================
-            YOUR ATMOSPHERE TITLE WITH CUSTOM LOGO ICON
-        ========================================================= */}
-        <div className="flex items-center gap-2.5">
-          <img 
-            src="/vibespace-logo-icon.png" 
-            alt="VibeSpace Icon" 
-            className="w-5 h-5 object-contain flex-shrink-0"
-          />
-          <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: 'var(--text-muted)' }}>
-            Live Mix Preview
-          </span>
-        </div>
-
+        <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: 'var(--text-muted)' }}>
+          Live Mix Preview
+        </span>
         <span className="text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>
           {activeMix.length} active soundscape{activeMix.length === 1 ? '' : 's'}
         </span>
