@@ -121,18 +121,6 @@ export const Navbar = ({
             aria-label="Go to VibeSpace home"
           >
 
-            {/* =================================================
-                VIBESPACE IMAGE LOGO
-
-                Desktop:
-                - Clean square logo container
-
-                Mobile:
-                - Slightly smaller
-                - Brand text hidden
-                - Prevents collision with center navigation
-            ================================================= */}
-
             <div
               className="
                 relative
@@ -180,17 +168,11 @@ export const Navbar = ({
               />
 
               {/* =================================================
-                  ACTUAL VIBESPACE LOGO
-
-                  File:
-                  /public/vibespace-logo.png
-
-                  URL:
-                  /vibespace-logo.png
+                  ACTUAL VIBESPACE LOGO IMAGE
               ================================================= */}
 
               <img
-                src="/vibespace-logo.png"
+                src="/vibespace-logo-transparent.png"
                 alt="VibeSpace"
                 draggable="false"
                 className="
@@ -198,16 +180,13 @@ export const Navbar = ({
                   z-10
                   w-full
                   h-full
-                  object-cover
-                  scale-[1.08]
+                  object-contain
+                  scale-[1.12]
                   transition-all
                   duration-500
                   ease-out
-                  group-hover:scale-[1.14]
+                  group-hover:scale-[1.2]
                 "
-                style={{
-                  mixBlendMode: 'screen'
-                }}
               />
 
               {/* Hover glow */}
@@ -235,9 +214,6 @@ export const Navbar = ({
 
             {/* =================================================
                 BRAND TEXT
-
-                Hidden on very small screens so it never
-                collides with the centered mobile navigation.
             ================================================= */}
 
             <div
@@ -301,8 +277,6 @@ export const Navbar = ({
 
           {/* =================================================
               DESKTOP NAVIGATION
-
-              DESKTOP VERSION PRESERVED
           ================================================= */}
 
           <nav
@@ -471,12 +445,6 @@ export const Navbar = ({
 
         {/* =====================================================
             MOBILE NAVIGATION
-
-            IMPORTANT:
-            - Remains INSIDE navbar
-            - Not bottom fixed
-            - Not sticky
-            - Does not affect desktop
         ===================================================== */}
 
         <div
@@ -516,10 +484,6 @@ export const Navbar = ({
             }}
           >
 
-            {/* =================================================
-                MOBILE BUILDER
-            ================================================= */}
-
             <button
               type="button"
               onClick={handleHome}
@@ -556,10 +520,6 @@ export const Navbar = ({
               Builder
             </button>
 
-
-            {/* =================================================
-                MOBILE STUDIO
-            ================================================= */}
 
             <button
               type="button"
