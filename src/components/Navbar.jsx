@@ -161,36 +161,36 @@ export const Navbar = ({
                 "
               />
 
-              {/* ULTIMATE VIBESPACE HYBRID LOGO (V + Waveform + Orbital Sonic Node) */}
+              {/* PERFECT VIBESPACE HYBRID LOGO (V + Waveform + Orbital Sonic Node) */}
 
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110">
-                {/* Orbital Ring with Planet/Sonic Node */}
-                <path d="M3 15C3 10 8 4 17 5" stroke="url(#paint_orbit)" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.7" />
-                <circle cx="17" cy="5" r="1.2" fill="var(--champagne, #D6B887)" />
+                {/* Orbital Ring with Sonic Node */}
+                <path d="M4 14C4 9 9 3 18 5" stroke="url(#paint_orbit)" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.8" />
+                <circle cx="18" cy="5" r="1.3" fill="var(--champagne, #D6B887)" />
 
-                {/* Left Side Audio Equalizer / Sound Bars */}
-                <path d="M4 14V10" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M6 16V8" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M8 15V9" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                {/* Left Audio Wave Bars */}
+                <path d="M3 13V11" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M5.5 15V9" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M8 14V10" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
 
-                {/* Right Side Audio Equalizer / Sound Bars */}
-                <path d="M16 15V9" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M18 16V8" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M20 14V10" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                {/* Right Audio Wave Bars */}
+                <path d="M16 14V10" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M18.5 15V9" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M21 13V11" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
 
-                {/* Central Flowing V Shape with Fluid Waveform Base */}
-                <path d="M7 6L11.5 17L13 14L17 6" stroke="url(#paint_v)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                {/* Central Elegant V Shape */}
+                <path d="M7 7L12 17L17 7" stroke="url(#paint_v)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
 
                 <defs>
-                  <linearGradient id="paint_v" x1="7" y1="6" x2="17" y2="17" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_v" x1="7" y1="7" x2="17" y2="17" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
-                  <linearGradient id="paint_eq" x1="4" y1="8" x2="20" y2="16" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_eq" x1="3" y1="9" x2="21" y2="15" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
-                  <linearGradient id="paint_orbit" x1="3" y1="5" x2="17" y2="15" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_orbit" x1="4" y1="5" x2="18" y2="14" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
