@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
+
 import {
   Sun,
   Moon,
-  Sparkles,
   SlidersHorizontal,
-  Home
-} from 'lucide-react';
+  Home,
+} from "lucide-react";
 
-import { useAudio } from './AudioManager';
+import { useAudio } from "./AudioManager";
+import Logo from "./Logo";
 
 export const Navbar = ({
   currentTab,
-  setCurrentTab
+  setCurrentTab,
 }) => {
   const {
     isDarkMode,
     setIsDarkMode,
-    setHasSubmittedSituation
+    setHasSubmittedSituation,
   } = useAudio();
 
   /* =========================================================
@@ -24,45 +25,42 @@ export const Navbar = ({
   ========================================================= */
 
   useEffect(() => {
-    const themeValue = isDarkMode ? 'dark' : 'light';
+    const themeValue = isDarkMode ? "dark" : "light";
 
     document.documentElement.setAttribute(
-      'data-theme',
+      "data-theme",
       themeValue
     );
 
     if (isDarkMode) {
-      document.documentElement.classList.remove('light');
+      document.documentElement.classList.remove("light");
     } else {
-      document.documentElement.classList.add('light');
+      document.documentElement.classList.add("light");
     }
   }, [isDarkMode]);
-
 
   /* =========================================================
      THEME TOGGLE
   ========================================================= */
 
   const handleThemeToggle = () => {
-    if (typeof setIsDarkMode === 'function') {
+    if (typeof setIsDarkMode === "function") {
       setIsDarkMode((previous) => !previous);
     } else {
       console.error(
-        'setIsDarkMode is not available in AudioContext'
+        "setIsDarkMode is not available in AudioContext"
       );
     }
   };
-
 
   /* =========================================================
      HOME
   ========================================================= */
 
   const handleHome = () => {
-    setCurrentTab('builder');
+    setCurrentTab("builder");
     setHasSubmittedSituation(false);
   };
-
 
   return (
     <>
@@ -86,33 +84,26 @@ export const Navbar = ({
         "
         style={{
           backgroundColor:
-            'color-mix(in srgb, var(--bg-primary) 88%, transparent)',
+            "color-mix(in srgb, var(--bg-primary) 88%, transparent)",
           borderColor:
-            'var(--border-subtle)'
+            "var(--border-subtle)",
         }}
       >
-
-        {/* =================================================
-            DESKTOP NAVBAR
-            md+ ONLY
-        ================================================= */}
-
         <div
           className="
-            hidden
-            md:flex
             max-w-7xl
             mx-auto
             px-5
             sm:px-8
             h-20
+            flex
             items-center
             justify-between
           "
         >
 
           {/* =================================================
-              DESKTOP LOGO
+              LOGO
           ================================================= */}
 
           <button
@@ -130,7 +121,7 @@ export const Navbar = ({
             "
             aria-label="Go to VibeSpace home"
           >
-
+            {/* Logo Container */}
             <div
               className="
                 w-10
@@ -149,16 +140,16 @@ export const Navbar = ({
               "
               style={{
                 background:
-                  'linear-gradient(145deg, var(--sage), var(--surface-soft))',
+                  "linear-gradient(145deg, var(--sage), var(--surface-soft))",
 
                 border:
-                  '1px solid rgba(255, 255, 255, 0.2)',
+                  "1px solid rgba(255, 255, 255, 0.2)",
 
                 boxShadow:
-                  '0 10px 30px rgba(168, 182, 154, 0.25)'
+                  "0 10px 30px rgba(168, 182, 154, 0.25)",
               }}
             >
-
+              {/* Inner ambient glow */}
               <div
                 className="
                   absolute
@@ -171,26 +162,15 @@ export const Navbar = ({
                 "
               />
 
-              <Sparkles
-                className="
-                  w-4
-                  h-4
-                  relative
-                  z-10
-                  transition-transform
-                  duration-500
-                  group-hover:scale-110
-                "
-                style={{
-                  color: 'var(--bg-primary)'
-                }}
+              {/* NEW AMBIENT ARC LOGO */}
+              <Logo
+                size={25}
+                className="relative z-10"
               />
-
             </div>
 
-
+            {/* Brand */}
             <div className="flex flex-col items-start">
-
               <span
                 className="
                   font-light
@@ -200,20 +180,19 @@ export const Navbar = ({
                   duration-300
                 "
                 style={{
-                  color: 'var(--text-primary)'
+                  color: "var(--text-primary)",
                 }}
               >
                 Vibe
                 <span
                   className="font-normal italic"
                   style={{
-                    color: 'var(--champagne)'
+                    color: "var(--champagne)",
                   }}
                 >
                   Space
                 </span>
               </span>
-
 
               <span
                 className="
@@ -226,19 +205,18 @@ export const Navbar = ({
                   opacity-60
                 "
                 style={{
-                  color: 'var(--text-muted)'
+                  color: "var(--text-muted)",
                 }}
               >
                 Acoustic World
               </span>
-
             </div>
-
           </button>
-
 
           {/* =================================================
               DESKTOP NAVIGATION
+
+              PC VERSION UNCHANGED
           ================================================= */}
 
           <nav
@@ -253,17 +231,16 @@ export const Navbar = ({
             "
             style={{
               borderColor:
-                'var(--border-subtle)',
+                "var(--border-subtle)",
 
               backgroundColor:
-                'var(--surface-primary)'
+                "var(--surface-primary)",
             }}
           >
-
             <button
               type="button"
               onClick={() =>
-                setCurrentTab('builder')
+                setCurrentTab("builder")
               }
               className={`
                 px-4
@@ -274,34 +251,33 @@ export const Navbar = ({
                 duration-300
 
                 ${
-                  currentTab === 'builder'
-                    ? 'font-medium'
-                    : 'opacity-55 hover:opacity-100'
+                  currentTab === "builder"
+                    ? "font-medium"
+                    : "opacity-55 hover:opacity-100"
                 }
               `}
               style={
-                currentTab === 'builder'
+                currentTab === "builder"
                   ? {
                       backgroundColor:
-                        'var(--text-primary)',
+                        "var(--text-primary)",
 
                       color:
-                        'var(--bg-primary)'
+                        "var(--bg-primary)",
                     }
                   : {
                       color:
-                        'var(--text-muted)'
+                        "var(--text-muted)",
                     }
               }
             >
               Situation Builder
             </button>
 
-
             <button
               type="button"
               onClick={() =>
-                setCurrentTab('studio')
+                setCurrentTab("studio")
               }
               className={`
                 px-4
@@ -312,34 +288,34 @@ export const Navbar = ({
                 duration-300
 
                 ${
-                  currentTab === 'studio'
-                    ? 'font-medium'
-                    : 'opacity-55 hover:opacity-100'
+                  currentTab === "studio"
+                    ? "font-medium"
+                    : "opacity-55 hover:opacity-100"
                 }
               `}
               style={
-                currentTab === 'studio'
+                currentTab === "studio"
                   ? {
                       backgroundColor:
-                        'var(--text-primary)',
+                        "var(--text-primary)",
 
                       color:
-                        'var(--bg-primary)'
+                        "var(--bg-primary)",
                     }
                   : {
                       color:
-                        'var(--text-muted)'
+                        "var(--text-muted)",
                     }
               }
             >
               Atmosphere Studio
             </button>
-
           </nav>
 
-
           {/* =================================================
-              DESKTOP THEME SWITCHER
+              THEME SWITCHER
+
+              PC VERSION UNCHANGED
           ================================================= */}
 
           <button
@@ -361,26 +337,24 @@ export const Navbar = ({
             "
             style={{
               borderColor:
-                'var(--border-subtle)',
+                "var(--border-subtle)",
 
               backgroundColor:
-                'var(--surface-primary)'
+                "var(--surface-primary)",
             }}
             aria-label={
               isDarkMode
-                ? 'Switch to light mode'
-                : 'Switch to dark mode'
+                ? "Switch to light mode"
+                : "Switch to dark mode"
             }
           >
-
             <span className="relative z-10">
-
               {isDarkMode ? (
                 <Sun
                   className="w-4 h-4"
                   style={{
                     color:
-                      'var(--champagne)'
+                      "var(--champagne)",
                   }}
                 />
               ) : (
@@ -388,344 +362,141 @@ export const Navbar = ({
                   className="w-4 h-4"
                   style={{
                     color:
-                      'var(--sage)'
+                      "var(--sage)",
                   }}
                 />
               )}
-
             </span>
-
           </button>
-
         </div>
 
-
         {/* =====================================================
-            MOBILE NAVBAR
-           
+            MOBILE NAVIGATION
+
             MOBILE ONLY
-           
-            375px → 428px
-           
-            Layout:
-            Logo | Builder/Studio | Theme
-           
+
             IMPORTANT:
-            - No absolute centered navigation
-            - No bottom navigation
-            - No fixed middle pill
-            - Logo remains visible
-            - PC version unaffected
+            - Inside the TOP navbar
+            - NOT bottom fixed
+            - NOT sticky
+            - NOT viewport centered
+            - Does NOT affect desktop
         ===================================================== */}
 
         <div
           className="
-            flex
             md:hidden
-            h-16
-            w-full
+            absolute
+            inset-y-0
+            left-1/2
+            -translate-x-1/2
+            flex
             items-center
-            gap-2
-            px-3
-            sm:px-4
+            pointer-events-none
           "
         >
-
-          {/* =================================================
-              MOBILE LOGO
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={handleHome}
-            className="
-              flex
-              items-center
-              gap-2
-              min-w-0
-              flex-shrink-0
-              bg-transparent
-              border-0
-              cursor-pointer
-              group
-            "
-            aria-label="Go to VibeSpace home"
-          >
-
-            {/* Logo Icon */}
-
-            <div
-              className="
-                w-9
-                h-9
-                rounded-xl
-                flex
-                items-center
-                justify-center
-                relative
-                overflow-hidden
-                flex-shrink-0
-                transition-transform
-                duration-300
-                group-active:scale-95
-              "
-              style={{
-                background:
-                  'linear-gradient(145deg, var(--sage), var(--surface-soft))',
-
-                border:
-                  '1px solid rgba(255,255,255,0.18)',
-
-                boxShadow:
-                  '0 7px 20px rgba(168,182,154,0.20)'
-              }}
-            >
-
-              <Sparkles
-                size={15}
-                style={{
-                  color: 'var(--bg-primary)'
-                }}
-              />
-
-            </div>
-
-
-            {/* VibeSpace Name */}
-
-            <div
-              className="
-                flex
-                flex-col
-                items-start
-                leading-none
-                min-w-0
-              "
-            >
-
-              <span
-                className="
-                  text-[13px]
-                  font-light
-                  tracking-tight
-                  whitespace-nowrap
-                "
-                style={{
-                  color:
-                    'var(--text-primary)'
-                }}
-              >
-                Vibe
-                <span
-                  className="font-normal italic"
-                  style={{
-                    color:
-                      'var(--champagne)'
-                  }}
-                >
-                  Space
-                </span>
-              </span>
-
-              <span
-                className="
-                  mt-1
-                  text-[6px]
-                  uppercase
-                  tracking-[0.22em]
-                  whitespace-nowrap
-                  opacity-50
-                "
-                style={{
-                  color:
-                    'var(--text-muted)'
-                }}
-              >
-                Acoustic World
-              </span>
-
-            </div>
-
-          </button>
-
-
-          {/* =================================================
-              MOBILE BUILDER / STUDIO
-          ================================================= */}
-
           <nav
             className="
+              pointer-events-auto
               flex
               items-center
               gap-0.5
               p-1
               rounded-full
               border
-              flex-1
-              min-w-0
-              justify-center
-              mx-1
               backdrop-blur-xl
+              whitespace-nowrap
             "
             style={{
               backgroundColor:
-                'color-mix(in srgb, var(--surface-primary) 94%, transparent)',
+                "color-mix(in srgb, var(--surface-primary) 94%, transparent)",
 
               borderColor:
-                'var(--border-subtle)',
+                "var(--border-subtle)",
 
               boxShadow:
-                '0 6px 20px rgba(0,0,0,0.12)'
+                "0 8px 24px rgba(0, 0, 0, 0.14)",
             }}
           >
 
-            {/* Builder */}
+            {/* MOBILE BUILDER */}
 
             <button
               type="button"
               onClick={handleHome}
               className="
-                flex-1
-                min-w-0
-                px-2
-                sm:px-3
+                px-3
                 py-2
                 rounded-full
-                text-[9px]
-                sm:text-[10px]
+                text-[10px]
                 transition-all
                 duration-300
                 whitespace-nowrap
-                text-center
               "
               style={
-                currentTab === 'builder' ||
-                currentTab === 'result'
+                currentTab === "builder" ||
+                currentTab === "result"
                   ? {
                       backgroundColor:
-                        'var(--text-primary)',
+                        "var(--text-primary)",
 
                       color:
-                        'var(--bg-primary)',
+                        "var(--bg-primary)",
 
-                      fontWeight: 500
+                      fontWeight: 500,
                     }
                   : {
                       color:
-                        'var(--text-muted)',
+                        "var(--text-muted)",
 
                       backgroundColor:
-                        'transparent'
+                        "transparent",
                     }
               }
             >
               Builder
             </button>
 
-
-            {/* Studio */}
+            {/* MOBILE STUDIO */}
 
             <button
               type="button"
               onClick={() =>
-                setCurrentTab('studio')
+                setCurrentTab("studio")
               }
               className="
-                flex-1
-                min-w-0
-                px-2
-                sm:px-3
+                px-3
                 py-2
                 rounded-full
-                text-[9px]
-                sm:text-[10px]
+                text-[10px]
                 transition-all
                 duration-300
                 whitespace-nowrap
-                text-center
               "
               style={
-                currentTab === 'studio'
+                currentTab === "studio"
                   ? {
                       backgroundColor:
-                        'var(--text-primary)',
+                        "var(--text-primary)",
 
                       color:
-                        'var(--bg-primary)',
+                        "var(--bg-primary)",
 
-                      fontWeight: 500
+                      fontWeight: 500,
                     }
                   : {
                       color:
-                        'var(--text-muted)',
+                        "var(--text-muted)",
 
                       backgroundColor:
-                        'transparent'
+                        "transparent",
                     }
               }
             >
               Studio
             </button>
-
           </nav>
-
-
-          {/* =================================================
-              MOBILE THEME SWITCHER
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={handleThemeToggle}
-            className="
-              w-9
-              h-9
-              rounded-xl
-              border
-              flex
-              items-center
-              justify-center
-              flex-shrink-0
-              transition-all
-              duration-300
-              active:scale-95
-            "
-            style={{
-              borderColor:
-                'var(--border-subtle)',
-
-              backgroundColor:
-                'var(--surface-primary)'
-            }}
-            aria-label={
-              isDarkMode
-                ? 'Switch to light mode'
-                : 'Switch to dark mode'
-            }
-          >
-
-            {isDarkMode ? (
-              <Sun
-                size={14}
-                style={{
-                  color:
-                    'var(--champagne)'
-                }}
-              />
-            ) : (
-              <Moon
-                size={14}
-                style={{
-                  color:
-                    'var(--sage)'
-                }}
-              />
-            )}
-
-          </button>
-
         </div>
-
       </header>
     </>
   );
