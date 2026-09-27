@@ -113,18 +113,13 @@ export const Navbar = ({
               bg-transparent
               border-0
               text-left
+              min-w-0
             "
             aria-label="Go to VibeSpace home"
           >
 
             {/* =================================================
-                VIBESPACE LOGO IMAGE
-
-                File location:
-                /public/vibespace-logo.png
-
-                Public URL:
-                /vibespace-logo.png
+                VIBESPACE IMAGE LOGO
             ================================================= */}
 
             <div
@@ -142,6 +137,7 @@ export const Navbar = ({
                 relative
                 overflow-hidden
                 shadow-lg
+                flex-shrink-0
               "
               style={{
                 background:
@@ -155,7 +151,7 @@ export const Navbar = ({
               }}
             >
 
-              {/* Ambient hover glow */}
+              {/* Subtle overlay */}
 
               <div
                 className="
@@ -166,25 +162,34 @@ export const Navbar = ({
                   group-hover:opacity-100
                   transition-opacity
                   duration-500
-                  z-10
+                  z-20
                   pointer-events-none
                 "
               />
 
-              {/* Actual V + Music Logo */}
+              {/* =================================================
+                  YOUR NEW VIBESPACE LOGO
+
+                  File:
+                  public/vibespace-logo.png
+
+                  URL:
+                  /vibespace-logo.png
+              ================================================= */}
 
               <img
                 src="/vibespace-logo.png"
                 alt="VibeSpace"
                 className="
                   relative
-                  z-20
-                  w-[30px]
-                  h-[30px]
+                  z-10
+                  w-full
+                  h-full
                   object-contain
+                  p-1
                   transition-transform
                   duration-500
-                  group-hover:scale-110
+                  group-hover:scale-105
                 "
               />
 
@@ -192,10 +197,10 @@ export const Navbar = ({
 
 
             {/* =================================================
-                BRAND NAME
+                BRAND TEXT
             ================================================= */}
 
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start min-w-0">
 
               <span
                 className="
@@ -204,6 +209,7 @@ export const Navbar = ({
                   text-sm
                   transition-colors
                   duration-300
+                  whitespace-nowrap
                 "
                 style={{
                   color:
@@ -269,7 +275,7 @@ export const Navbar = ({
             }}
           >
 
-            {/* Situation Builder */}
+            {/* BUILDER */}
 
             <button
               type="button"
@@ -309,7 +315,7 @@ export const Navbar = ({
             </button>
 
 
-            {/* Atmosphere Studio */}
+            {/* STUDIO */}
 
             <button
               type="button"
@@ -371,6 +377,7 @@ export const Navbar = ({
               duration-300
               hover:scale-105
               active:scale-95
+              flex-shrink-0
             "
             style={{
               borderColor:
@@ -415,9 +422,6 @@ export const Navbar = ({
 
         {/* =====================================================
             MOBILE NAVIGATION
-
-            MOBILE ONLY
-            Remains inside top navbar.
         ===================================================== */}
 
         <div
@@ -457,9 +461,7 @@ export const Navbar = ({
             }}
           >
 
-            {/* =================================================
-                MOBILE BUILDER
-            ================================================= */}
+            {/* MOBILE BUILDER */}
 
             <button
               type="button"
@@ -498,9 +500,7 @@ export const Navbar = ({
             </button>
 
 
-            {/* =================================================
-                MOBILE STUDIO
-            ================================================= */}
+            {/* MOBILE STUDIO */}
 
             <button
               type="button"
