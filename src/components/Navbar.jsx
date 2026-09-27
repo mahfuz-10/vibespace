@@ -89,7 +89,7 @@ export const Navbar = ({
           className="
             max-w-7xl
             mx-auto
-            px-3
+            px-4
             sm:px-8
             h-20
             flex
@@ -107,7 +107,7 @@ export const Navbar = ({
             className="
               flex
               items-center
-              gap-2
+              gap-3
               sm:gap-4
               min-w-0
               flex-shrink-0
@@ -137,9 +137,7 @@ export const Navbar = ({
               aria-label="Go to VibeSpace home"
             >
 
-              {/* =============================================
-                  ACTUAL VIBESPACE LOGO IMAGE
-              ============================================= */}
+              {/* ACTUAL VIBESPACE LOGO IMAGE */}
 
               <img
                 src="/vibespace-logo-transparent.png"
@@ -163,9 +161,7 @@ export const Navbar = ({
               />
 
 
-              {/* =============================================
-                  BRAND TEXT (Hidden on mobile to prevent overlap, visible on sm+ screens)
-              ============================================= */}
+              {/* BRAND TEXT */}
 
               <div
                 className="
@@ -224,9 +220,7 @@ export const Navbar = ({
               </div>
 
 
-              {/* =============================================
-                  BOTTOM ANCHOR LINE
-              ============================================= */}
+              {/* BOTTOM ANCHOR LINE */}
 
               <span
                 className="
@@ -249,9 +243,7 @@ export const Navbar = ({
             </button>
 
 
-            {/* =================================================
-                VERTICAL SEPARATOR
-            ================================================= */}
+            {/* VERTICAL SEPARATOR */}
 
             <span
               className="
@@ -270,7 +262,7 @@ export const Navbar = ({
 
 
           {/* =================================================
-              DESKTOP NAVIGATION
+              DESKTOP NAVIGATION (PC VERSION)
           ================================================= */}
 
           <nav
@@ -441,26 +433,22 @@ export const Navbar = ({
 
 
         {/* =====================================================
-            MOBILE NAVIGATION
+            MOBILE NAVIGATION (Clean & Centered without Overlap)
         ===================================================== */}
 
         <div
           className="
             md:hidden
-            absolute
-            inset-y-0
-            left-1/2
-            -translate-x-1/2
             flex
-            items-center
-            pointer-events-none
-            z-10
+            justify-center
+            pb-3
+            pt-1
+            w-full
           "
         >
 
           <nav
             className="
-              pointer-events-auto
               flex
               items-center
               gap-0.5
@@ -486,10 +474,8 @@ export const Navbar = ({
               type="button"
               onClick={handleHome}
               className="
-                px-2.5
+                px-3
                 py-1.5
-                sm:px-3
-                sm:py-2
                 rounded-full
                 text-[10px]
                 transition-all
@@ -527,10 +513,8 @@ export const Navbar = ({
                 setCurrentTab('studio')
               }
               className="
-                px-2.5
+                px-3
                 py-1.5
-                sm:px-3
-                sm:py-2
                 rounded-full
                 text-[10px]
                 transition-all
