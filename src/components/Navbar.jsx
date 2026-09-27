@@ -121,95 +121,28 @@ export const Navbar = ({
             aria-label="Go to VibeSpace home"
           >
 
-            <div
+            {/* =================================================
+                ACTUAL VIBESPACE LOGO IMAGE
+                (no box, no background, no crop —
+                 shows full landscape logo as-is)
+            ================================================= */}
+
+            <img
+              src="/vibespace-logo-transparent.png"
+              alt="VibeSpace"
+              draggable="false"
               className="
-                relative
-                w-12
-                h-12
-                sm:w-12
+                h-11
                 sm:h-12
-                rounded-2xl
-                overflow-hidden
-                flex
-                items-center
-                justify-center
+                w-auto
+                object-contain
                 flex-shrink-0
-                transition-all
+                transition-transform
                 duration-500
+                ease-out
                 group-hover:scale-105
-                group-hover:-rotate-2
               "
-              style={{
-                background:
-                  'linear-gradient(145deg, var(--sage), var(--surface-soft))',
-
-                border:
-                  '1px solid rgba(255, 255, 255, 0.18)',
-
-                boxShadow:
-                  '0 10px 30px rgba(168, 182, 154, 0.18)'
-              }}
-            >
-
-              {/* Soft inner light */}
-
-              <div
-                className="
-                  absolute
-                  inset-0
-                  rounded-2xl
-                  pointer-events-none
-                  opacity-40
-                "
-                style={{
-                  background:
-                    'radial-gradient(circle at 35% 25%, rgba(255,255,255,0.22), transparent 55%)'
-                }}
-              />
-
-              {/* =================================================
-                  ACTUAL VIBESPACE LOGO IMAGE
-              ================================================= */}
-
-              <img
-                src="/vibespace-logo-transparent.png"
-                alt="VibeSpace"
-                draggable="false"
-                className="
-                  relative
-                  z-10
-                  w-full
-                  h-full
-                  object-contain
-                  scale-[1.12]
-                  transition-all
-                  duration-500
-                  ease-out
-                  group-hover:scale-[1.2]
-                "
-              />
-
-              {/* Hover glow */}
-
-              <div
-                className="
-                  absolute
-                  inset-0
-                  rounded-2xl
-                  opacity-0
-                  group-hover:opacity-100
-                  transition-opacity
-                  duration-500
-                  pointer-events-none
-                  z-20
-                "
-                style={{
-                  background:
-                    'radial-gradient(circle, rgba(211,180,134,0.18), transparent 65%)'
-                }}
-              />
-
-            </div>
+            />
 
 
             {/* =================================================
