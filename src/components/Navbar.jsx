@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import {
   Sun,
-  Moon,
-  SlidersHorizontal,
-  Home
+  Moon
 } from 'lucide-react';
 
 import { useAudio } from './AudioManager';
@@ -119,6 +117,16 @@ export const Navbar = ({
             aria-label="Go to VibeSpace home"
           >
 
+            {/* =================================================
+                VIBESPACE LOGO IMAGE
+
+                File location:
+                /public/vibespace-logo.png
+
+                Public URL:
+                /vibespace-logo.png
+            ================================================= */}
+
             <div
               className="
                 w-10
@@ -158,47 +166,34 @@ export const Navbar = ({
                   group-hover:opacity-100
                   transition-opacity
                   duration-500
+                  z-10
+                  pointer-events-none
                 "
               />
 
-              {/* PERFECT VIBESPACE HYBRID LOGO (V + Waveform + Orbital Sonic Node) */}
+              {/* Actual V + Music Logo */}
 
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110">
-                {/* Orbital Ring with Sonic Node */}
-                <path d="M4 14C4 9 9 3 18 5" stroke="url(#paint_orbit)" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.8" />
-                <circle cx="18" cy="5" r="1.3" fill="var(--champagne, #D6B887)" />
-
-                {/* Left Audio Wave Bars */}
-                <path d="M3 13V11" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M5.5 15V9" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M8 14V10" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-
-                {/* Right Audio Wave Bars */}
-                <path d="M16 14V10" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M18.5 15V9" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M21 13V11" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
-
-                {/* Central Elegant V Shape */}
-                <path d="M7 7L12 17L17 7" stroke="url(#paint_v)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-
-                <defs>
-                  <linearGradient id="paint_v" x1="7" y1="7" x2="17" y2="17" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="var(--sage, #A8B69A)" />
-                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
-                  </linearGradient>
-                  <linearGradient id="paint_eq" x1="3" y1="9" x2="21" y2="15" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="var(--sage, #A8B69A)" />
-                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
-                  </linearGradient>
-                  <linearGradient id="paint_orbit" x1="4" y1="5" x2="18" y2="14" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="var(--sage, #A8B69A)" />
-                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
-                  </linearGradient>
-                </defs>
-              </svg>
+              <img
+                src="/vibespace-logo.png"
+                alt="VibeSpace"
+                className="
+                  relative
+                  z-20
+                  w-[30px]
+                  h-[30px]
+                  object-contain
+                  transition-transform
+                  duration-500
+                  group-hover:scale-110
+                "
+              />
 
             </div>
 
+
+            {/* =================================================
+                BRAND NAME
+            ================================================= */}
 
             <div className="flex flex-col items-start">
 
@@ -274,6 +269,8 @@ export const Navbar = ({
             }}
           >
 
+            {/* Situation Builder */}
+
             <button
               type="button"
               onClick={() =>
@@ -311,6 +308,8 @@ export const Navbar = ({
               Situation Builder
             </button>
 
+
+            {/* Atmosphere Studio */}
 
             <button
               type="button"
@@ -416,6 +415,9 @@ export const Navbar = ({
 
         {/* =====================================================
             MOBILE NAVIGATION
+
+            MOBILE ONLY
+            Remains inside top navbar.
         ===================================================== */}
 
         <div
@@ -455,6 +457,10 @@ export const Navbar = ({
             }}
           >
 
+            {/* =================================================
+                MOBILE BUILDER
+            ================================================= */}
+
             <button
               type="button"
               onClick={handleHome}
@@ -491,6 +497,10 @@ export const Navbar = ({
               Builder
             </button>
 
+
+            {/* =================================================
+                MOBILE STUDIO
+            ================================================= */}
 
             <button
               type="button"
