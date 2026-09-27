@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 
 import { useAudio } from './AudioManager';
-import VibeIcon from './VibeIcon';
 
 export const Navbar = ({
   currentTab,
@@ -162,15 +161,23 @@ export const Navbar = ({
                 "
               />
 
-              {/* NEW VIBESPACE ARC LOGO */}
+              {/* ULTRA-LEVEL PROFESSIONAL VIBESPACE LOGO SVG */}
 
-              <VibeIcon
-                size={26}
-                className="
-                  relative
-                  z-10
-                "
-              />
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110">
+                <circle cx="12" cy="12" r="9" stroke="url(#paint0_linear)" strokeWidth="1.5" strokeOpacity="0.7" strokeDasharray="4 3" />
+                <circle cx="12" cy="12" r="4" fill="url(#paint1_linear)" />
+                <circle cx="12" cy="12" r="1.5" fill="var(--bg-primary, #1D1B17)" />
+                <defs>
+                  <linearGradient id="paint0_linear" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="var(--sage, #A8B69A)" />
+                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
+                  </linearGradient>
+                  <linearGradient id="paint1_linear" x1="8" y1="8" x2="16" y2="16" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="var(--sage, #A8B69A)" />
+                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
+                  </linearGradient>
+                </defs>
+              </svg>
 
             </div>
 
@@ -391,10 +398,6 @@ export const Navbar = ({
 
         {/* =====================================================
             MOBILE NAVIGATION
-
-            Kept inside navbar.
-            No bottom positioning.
-            No viewport-center positioning.
         ===================================================== */}
 
         <div
