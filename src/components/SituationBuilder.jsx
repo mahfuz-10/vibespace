@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Sparkles,
   ArrowRight,
   RefreshCw,
   Check,
@@ -1157,11 +1156,15 @@ export const SituationBuilder = () => {
           }}
         >
 
-          <Sparkles
-            size={13}
+          <img
+            src="/vibespace-logo-icon.png"
+            alt=""
             className="flex-shrink-0"
             style={{
-              color: 'var(--sage)'
+              height: '14px',
+              width: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 6px rgba(168, 182, 154, 0.3)) drop-shadow(0 0 12px rgba(214, 184, 135, 0.15))'
             }}
           />
 

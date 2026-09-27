@@ -12,7 +12,6 @@ import {
   Bird, 
   CloudLightning, 
   Car,
-  Sparkles,
   Radio,
   Sliders
 } from 'lucide-react';
@@ -53,7 +52,16 @@ export const AtmosphereStudio = () => {
         
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border mb-4 backdrop-blur-md"
              style={{ backgroundColor: 'rgba(168, 182, 154, 0.05)', borderColor: 'rgba(168, 182, 154, 0.2)' }}>
-          <Sparkles size={12} style={{ color: 'var(--sage)' }} />
+          <img
+            src="/vibespace-logo-icon.png"
+            alt=""
+            style={{
+              height: '14px',
+              width: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 6px rgba(168, 182, 154, 0.3)) drop-shadow(0 0 12px rgba(214, 184, 135, 0.15))'
+            }}
+          />
           <span className="text-[10px] font-semibold tracking-widest uppercase" style={{ color: 'var(--sage)' }}>
             Spatial Acoustic Laboratory
           </span>
