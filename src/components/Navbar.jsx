@@ -161,29 +161,28 @@ export const Navbar = ({
                 "
               />
 
-              {/* INTERNATIONAL HYBRID LOGO (V + Waveform + Sonic Aperture) */}
+              {/* VIBE WAVE + ENHANCED MUSIC FREQUENCY LOGO SVG */}
 
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110">
-                {/* Sonic Aperture / Open Ambient Corners */}
-                <path d="M7 4L5 6M17 4L19 6M5 18L7 20M19 18L17 20" stroke="url(#paint_aperture)" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
+                {/* Circular Open Arc / Sound Orbit */}
+                <path d="M19.07 4.93C21.9 7.76 22.1 12.3 19.6 15.3M4.93 19.07C2.1 16.24 1.9 11.7 4.4 8.7M17.66 6.34C19.55 8.23 19.68 11.23 18.02 13.28" stroke="url(#paint_arc)" strokeWidth="1.2" strokeLinecap="round" strokeOpacity="0.7" />
                 
-                {/* Side Ambient Sound Waves (~ symbols) */}
-                <path d="M3 10C3.5 10.5 3.5 11.5 3 12C3.5 12.5 3.5 13.5 3 14" stroke="url(#paint_wave)" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M21 10C20.5 10.5 20.5 11.5 21 12C20.5 12.5 20.5 13.5 21 14" stroke="url(#paint_wave)" strokeWidth="1.2" strokeLinecap="round" />
+                {/* Enhanced Music Frequency / Audio Wave Lines */}
+                <path d="M7 14V10" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M10 17V7" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M13 15V9" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M16 16V8" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
 
-                {/* Central V (Vibe) Shape */}
-                <path d="M7 8L12 16L17 8" stroke="url(#paint_v)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                {/* Micro Sound Node / Beat Dot */}
+                <circle cx="10" cy="19" r="0.8" fill="var(--champagne, #D6B887)" />
+                <circle cx="16" cy="18" r="0.8" fill="var(--champagne, #D6B887)" />
 
                 <defs>
-                  <linearGradient id="paint_v" x1="7" y1="8" x2="17" y2="16" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_arc" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
-                  <linearGradient id="paint_wave" x1="3" y1="10" x2="21" y2="14" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="var(--sage, #A8B69A)" />
-                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
-                  </linearGradient>
-                  <linearGradient id="paint_aperture" x1="5" y1="4" x2="19" y2="20" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_waves" x1="7" y1="7" x2="16" y2="17" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
