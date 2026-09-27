@@ -161,28 +161,36 @@ export const Navbar = ({
                 "
               />
 
-              {/* VIBE WAVE + ENHANCED MUSIC FREQUENCY LOGO SVG */}
+              {/* ULTIMATE VIBESPACE HYBRID LOGO (V + Waveform + Orbital Sonic Node) */}
 
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110">
-                {/* Circular Open Arc / Sound Orbit */}
-                <path d="M19.07 4.93C21.9 7.76 22.1 12.3 19.6 15.3M4.93 19.07C2.1 16.24 1.9 11.7 4.4 8.7M17.66 6.34C19.55 8.23 19.68 11.23 18.02 13.28" stroke="url(#paint_arc)" strokeWidth="1.2" strokeLinecap="round" strokeOpacity="0.7" />
-                
-                {/* Enhanced Music Frequency / Audio Wave Lines */}
-                <path d="M7 14V10" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
-                <path d="M10 17V7" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
-                <path d="M13 15V9" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
-                <path d="M16 16V8" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
+                {/* Orbital Ring with Planet/Sonic Node */}
+                <path d="M3 15C3 10 8 4 17 5" stroke="url(#paint_orbit)" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.7" />
+                <circle cx="17" cy="5" r="1.2" fill="var(--champagne, #D6B887)" />
 
-                {/* Micro Sound Node / Beat Dot */}
-                <circle cx="10" cy="19" r="0.8" fill="var(--champagne, #D6B887)" />
-                <circle cx="16" cy="18" r="0.8" fill="var(--champagne, #D6B887)" />
+                {/* Left Side Audio Equalizer / Sound Bars */}
+                <path d="M4 14V10" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M6 16V8" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M8 15V9" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+
+                {/* Right Side Audio Equalizer / Sound Bars */}
+                <path d="M16 15V9" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M18 16V8" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M20 14V10" stroke="url(#paint_eq)" strokeWidth="1.2" strokeLinecap="round" />
+
+                {/* Central Flowing V Shape with Fluid Waveform Base */}
+                <path d="M7 6L11.5 17L13 14L17 6" stroke="url(#paint_v)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
 
                 <defs>
-                  <linearGradient id="paint_arc" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_v" x1="7" y1="6" x2="17" y2="17" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
-                  <linearGradient id="paint_waves" x1="7" y1="7" x2="16" y2="17" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_eq" x1="4" y1="8" x2="20" y2="16" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="var(--sage, #A8B69A)" />
+                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
+                  </linearGradient>
+                  <linearGradient id="paint_orbit" x1="3" y1="5" x2="17" y2="15" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
