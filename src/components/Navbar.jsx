@@ -161,24 +161,24 @@ export const Navbar = ({
                 "
               />
 
-              {/* BOLD, VISIBLE & PROFESSIONAL MUSIC VINYL EQUALIZER LOGO */}
+              {/* VIBE WAVE LOGO SVG (Circular Arc with Smooth Vertical Audio Waves) */}
 
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
-                <circle cx="12" cy="12" r="11" stroke="url(#paint_outer_glow)" strokeWidth="0.8" strokeOpacity="0.6" strokeDasharray="2 2" />
-                <circle cx="12" cy="12" r="9" fill="var(--surface-primary, #2E2C26)" stroke="url(#paint_ring)" strokeWidth="1.5" />
-                <circle cx="12" cy="12" r="6" stroke="url(#paint_ring)" strokeWidth="0.8" strokeOpacity="0.5" />
-                <path d="M8 13V11M10 15V9M12 16V8M14 14V10M16 12V12" stroke="url(#paint_wave)" strokeWidth="1.8" strokeLinecap="round" />
-                <circle cx="12" cy="12" r="1" fill="var(--champagne, #D6B887)" />
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transition-transform duration-500 group-hover:scale-110">
+                {/* Circular Open Arc / Sound Orbit */}
+                <path d="M19.07 4.93C21.9 7.76 22.1 12.3 19.6 15.3M4.93 19.07C2.1 16.24 1.9 11.7 4.4 8.7M17.66 6.34C19.55 8.23 19.68 11.23 18.02 13.28" stroke="url(#paint_arc)" strokeWidth="1.2" strokeLinecap="round" strokeOpacity="0.7" />
+                
+                {/* Smooth Vertical Audio-Wave Lines Inside */}
+                <path d="M7 14V10" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M10 16V8" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M13 17V7" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M16 14V10" stroke="url(#paint_waves)" strokeWidth="1.8" strokeLinecap="round" />
+
                 <defs>
-                  <linearGradient id="paint_outer_glow" x1="1" y1="1" x2="23" y2="23" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_arc" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
-                  <linearGradient id="paint_ring" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="var(--sage, #A8B69A)" />
-                    <stop offset="1" stopColor="var(--champagne, #D6B887)" />
-                  </linearGradient>
-                  <linearGradient id="paint_wave" x1="8" y1="8" x2="16" y2="16" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="paint_waves" x1="7" y1="7" x2="16" y2="17" gradientUnits="userSpaceOnUse">
                     <stop stopColor="var(--sage, #A8B69A)" />
                     <stop offset="1" stopColor="var(--champagne, #D6B887)" />
                   </linearGradient>
