@@ -61,7 +61,7 @@ export const Navbar = ({
   return (
     <>
       {/* =====================================================
-          DESKTOP / TOP NAVBAR
+          TOP NAVBAR
       ===================================================== */}
 
       <header
@@ -79,6 +79,7 @@ export const Navbar = ({
         style={{
           backgroundColor:
             'color-mix(in srgb, var(--bg-primary) 88%, transparent)',
+
           borderColor:
             'var(--border-subtle)'
         }}
@@ -94,11 +95,12 @@ export const Navbar = ({
             flex
             items-center
             justify-between
+            relative
           "
         >
 
           {/* =================================================
-              LOGO
+              LOGO / BRAND
           ================================================= */}
 
           <button
@@ -114,64 +116,74 @@ export const Navbar = ({
               border-0
               text-left
               min-w-0
+              flex-shrink-0
             "
             aria-label="Go to VibeSpace home"
           >
 
             {/* =================================================
                 VIBESPACE IMAGE LOGO
+
+                Desktop:
+                - Clean square logo container
+
+                Mobile:
+                - Slightly smaller
+                - Brand text hidden
+                - Prevents collision with center navigation
             ================================================= */}
 
             <div
               className="
-                w-10
-                h-10
+                relative
+                w-12
+                h-12
+                sm:w-12
+                sm:h-12
                 rounded-2xl
+                overflow-hidden
                 flex
                 items-center
                 justify-center
+                flex-shrink-0
                 transition-all
                 duration-500
                 group-hover:scale-105
-                group-hover:rotate-3
-                relative
-                overflow-hidden
-                shadow-lg
-                flex-shrink-0
+                group-hover:-rotate-2
               "
               style={{
                 background:
                   'linear-gradient(145deg, var(--sage), var(--surface-soft))',
 
                 border:
-                  '1px solid rgba(255, 255, 255, 0.2)',
+                  '1px solid rgba(255, 255, 255, 0.18)',
 
                 boxShadow:
-                  '0 10px 30px rgba(168, 182, 154, 0.25)'
+                  '0 10px 30px rgba(168, 182, 154, 0.18)'
               }}
             >
 
-              {/* Subtle overlay */}
+              {/* Soft inner light */}
 
               <div
                 className="
                   absolute
                   inset-0
-                  bg-white/10
-                  opacity-0
-                  group-hover:opacity-100
-                  transition-opacity
-                  duration-500
-                  z-20
+                  rounded-2xl
                   pointer-events-none
+                  opacity-40
                 "
+                style={{
+                  background:
+                    'radial-gradient(circle at 35% 25%, rgba(255,255,255,0.22), transparent 55%)'
+                }}
               />
 
               {/* =================================================
-                  YOUR NEW VIBESPACE LOGO
+                  ACTUAL VIBESPACE LOGO
 
                   File:
-                  public/vibespace-logo.png
+                  /public/vibespace-logo.png
 
                   URL:
                   /vibespace-logo.png
@@ -180,17 +192,42 @@ export const Navbar = ({
               <img
                 src="/vibespace-logo.png"
                 alt="VibeSpace"
+                draggable="false"
                 className="
                   relative
                   z-10
                   w-full
                   h-full
-                  object-contain
-                  p-1
-                  transition-transform
+                  object-cover
+                  scale-[1.08]
+                  transition-all
                   duration-500
-                  group-hover:scale-105
+                  ease-out
+                  group-hover:scale-[1.14]
                 "
+                style={{
+                  mixBlendMode: 'screen'
+                }}
+              />
+
+              {/* Hover glow */}
+
+              <div
+                className="
+                  absolute
+                  inset-0
+                  rounded-2xl
+                  opacity-0
+                  group-hover:opacity-100
+                  transition-opacity
+                  duration-500
+                  pointer-events-none
+                  z-20
+                "
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(211,180,134,0.18), transparent 65%)'
+                }}
               />
 
             </div>
@@ -198,9 +235,20 @@ export const Navbar = ({
 
             {/* =================================================
                 BRAND TEXT
+
+                Hidden on very small screens so it never
+                collides with the centered mobile navigation.
             ================================================= */}
 
-            <div className="flex flex-col items-start min-w-0">
+            <div
+              className="
+                hidden
+                sm:flex
+                flex-col
+                items-start
+                min-w-0
+              "
+            >
 
               <span
                 className="
@@ -231,13 +279,12 @@ export const Navbar = ({
 
               <span
                 className="
-                  hidden
-                  sm:block
                   text-[8px]
                   uppercase
                   tracking-[0.25em]
                   font-mono
                   opacity-60
+                  whitespace-nowrap
                 "
                 style={{
                   color:
@@ -254,6 +301,8 @@ export const Navbar = ({
 
           {/* =================================================
               DESKTOP NAVIGATION
+
+              DESKTOP VERSION PRESERVED
           ================================================= */}
 
           <nav
@@ -422,6 +471,12 @@ export const Navbar = ({
 
         {/* =====================================================
             MOBILE NAVIGATION
+
+            IMPORTANT:
+            - Remains INSIDE navbar
+            - Not bottom fixed
+            - Not sticky
+            - Does not affect desktop
         ===================================================== */}
 
         <div
@@ -461,7 +516,9 @@ export const Navbar = ({
             }}
           >
 
-            {/* MOBILE BUILDER */}
+            {/* =================================================
+                MOBILE BUILDER
+            ================================================= */}
 
             <button
               type="button"
@@ -500,7 +557,9 @@ export const Navbar = ({
             </button>
 
 
-            {/* MOBILE STUDIO */}
+            {/* =================================================
+                MOBILE STUDIO
+            ================================================= */}
 
             <button
               type="button"
