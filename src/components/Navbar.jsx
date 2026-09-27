@@ -89,7 +89,7 @@ export const Navbar = ({
           className="
             max-w-7xl
             mx-auto
-            px-4
+            px-3
             sm:px-8
             h-20
             flex
@@ -107,7 +107,7 @@ export const Navbar = ({
             className="
               flex
               items-center
-              gap-3
+              gap-2
               sm:gap-4
               min-w-0
               flex-shrink-0
@@ -122,7 +122,7 @@ export const Navbar = ({
                 relative
                 flex
                 items-center
-                gap-2.5
+                gap-2
                 sm:gap-3.5
                 cursor-pointer
                 group
@@ -144,7 +144,7 @@ export const Navbar = ({
                 alt="VibeSpace"
                 draggable="false"
                 className="
-                  h-9
+                  h-8
                   sm:h-12
                   w-auto
                   object-contain
@@ -161,7 +161,7 @@ export const Navbar = ({
               />
 
 
-              {/* BRAND TEXT */}
+              {/* BRAND TEXT (Hidden on very small screens to fit cleanly, visible on sm+) */}
 
               <div
                 className="
@@ -262,25 +262,32 @@ export const Navbar = ({
 
 
           {/* =================================================
-              DESKTOP NAVIGATION (PC VERSION)
+              NAVIGATION (Unified responsive view for Mobile & PC)
           ================================================= */}
 
           <nav
             className="
-              hidden
-              md:flex
+              flex
               items-center
-              gap-1
+              gap-0.5
+              sm:gap-1
               p-1
               rounded-full
               border
+              backdrop-blur-xl
+              whitespace-nowrap
+              mx-auto
+              md:mx-0
             "
             style={{
               borderColor:
                 'var(--border-subtle)',
 
               backgroundColor:
-                'var(--surface-primary)'
+                'var(--surface-primary)',
+
+              boxShadow:
+                '0 8px 24px rgba(0, 0, 0, 0.14)'
             }}
           >
 
@@ -288,25 +295,27 @@ export const Navbar = ({
 
             <button
               type="button"
-              onClick={() =>
-                setCurrentTab('builder')
-              }
+              onClick={handleHome}
               className={`
-                px-4
-                py-2
+                px-3
+                py-1.5
+                sm:px-4
+                sm:py-2
                 rounded-full
-                text-xs
+                text-[11px]
+                sm:text-xs
                 transition-all
                 duration-300
+                whitespace-nowrap
 
                 ${
-                  currentTab === 'builder'
+                  currentTab === 'builder' || currentTab === 'result'
                     ? 'font-medium'
                     : 'opacity-55 hover:opacity-100'
                 }
               `}
               style={
-                currentTab === 'builder'
+                currentTab === 'builder' || currentTab === 'result'
                   ? {
                       backgroundColor:
                         'var(--text-primary)',
@@ -316,11 +325,15 @@ export const Navbar = ({
                     }
                   : {
                       color:
-                        'var(--text-muted)'
+                        'var(--text-muted)',
+
+                      backgroundColor:
+                        'transparent'
                     }
               }
             >
-              Situation Builder
+              <span className="hidden sm:inline">Situation Builder</span>
+              <span className="inline sm:hidden">Builder</span>
             </button>
 
 
@@ -332,12 +345,16 @@ export const Navbar = ({
                 setCurrentTab('studio')
               }
               className={`
-                px-4
-                py-2
+                px-3
+                py-1.5
+                sm:px-4
+                sm:py-2
                 rounded-full
-                text-xs
+                text-[11px]
+                sm:text-xs
                 transition-all
                 duration-300
+                whitespace-nowrap
 
                 ${
                   currentTab === 'studio'
@@ -356,11 +373,15 @@ export const Navbar = ({
                     }
                   : {
                       color:
-                        'var(--text-muted)'
+                        'var(--text-muted)',
+
+                      backgroundColor:
+                        'transparent'
                     }
               }
             >
-              Atmosphere Studio
+              <span className="hidden sm:inline">Atmosphere Studio</span>
+              <span className="inline sm:hidden">Studio</span>
             </button>
 
           </nav>
@@ -428,123 +449,6 @@ export const Navbar = ({
             </span>
 
           </button>
-
-        </div>
-
-
-        {/* =====================================================
-            MOBILE NAVIGATION (Clean & Centered without Overlap)
-        ===================================================== */}
-
-        <div
-          className="
-            md:hidden
-            flex
-            justify-center
-            pb-3
-            pt-1
-            w-full
-          "
-        >
-
-          <nav
-            className="
-              flex
-              items-center
-              gap-0.5
-              p-1
-              rounded-full
-              border
-              backdrop-blur-xl
-              whitespace-nowrap
-            "
-            style={{
-              backgroundColor:
-                'color-mix(in srgb, var(--surface-primary) 94%, transparent)',
-
-              borderColor:
-                'var(--border-subtle)',
-
-              boxShadow:
-                '0 8px 24px rgba(0, 0, 0, 0.14)'
-            }}
-          >
-
-            <button
-              type="button"
-              onClick={handleHome}
-              className="
-                px-3
-                py-1.5
-                rounded-full
-                text-[10px]
-                transition-all
-                duration-300
-                whitespace-nowrap
-              "
-              style={
-                currentTab === 'builder' ||
-                currentTab === 'result'
-                  ? {
-                      backgroundColor:
-                        'var(--text-primary)',
-
-                      color:
-                        'var(--bg-primary)',
-
-                      fontWeight: 500
-                    }
-                  : {
-                      color:
-                        'var(--text-muted)',
-
-                      backgroundColor:
-                        'transparent'
-                    }
-              }
-            >
-              Builder
-            </button>
-
-
-            <button
-              type="button"
-              onClick={() =>
-                setCurrentTab('studio')
-              }
-              className="
-                px-3
-                py-1.5
-                rounded-full
-                text-[10px]
-                transition-all
-                duration-300
-                whitespace-nowrap
-              "
-              style={
-                currentTab === 'studio'
-                  ? {
-                      backgroundColor:
-                        'var(--text-primary)',
-
-                      color:
-                        'var(--bg-primary)',
-
-                      fontWeight: 500
-                    }
-                  : {
-                      color:
-                        'var(--text-muted)',
-
-                      backgroundColor:
-                        'transparent'
-                    }
-              }
-            >
-              Studio
-            </button>
-
-          </nav>
 
         </div>
 
