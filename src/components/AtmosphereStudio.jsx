@@ -62,12 +62,15 @@ export const AtmosphereStudio = () => {
         px-4
         sm:px-6
         lg:px-8
-        pt-24
-        sm:pt-28
+
+        pt-16
+        sm:pt-24
         lg:pt-32
-        pb-28
-        sm:pb-36
+
+        pb-24
+        sm:pb-32
         lg:pb-40
+
         animate-fade-up
       "
     >
@@ -77,26 +80,34 @@ export const AtmosphereStudio = () => {
       ========================================================= */}
       <div
         className="
-          mb-9
-          sm:mb-11
+          mb-7
+          sm:mb-10
           lg:mb-12
+
           text-center
           max-w-2xl
           mx-auto
           relative
-          px-2
+          px-1
         "
       >
+
+        {/* Subtle Header Glow */}
         <div
           className="
             absolute
-            inset-0
-            -top-8
+            inset-x-0
+            -top-6
             sm:-top-10
+
+            h-40
+            sm:h-52
+
             bg-radial
             from-emerald-500/10
             via-transparent
             to-transparent
+
             blur-2xl
             pointer-events-none
           "
@@ -108,13 +119,20 @@ export const AtmosphereStudio = () => {
             relative
             inline-flex
             items-center
-            gap-2
-            px-3
+            gap-1.5
+            sm:gap-2
+
+            px-2.5
             sm:px-3.5
-            py-1.5
+
+            py-1
+            sm:py-1.5
+
             rounded-full
             border
-            mb-4
+            mb-3
+            sm:mb-4
+
             backdrop-blur-md
             max-w-full
           "
@@ -127,7 +145,7 @@ export const AtmosphereStudio = () => {
             src="/vibespace-logo-icon.png"
             alt=""
             style={{
-              height: '13px',
+              height: '11px',
               width: 'auto',
               objectFit: 'contain',
               flexShrink: 0,
@@ -138,12 +156,14 @@ export const AtmosphereStudio = () => {
 
           <span
             className="
-              text-[8px]
-              xs:text-[9px]
+              text-[7px]
+              xs:text-[8px]
               sm:text-[10px]
+
               font-semibold
-              tracking-[0.16em]
+              tracking-[0.13em]
               sm:tracking-widest
+
               uppercase
               whitespace-nowrap
             "
@@ -159,13 +179,19 @@ export const AtmosphereStudio = () => {
         <h1
           className="
             relative
-            text-[30px]
-            leading-tight
+
+            text-[26px]
+            xs:text-[28px]
+
             sm:text-4xl
             lg:text-[42px]
+
+            leading-[1.05]
             font-light
             tracking-tight
-            mb-3
+
+            mb-2
+            sm:mb-3
           "
           style={{
             color: 'var(--text-primary)',
@@ -187,10 +213,16 @@ export const AtmosphereStudio = () => {
         <p
           className="
             relative
-            text-[11px]
+
+            text-[10px]
             sm:text-xs
-            leading-[1.7]
-            max-w-md
+
+            leading-[1.55]
+            sm:leading-[1.7]
+
+            max-w-[300px]
+            sm:max-w-md
+
             mx-auto
           "
           style={{
@@ -212,10 +244,12 @@ export const AtmosphereStudio = () => {
           grid
           grid-cols-1
           lg:grid-cols-12
-          gap-4
+
+          gap-3
           sm:gap-5
           lg:gap-6
-          mb-8
+
+          mb-7
           sm:mb-10
         "
       >
@@ -224,16 +258,22 @@ export const AtmosphereStudio = () => {
         <div
           className="
             lg:col-span-5
-            p-4
+
+            p-3.5
             sm:p-5
-            rounded-[24px]
+
+            rounded-[20px]
             sm:rounded-3xl
+
             border
+
             flex
             flex-col
             justify-between
+
             transition-all
             duration-300
+
             relative
             overflow-hidden
             shadow-xl
@@ -263,20 +303,22 @@ export const AtmosphereStudio = () => {
             }}
           />
 
-          <div className="relative flex items-center justify-between mb-5">
+          <div className="relative flex items-center justify-between mb-4 sm:mb-5">
 
-            <div className="flex items-center gap-3 min-w-0">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
 
               <div
                 className="
-                  w-9
-                  h-9
+                  w-8
+                  h-8
                   sm:w-10
                   sm:h-10
+
                   rounded-xl
                   flex
                   items-center
                   justify-center
+
                   border
                   flex-shrink-0
                 "
@@ -286,7 +328,7 @@ export const AtmosphereStudio = () => {
                 }}
               >
                 <Volume2
-                  className="w-4 h-4 sm:w-[17px] sm:h-[17px]"
+                  className="w-3.5 h-3.5 sm:w-[17px] sm:h-[17px]"
                   style={{
                     color: 'var(--sage)'
                   }}
@@ -297,8 +339,9 @@ export const AtmosphereStudio = () => {
 
                 <h3
                   className="
-                    text-[11px]
+                    text-[10px]
                     sm:text-xs
+
                     font-medium
                     tracking-tight
                     truncate
@@ -312,8 +355,9 @@ export const AtmosphereStudio = () => {
 
                 <p
                   className="
-                    text-[9px]
+                    text-[8px]
                     sm:text-[10px]
+
                     opacity-50
                     mt-0.5
                   "
@@ -329,13 +373,17 @@ export const AtmosphereStudio = () => {
 
             <span
               className="
-                text-[10px]
+                text-[9px]
                 sm:text-xs
+
                 font-mono
                 font-bold
+
                 px-2
                 py-1
+
                 rounded-lg
+
                 flex-shrink-0
                 ml-3
               "
@@ -399,7 +447,7 @@ export const AtmosphereStudio = () => {
       {/* =========================================================
           PRESET MIXES
       ========================================================= */}
-      <div className="mb-9 sm:mb-12">
+      <div className="mb-7 sm:mb-12">
         <PresetMixes
           ambientLayers={ambientLayers}
           setAmbientVolume={setAmbientVolume}
@@ -410,7 +458,7 @@ export const AtmosphereStudio = () => {
       {/* =========================================================
           MAIN STUDIO SECTIONS
       ========================================================= */}
-      <div className="space-y-8 sm:space-y-10 lg:space-y-12">
+      <div className="space-y-6 sm:space-y-10 lg:space-y-12">
 
 
         {/* =======================================================
@@ -418,12 +466,15 @@ export const AtmosphereStudio = () => {
         ======================================================= */}
         <div
           className="
-            p-4
+            p-3.5
             sm:p-6
             lg:p-8
-            rounded-[26px]
+
+            rounded-[22px]
             sm:rounded-3xl
+
             border
+
             relative
             overflow-hidden
             backdrop-blur-md
@@ -442,27 +493,37 @@ export const AtmosphereStudio = () => {
             className="
               flex
               flex-col
-              gap-3
+
+              gap-2.5
+              sm:gap-3
+
               sm:flex-row
               sm:items-center
               sm:justify-between
-              mb-5
+
+              mb-4
               sm:mb-6
-              pb-4
+
+              pb-3
+              sm:pb-4
+
               border-b
               border-white/5
             "
           >
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
 
               <div
                 className="
                   w-7
                   h-7
+
                   sm:w-8
                   sm:h-8
+
                   rounded-lg
+
                   flex
                   items-center
                   justify-center
@@ -473,7 +534,7 @@ export const AtmosphereStudio = () => {
                 }}
               >
                 <Radio
-                  size={15}
+                  size={14}
                   style={{
                     color: 'var(--champagne)'
                   }}
@@ -482,10 +543,13 @@ export const AtmosphereStudio = () => {
 
               <h2
                 className="
-                  text-[10px]
+                  text-[9px]
                   sm:text-xs
+
                   uppercase
-                  tracking-[0.17em]
+                  tracking-[0.15em]
+                  sm:tracking-[0.17em]
+
                   font-semibold
                 "
                 style={{
@@ -501,11 +565,17 @@ export const AtmosphereStudio = () => {
               className="
                 self-start
                 sm:self-auto
-                text-[9px]
+
+                text-[8px]
                 sm:text-[10px]
+
                 font-mono
-                px-2.5
+
+                px-2
+                sm:px-2.5
+
                 py-1
+
                 rounded-md
                 border
               "
@@ -525,10 +595,12 @@ export const AtmosphereStudio = () => {
           <div
             className="
               grid
+
               grid-cols-1
               sm:grid-cols-2
               lg:grid-cols-3
-              gap-2.5
+
+              gap-2
               sm:gap-3.5
             "
           >
@@ -546,30 +618,42 @@ export const AtmosphereStudio = () => {
                   key={track.id}
                   onClick={() => playTrack(track)}
                   className={`
-                    p-3
+                    p-2.5
                     sm:p-3.5
-                    rounded-2xl
+
+                    rounded-xl
+                    sm:rounded-2xl
+
                     border
                     cursor-pointer
+
                     flex
                     items-center
-                    gap-3
+
+                    gap-2.5
                     sm:gap-3.5
+
                     transition-all
                     duration-300
+
                     group
+
                     active:scale-[0.985]
                     hover:-translate-y-0.5
+
                     ${isCurrent ? 'font-medium' : ''}
                   `}
                   style={{
                     backgroundColor: isCurrent
                       ? 'rgba(168, 182, 154, 0.08)'
                       : 'var(--surface-primary)',
+
                     borderColor: isCurrent
                       ? 'var(--sage)'
                       : 'var(--border-subtle, rgba(244,240,230,0.08))',
+
                     opacity: isCurrent ? 1 : 0.82,
+
                     boxShadow: isCurrent
                       ? '0 8px 25px rgba(168,182,154,0.15)'
                       : '0 4px 15px rgba(0,0,0,0.05)'
@@ -579,20 +663,24 @@ export const AtmosphereStudio = () => {
                   {/* Artwork */}
                   <div
                     className="
-                      w-11
-                      h-11
+                      w-10
+                      h-10
+
                       sm:w-12
                       sm:h-12
+
                       overflow-hidden
                       flex-shrink-0
+
                       transition-all
                       duration-500
+
                       shadow-lg
                       relative
                     "
                     style={{
                       borderRadius:
-                        isSpinning ? '50%' : '11px'
+                        isSpinning ? '50%' : '10px'
                     }}
                   >
                     <img
@@ -602,9 +690,12 @@ export const AtmosphereStudio = () => {
                         w-full
                         h-full
                         object-cover
+
                         transition-transform
                         duration-300
+
                         group-hover:scale-105
+
                         ${isSpinning ? 'vinyl-spinning' : ''}
                       `}
                       style={{
@@ -621,10 +712,12 @@ export const AtmosphereStudio = () => {
 
                     <h4
                       className="
-                        text-[11px]
+                        text-[10px]
                         sm:text-xs
+
                         truncate
                         font-medium
+
                         mb-0.5
                       "
                       style={{
@@ -638,8 +731,9 @@ export const AtmosphereStudio = () => {
 
                     <p
                       className="
-                        text-[9px]
+                        text-[8px]
                         sm:text-[10px]
+
                         truncate
                         opacity-50
                       "
@@ -660,13 +754,21 @@ export const AtmosphereStudio = () => {
                         flex
                         items-end
                         space-x-0.5
+
                         h-3.5
                         flex-shrink-0
-                        px-1
+
+                        px-0.5
+                        sm:px-1
                       "
                     >
                       <span
-                        className="w-0.5 h-full animate-pulse rounded-full"
+                        className="
+                          w-0.5
+                          h-full
+                          animate-pulse
+                          rounded-full
+                        "
                         style={{
                           backgroundColor: 'var(--sage)',
                           animationDuration: '0.6s'
@@ -674,7 +776,12 @@ export const AtmosphereStudio = () => {
                       />
 
                       <span
-                        className="w-0.5 h-2/3 animate-pulse rounded-full"
+                        className="
+                          w-0.5
+                          h-2/3
+                          animate-pulse
+                          rounded-full
+                        "
                         style={{
                           backgroundColor: 'var(--sage)',
                           animationDuration: '0.4s'
@@ -682,7 +789,12 @@ export const AtmosphereStudio = () => {
                       />
 
                       <span
-                        className="w-0.5 h-4/5 animate-pulse rounded-full"
+                        className="
+                          w-0.5
+                          h-4/5
+                          animate-pulse
+                          rounded-full
+                        "
                         style={{
                           backgroundColor: 'var(--sage)',
                           animationDuration: '0.5s'
@@ -704,11 +816,13 @@ export const AtmosphereStudio = () => {
         ======================================================= */}
         <div
           className="
-            p-4
+            p-3.5
             sm:p-6
             lg:p-8
-            rounded-[26px]
+
+            rounded-[22px]
             sm:rounded-3xl
+
             border
             relative
             overflow-hidden
@@ -728,19 +842,24 @@ export const AtmosphereStudio = () => {
             className="
               flex
               flex-col
-              gap-3
+              gap-2.5
+
               sm:flex-row
               sm:items-center
               sm:justify-between
-              mb-5
+
+              mb-4
               sm:mb-6
-              pb-4
+
+              pb-3
+              sm:pb-4
+
               border-b
               border-white/5
             "
           >
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
 
               <div
                 className="
@@ -748,7 +867,9 @@ export const AtmosphereStudio = () => {
                   h-7
                   sm:w-8
                   sm:h-8
+
                   rounded-lg
+
                   flex
                   items-center
                   justify-center
@@ -759,7 +880,7 @@ export const AtmosphereStudio = () => {
                 }}
               >
                 <Sliders
-                  size={15}
+                  size={14}
                   style={{
                     color: 'var(--champagne)'
                   }}
@@ -768,10 +889,13 @@ export const AtmosphereStudio = () => {
 
               <h2
                 className="
-                  text-[10px]
+                  text-[9px]
                   sm:text-xs
+
                   uppercase
-                  tracking-[0.17em]
+                  tracking-[0.15em]
+                  sm:tracking-[0.17em]
+
                   font-semibold
                 "
                 style={{
@@ -787,11 +911,17 @@ export const AtmosphereStudio = () => {
               className="
                 self-start
                 sm:self-auto
-                text-[9px]
+
+                text-[8px]
                 sm:text-[10px]
+
                 font-mono
-                px-2.5
+
+                px-2
+                sm:px-2.5
+
                 py-1
+
                 rounded-md
                 border
               "
@@ -814,6 +944,7 @@ export const AtmosphereStudio = () => {
               grid-cols-1
               sm:grid-cols-2
               md:grid-cols-3
+
               gap-2.5
               sm:gap-4
             "
@@ -859,15 +990,21 @@ export const AtmosphereStudio = () => {
                 <div
                   key={layer.id}
                   className="
-                    p-3.5
+                    p-3
                     sm:p-4
-                    rounded-2xl
+
+                    rounded-xl
+                    sm:rounded-2xl
+
                     border
+
                     flex
                     flex-col
                     justify-between
+
                     transition-all
                     duration-300
+
                     hover:border-emerald-500/30
                     active:scale-[0.99]
                   "
@@ -892,7 +1029,9 @@ export const AtmosphereStudio = () => {
                       flex
                       items-center
                       justify-between
-                      mb-4
+
+                      mb-3
+                      sm:mb-4
                     "
                   >
 
@@ -900,7 +1039,8 @@ export const AtmosphereStudio = () => {
                       className="
                         flex
                         items-center
-                        gap-2.5
+                        gap-2
+
                         min-w-0
                       "
                     >
@@ -909,10 +1049,13 @@ export const AtmosphereStudio = () => {
                         className="
                           w-8
                           h-8
+
                           rounded-xl
+
                           flex
                           items-center
                           justify-center
+
                           flex-shrink-0
                         "
                         style={{
@@ -942,8 +1085,9 @@ export const AtmosphereStudio = () => {
 
                       <span
                         className="
-                          text-[11px]
+                          text-[10px]
                           sm:text-xs
+
                           font-medium
                           truncate
                         "
@@ -965,14 +1109,20 @@ export const AtmosphereStudio = () => {
                         toggleAmbientMute(layer.id)
                       }
                       className="
-                        p-2
+                        p-1.5
+                        sm:p-2
+
                         rounded-xl
                         text-xs
+
                         transition-all
                         duration-200
+
                         cursor-pointer
+
                         hover:bg-white/5
                         active:scale-90
+
                         flex-shrink-0
                       "
                       style={{
@@ -1007,7 +1157,7 @@ export const AtmosphereStudio = () => {
                     className="
                       flex
                       items-center
-                      gap-3
+                      gap-2.5
                     "
                   >
 
@@ -1031,9 +1181,12 @@ export const AtmosphereStudio = () => {
                         w-full
                         h-1.5
                         sm:h-2
+
                         rounded-full
+
                         appearance-none
                         cursor-pointer
+
                         studio-slider
                       "
                       style={{
@@ -1044,6 +1197,7 @@ export const AtmosphereStudio = () => {
                               : layer.volume,
                             1
                           ),
+
                         accentColor:
                           'var(--sage)'
                       }}
@@ -1051,12 +1205,16 @@ export const AtmosphereStudio = () => {
 
                     <span
                       className="
-                        text-[9px]
+                        text-[8px]
                         sm:text-[10px]
+
                         font-mono
+
                         w-8
                         text-right
+
                         opacity-70
+
                         flex-shrink-0
                       "
                       style={{
