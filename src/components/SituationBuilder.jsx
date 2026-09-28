@@ -574,7 +574,7 @@ export const SituationBuilder = () => {
         mx-auto
         px-4
         sm:px-6
-        pt-24
+        pt-20
         sm:pt-32
         pb-28
         sm:pb-40
@@ -1110,7 +1110,7 @@ export const SituationBuilder = () => {
           w-full
           max-w-3xl
           mx-auto
-          mb-14
+          mb-6
           sm:mb-20
           relative
         "
@@ -1143,7 +1143,7 @@ export const SituationBuilder = () => {
             py-1.5
             rounded-full
             border
-            mb-5
+            mb-3
             sm:mb-6
             backdrop-blur-md
           "
@@ -1190,11 +1190,11 @@ export const SituationBuilder = () => {
 
         <h1
           className="
-            text-4xl
+            text-3xl
             sm:text-6xl
             font-light
             tracking-tight
-            mb-5
+            mb-2
             sm:mb-6
             leading-tight
           "
@@ -1304,8 +1304,8 @@ export const SituationBuilder = () => {
                 style={{
                   top:
                     `${86 +
-                      (progressPercentage / 100) *
-                      150}px`
+                    (progressPercentage / 100) *
+                    150}px`
                 }}
               />
 
@@ -1655,14 +1655,14 @@ export const SituationBuilder = () => {
 
         {/* ======================================================
             RIGHT CONTENT
-        ====================================================== */}
+        ================================================      */}
 
         <div className="lg:col-span-8 space-y-12 sm:space-y-14 min-w-0">
 
 
           {/* ====================================================
               ACTIVITY — 01
-          ==================================================== */}
+          ================================================    */}
 
           <section
             ref={el => {
@@ -1850,7 +1850,7 @@ export const SituationBuilder = () => {
 
           {/* ====================================================
               FEELING — 02
-          ==================================================== */}
+          ================================================    */}
 
           <section
             ref={el => {
@@ -2046,7 +2046,7 @@ export const SituationBuilder = () => {
 
           {/* ====================================================
               ENVIRONMENT — 03
-          ==================================================== */}
+          ================================================    */}
 
           <section
             ref={el => {
@@ -2209,7 +2209,7 @@ export const SituationBuilder = () => {
 
           {/* ====================================================
               INTENSITY — 04
-          ==================================================== */}
+          ================================================    */}
 
           <section
             ref={el => {
@@ -2358,7 +2358,7 @@ export const SituationBuilder = () => {
 
           {/* ====================================================
               ACTIONS
-          ==================================================== */}
+          ================================================    */}
 
           <div className="pt-2 sm:pt-6 space-y-5 sm:space-y-6">
 
