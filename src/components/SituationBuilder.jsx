@@ -574,7 +574,7 @@ export const SituationBuilder = () => {
         mx-auto
         px-4
         sm:px-6
-        pt-12
+        pt-2
         sm:pt-32
         pb-28
         sm:pb-40
