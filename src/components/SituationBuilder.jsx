@@ -574,7 +574,7 @@ export const SituationBuilder = () => {
         mx-auto
         px-4
         sm:px-6
-        pt-20
+        pt-12
         sm:pt-32
         pb-28
         sm:pb-40
@@ -1655,7 +1655,7 @@ export const SituationBuilder = () => {
 
         {/* ======================================================
             RIGHT CONTENT
-        ================================================      */}
+        ====================================================== */}
 
         <div className="lg:col-span-8 space-y-12 sm:space-y-14 min-w-0">
 
