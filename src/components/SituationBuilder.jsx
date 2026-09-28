@@ -583,7 +583,6 @@ export const SituationBuilder = () => {
       "
     >
 
-
       {/* ========================================================
           LOCAL ANIMATION SYSTEM
       ======================================================== */}
@@ -1110,8 +1109,8 @@ export const SituationBuilder = () => {
           w-full
           max-w-3xl
           mx-auto
-          mb-14
-          sm:mb-20
+          mb-10
+          sm:mb-14
           relative
         "
       >
@@ -1164,7 +1163,8 @@ export const SituationBuilder = () => {
               height: '14px',
               width: 'auto',
               objectFit: 'contain',
-              filter: 'drop-shadow(0 0 6px rgba(168, 182, 154, 0.3)) drop-shadow(0 0 12px rgba(214, 184, 135, 0.15))'
+              filter:
+                'drop-shadow(0 0 6px rgba(168, 182, 154, 0.3)) drop-shadow(0 0 12px rgba(214, 184, 135, 0.15))'
             }}
           />
 
@@ -1247,8 +1247,8 @@ export const SituationBuilder = () => {
           grid
           grid-cols-1
           lg:grid-cols-12
-          gap-8
-          lg:gap-10
+          gap-6
+          lg:gap-8
           items-start
           min-w-0
         "
@@ -1283,7 +1283,6 @@ export const SituationBuilder = () => {
                   '0 25px 60px rgba(0, 0, 0, 0.5)'
               }}
             >
-
 
               {/* SCROLL PROGRESS */}
 
@@ -1657,7 +1656,7 @@ export const SituationBuilder = () => {
             RIGHT CONTENT
         ====================================================== */}
 
-        <div className="lg:col-span-8 space-y-12 sm:space-y-14 min-w-0">
+        <div className="lg:col-span-8 space-y-9 sm:space-y-11 min-w-0">
 
 
           {/* ====================================================
@@ -2360,7 +2359,7 @@ export const SituationBuilder = () => {
               ACTIONS
           ==================================================== */}
 
-          <div className="pt-2 sm:pt-6 space-y-5 sm:space-y-6">
+          <div className="pt-0 sm:pt-3 space-y-4 sm:space-y-5">
 
 
             <div
@@ -2370,8 +2369,8 @@ export const SituationBuilder = () => {
                 sm:flex-row
                 items-stretch
                 sm:items-center
-                gap-3
-                sm:gap-4
+                gap-2.5
+                sm:gap-3
               "
             >
 
@@ -2472,15 +2471,14 @@ export const SituationBuilder = () => {
 
               <div
                 className="
-                  p-3.5
-                  sm:p-4
+                  p-3
+                  sm:p-3.5
                   rounded-2xl
                   border
                   flex
                   items-center
                   justify-between
                   gap-3
-                  sm:gap-4
                   backdrop-blur-xl
                   animate-fade-up
                   min-w-0
