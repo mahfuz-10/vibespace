@@ -91,7 +91,8 @@ export const Navbar = ({
             mx-auto
             px-3
             sm:px-8
-            h-20
+            h-16
+            sm:h-20
             flex
             items-center
             justify-between
