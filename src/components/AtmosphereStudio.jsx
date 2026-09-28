@@ -63,7 +63,7 @@ export const AtmosphereStudio = () => {
         sm:px-6
         lg:px-8
 
-        pt-12
+        pt-2
         sm:pt-24
         lg:pt-32
 
@@ -80,7 +80,7 @@ export const AtmosphereStudio = () => {
       ========================================================= */}
       <div
         className="
-          mb-7
+          mb-4
           sm:mb-10
           lg:mb-12
 
@@ -130,7 +130,7 @@ export const AtmosphereStudio = () => {
 
             rounded-full
             border
-            mb-3
+            mb-2
             sm:mb-4
 
             backdrop-blur-md
@@ -190,7 +190,7 @@ export const AtmosphereStudio = () => {
             font-light
             tracking-tight
 
-            mb-2
+            mb-1.5
             sm:mb-3
           "
           style={{
