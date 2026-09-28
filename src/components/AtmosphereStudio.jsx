@@ -63,7 +63,7 @@ export const AtmosphereStudio = () => {
         sm:px-6
         lg:px-8
 
-        pt-16
+        pt-12
         sm:pt-24
         lg:pt-32
 
