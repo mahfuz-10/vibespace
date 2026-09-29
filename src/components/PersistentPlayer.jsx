@@ -24,13 +24,23 @@ export const PersistentPlayer = () => {
     seekTo,
     volume,
     setVolume,
+    setHasSubmittedSituation,
   } = useAudio();
 
   const [showTimer, setShowTimer] = useState(false);
   const [timerMins, setTimerMins] = useState(null);
 
   /* =========================================================
-     SLEEP TIMER
+      OPEN PRESENT / VIBE RESULT PLAYER
+  ========================================================= */
+  const handleOpenResult = () => {
+    if (typeof setHasSubmittedSituation === "function") {
+      setHasSubmittedSituation(true);
+    }
+  };
+
+  /* =========================================================
+      SLEEP TIMER
   ========================================================= */
 
   useEffect(() => {
@@ -48,7 +58,7 @@ export const PersistentPlayer = () => {
   }, [timerMins, isPlaying, togglePlayPause]);
 
   /* =========================================================
-     FORMAT TIME
+      FORMAT TIME
   ========================================================= */
 
   const formatTime = (secs) => {
@@ -65,7 +75,7 @@ export const PersistentPlayer = () => {
   };
 
   /* =========================================================
-     SLIDER BACKGROUND
+      SLIDER BACKGROUND
   ========================================================= */
 
   const getSliderBg = (value, max = 100) => {
@@ -84,12 +94,15 @@ export const PersistentPlayer = () => {
   };
 
   /* =========================================================
-     EMPTY PLAYER
-     ========================================================= */
+      EMPTY PLAYER
+      ========================================================= */
 
   if (!currentTrack) {
     return (
-      <div className="fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-[720px] z-50">
+      <div 
+        onClick={handleOpenResult}
+        className="fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-[720px] z-50 cursor-pointer"
+      >
         <div
           className="relative overflow-hidden rounded-2xl border backdrop-blur-2xl"
           style={{
@@ -192,7 +205,7 @@ export const PersistentPlayer = () => {
   }
 
   /* =========================================================
-     PLAYER
+      PLAYER
   ========================================================= */
 
   return (
@@ -224,12 +237,16 @@ export const PersistentPlayer = () => {
           <div className="relative px-4 sm:px-5 py-3">
             <div className="flex items-center gap-4">
               {/* =================================================
-                  ARTWORK
+                  ARTWORK & TRACK INFO (Click to go to Result Player)
               ================================================= */}
 
-              <div className="flex items-center gap-3 min-w-0 w-[170px] sm:w-[210px]">
+              <div 
+                onClick={handleOpenResult}
+                className="flex items-center gap-3 min-w-0 w-[170px] sm:w-[210px] cursor-pointer group"
+                title="Open Present Atmosphere Player"
+              >
                 <div
-                  className="relative w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 border"
+                  className="relative w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 border transition-transform duration-300 group-hover:scale-105"
                   style={{
                     borderColor:
                       "rgba(255,255,255,0.08)",
@@ -287,7 +304,7 @@ export const PersistentPlayer = () => {
 
                 <div className="min-w-0">
                   <h4
-                    className="text-[11px] font-medium truncate"
+                    className="text-[11px] font-medium truncate group-hover:text-[var(--sage)] transition-colors"
                     style={{
                       color:
                         "var(--text-primary)",
@@ -347,8 +364,11 @@ export const PersistentPlayer = () => {
                 <div className="flex items-center gap-4 mb-1.5">
                   <button
                     type="button"
-                    onClick={prevTrack}
-                    className="opacity-45 hover:opacity-100 hover:scale-110 transition-all"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevTrack();
+                    }}
+                    className="opacity-45 hover:opacity-100 hover:scale-110 transition-all cursor-pointer"
                     style={{
                       color:
                         "var(--text-primary)",
@@ -363,7 +383,10 @@ export const PersistentPlayer = () => {
 
                   <button
                     type="button"
-                    onClick={togglePlayPause}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      togglePlayPause();
+                    }}
                     className="
                       w-9
                       h-9
@@ -375,6 +398,7 @@ export const PersistentPlayer = () => {
                       duration-300
                       hover:scale-105
                       active:scale-95
+                      cursor-pointer
                     "
                     style={{
                       backgroundColor:
@@ -406,8 +430,11 @@ export const PersistentPlayer = () => {
 
                   <button
                     type="button"
-                    onClick={nextTrack}
-                    className="opacity-45 hover:opacity-100 hover:scale-110 transition-all"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextTrack();
+                    }}
+                    className="opacity-45 hover:opacity-100 hover:scale-110 transition-all cursor-pointer"
                     style={{
                       color:
                         "var(--text-primary)",
@@ -439,6 +466,7 @@ export const PersistentPlayer = () => {
                     max={duration || 100}
                     step="0.1"
                     value={currentTime}
+                    onClick={(e) => e.stopPropagation()}
                     onChange={(e) =>
                       seekTo(
                         parseFloat(
@@ -474,7 +502,7 @@ export const PersistentPlayer = () => {
 
               <div className="hidden sm:flex items-center gap-4 w-[145px] justify-end">
                 {/* Volume */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                   <Volume2
                     size={12}
                     style={{
@@ -510,10 +538,11 @@ export const PersistentPlayer = () => {
                 {/* Timer */}
                 <button
                   type="button"
-                  onClick={() =>
-                    setShowTimer(true)
-                  }
-                  className="w-7 h-7 rounded-lg flex items-center justify-center border transition-all hover:scale-105"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowTimer(true);
+                  }}
+                  className="w-7 h-7 rounded-lg flex items-center justify-center border transition-all hover:scale-105 cursor-pointer"
                   style={{
                     backgroundColor:
                       timerMins
@@ -582,7 +611,7 @@ export const PersistentPlayer = () => {
               onClick={() =>
                 setShowTimer(false)
               }
-              className="absolute top-4 right-4 opacity-40 hover:opacity-100 transition"
+              className="absolute top-4 right-4 opacity-40 hover:opacity-100 transition cursor-pointer"
               style={{
                 color:
                   "var(--text-primary)",
@@ -640,7 +669,7 @@ export const PersistentPlayer = () => {
                       setTimerMins(mins);
                       setShowTimer(false);
                     }}
-                    className="py-3 rounded-xl border text-[10px] transition-all hover:scale-[1.02]"
+                    className="py-3 rounded-xl border text-[10px] transition-all hover:scale-[1.02] cursor-pointer"
                     style={{
                       backgroundColor:
                         timerMins === mins
@@ -669,7 +698,7 @@ export const PersistentPlayer = () => {
                   setTimerMins(null);
                   setShowTimer(false);
                 }}
-                className="w-full mt-3 py-2.5 rounded-xl text-[9px] uppercase tracking-[0.14em] border"
+                className="w-full mt-3 py-2.5 rounded-xl text-[9px] uppercase tracking-[0.14em] border cursor-pointer"
                 style={{
                   borderColor:
                     "rgba(255,255,255,0.06)",
@@ -687,7 +716,7 @@ export const PersistentPlayer = () => {
                 onClick={() =>
                   setShowTimer(false)
                 }
-                className="w-full mt-4 text-[9px] opacity-40 hover:opacity-80 transition"
+                className="w-full mt-4 text-[9px] opacity-40 hover:opacity-80 transition cursor-pointer"
                 style={{
                   color:
                     "var(--text-muted)",
