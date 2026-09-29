@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useAudio } from "./AudioManager";
 
-export const PersistentPlayer = () => {
+export const PersistentPlayer = ({ onOpenResult }) => {
   const {
     currentTrack,
     isPlaying,
@@ -36,6 +36,9 @@ export const PersistentPlayer = () => {
   const handleOpenResult = () => {
     if (typeof setHasSubmittedSituation === "function") {
       setHasSubmittedSituation(true);
+    }
+    if (typeof onOpenResult === "function") {
+      onOpenResult();
     }
   };
 

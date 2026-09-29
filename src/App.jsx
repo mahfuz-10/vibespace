@@ -113,7 +113,9 @@ function MainContent() {
 
 
         {currentTab === 'studio' && (
-          <AtmosphereStudio />
+          <AtmosphereStudio 
+            onBack={() => setCurrentTab('result')}
+          />
         )}
 
       </main>
@@ -126,7 +128,9 @@ function MainContent() {
           remain fixed at the bottom of the viewport.
       ===================================================== */}
 
-      <PersistentPlayer />
+      <PersistentPlayer 
+        onOpenResult={() => setCurrentTab('result')} 
+      />
 
     </div>
   );
