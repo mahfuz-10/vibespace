@@ -8,7 +8,7 @@ export const VibeIntro = ({ onEnter }) => {
   const containerRef = useRef(null);
 
   /* =========================================================
-     LIVE STUDIO CLOCK
+     LIVE STUDIO TIME
   ========================================================= */
   useEffect(() => {
     const updateTime = () => {
@@ -28,7 +28,7 @@ export const VibeIntro = ({ onEnter }) => {
   }, []);
 
   /* =========================================================
-     SMOOTH 3D SPOTLIGHT TRACKING
+     SMOOTH AURA TRACKING
   ========================================================= */
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
@@ -39,7 +39,7 @@ export const VibeIntro = ({ onEnter }) => {
   };
 
   /* =========================================================
-     SYNTHESIZED BESPOKE AUDIO CHORD (432Hz WARM HARMONIC)
+     WARM 432Hz HARMONIC SYNTHESIZER
   ========================================================= */
   const playHarmonicEntranceChord = () => {
     try {
@@ -50,7 +50,7 @@ export const VibeIntro = ({ onEnter }) => {
       const freqs = [108, 216, 432, 648];
       const masterGain = ctx.createGain();
       masterGain.gain.setValueAtTime(0.001, ctx.currentTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.22, ctx.currentTime + 0.35);
+      masterGain.gain.exponentialRampToValueAtTime(0.2, ctx.currentTime + 0.35);
       masterGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 2.0);
       masterGain.connect(ctx.destination);
 
@@ -60,7 +60,7 @@ export const VibeIntro = ({ onEnter }) => {
         osc.type = "sine";
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
-        oscGain.gain.setValueAtTime(0.22 / (idx + 1), ctx.currentTime);
+        oscGain.gain.setValueAtTime(0.2 / (idx + 1), ctx.currentTime);
         osc.connect(oscGain);
         oscGain.connect(masterGain);
 
@@ -96,120 +96,150 @@ export const VibeIntro = ({ onEnter }) => {
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className={`fixed inset-0 z-[120] bg-[#11120E] text-[#E5E2D9] overflow-hidden select-none flex flex-col justify-between p-6 sm:p-10 transition-all duration-700 ${
+      className={`fixed inset-0 z-[120] bg-[#141512] text-[#F3EFE6] overflow-hidden select-none flex flex-col justify-between p-6 sm:p-12 transition-all duration-700 ${
         isEntering ? "opacity-0 scale-[1.02] blur-md pointer-events-none" : "opacity-100"
       }`}
     >
       {/* =====================================================
-          INTERACTIVE SUBTLE LIGHT SOURCE
+          APP MATCHED AMBIENT GLOWS (SAGE & CHAMPAGNE)
       ===================================================== */}
+      {/* Top subtle emerald/sage ambient glow */}
       <div
-        className="absolute inset-0 pointer-events-none transition-all duration-300 ease-out"
+        className="absolute inset-x-0 -top-24 h-96 pointer-events-none opacity-40 blur-3xl"
         style={{
-          background: `radial-gradient(circle 650px at ${mousePos.x}% ${mousePos.y}%, rgba(168, 182, 154, 0.08), rgba(214, 184, 135, 0.035) 40%, transparent 75%)`,
+          background:
+            "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(168, 182, 154, 0.25), transparent 75%)",
         }}
       />
 
-      {/* Ultra-subtle Architectural Studio Grid */}
+      {/* Dynamic interactive light following cursor */}
       <div
-        className="absolute inset-0 opacity-[0.025] pointer-events-none"
+        className="absolute inset-0 pointer-events-none transition-all duration-500 ease-out"
         style={{
-          backgroundImage:
-            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
+          background: `radial-gradient(circle 600px at ${mousePos.x}% ${mousePos.y}%, rgba(214, 184, 135, 0.07), rgba(168, 182, 154, 0.04) 40%, transparent 75%)`,
+        }}
+      />
+
+      {/* Center soft warm bloom */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] pointer-events-none rounded-full blur-[130px] opacity-25"
+        style={{
+          background: "var(--champagne, rgba(214, 184, 135, 0.25))",
         }}
       />
 
       {/* =====================================================
-          TOP CORNER HUD (PROFESSIONAL SPEC)
+          TOP HEADER
       ===================================================== */}
-      <header className="relative z-10 flex items-center justify-between text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-mono text-[#7D8175]">
-        {/* Top Left */}
-        <div className="flex items-center gap-2.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#A8B69A] animate-pulse" />
-          <span>VIBESPACE LABS // SYSTEM ACTIVE</span>
+      <header className="relative z-10 flex items-center justify-between text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-mono text-[#8C9083]">
+        <div className="flex items-center gap-2">
+          <span
+            className="w-1.5 h-1.5 rounded-full animate-pulse"
+            style={{ backgroundColor: "var(--sage, #A8B69A)" }}
+          />
+          <span style={{ color: "var(--sage, #A8B69A)" }}>
+            SPATIAL ARCHITECTURE & SOUND ENGINE
+          </span>
         </div>
 
-        {/* Top Right */}
         <div className="flex items-center gap-5">
-          <span className="hidden sm:inline">CALIBRATION: 96.0 KHZ / 24-BIT</span>
-          <span className="text-[#D6B887] font-semibold">{timeStr || "00:00:00"}</span>
+          <span className="hidden sm:inline opacity-60">ACOUSTIC WORLD</span>
+          <span
+            className="font-medium tracking-widest px-2 py-0.5 rounded-md border"
+            style={{
+              color: "var(--champagne, #D6B887)",
+              borderColor: "rgba(214, 184, 135, 0.15)",
+              backgroundColor: "rgba(214, 184, 135, 0.05)",
+            }}
+          >
+            {timeStr || "00:00:00"}
+          </span>
         </div>
       </header>
 
       {/* =====================================================
-          CENTER HERO CONTENT
+          CENTER HERO CONTENT (APP MATCHED TYPOGRAPHY)
       ===================================================== */}
       <main className="relative z-10 max-w-3xl mx-auto text-center px-4 my-auto">
-        {/* Architecture Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.02] backdrop-blur-md mb-6 sm:mb-8 animate-fade-up">
+        {/* Logo / Badge matching App's exact styling */}
+        <div
+          className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full border mb-6 sm:mb-8 backdrop-blur-md"
+          style={{
+            backgroundColor: "rgba(168, 182, 154, 0.05)",
+            borderColor: "rgba(168, 182, 154, 0.2)",
+          }}
+        >
           <img
             src="/vibespace-logo-icon.png"
-            alt=""
+            alt="VibeSpace"
             className="w-3.5 h-3.5 object-contain"
             style={{
-              filter: "drop-shadow(0 0 8px rgba(168,182,154,0.35))",
+              filter:
+                "drop-shadow(0 0 6px rgba(168, 182, 154, 0.3)) drop-shadow(0 0 12px rgba(214, 184, 135, 0.15))",
             }}
           />
-          <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.24em] font-semibold text-[#A8B69A]">
-            Spatial Sound & Atmosphere
+          <span
+            className="text-[9px] sm:text-[10px] font-semibold tracking-[0.16em] uppercase leading-tight"
+            style={{ color: "var(--sage, #A8B69A)" }}
+          >
+            VibeSpace Acoustic World
           </span>
         </div>
 
-        {/* Brand Text */}
-        <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.38em] text-[#D6B887]/85 mb-3 sm:mb-4">
-          V I B E S P A C E
-        </p>
-
-        {/* Center Accent Dash */}
-        <div className="w-6 h-px bg-white/20 mx-auto mb-6 sm:mb-8" />
-
         {/* Main Title */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight leading-[1.08] text-[#F3EFE6] mb-5 sm:mb-6">
+        <h1
+          className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight leading-[1.08] mb-5 sm:mb-6"
+          style={{ color: "var(--text-primary, #F3EFE6)" }}
+        >
           Find the sound <br />
-          <span className="font-normal italic text-[#D6B887]">for your moment.</span>
+          <span
+            className="font-normal italic"
+            style={{ color: "var(--champagne, #D6B887)" }}
+          >
+            for your moment.
+          </span>
         </h1>
 
         {/* Subtext */}
-        <p className="text-xs sm:text-sm text-[#94988B] font-light max-w-lg mx-auto leading-relaxed mb-8 sm:mb-10 opacity-75">
-          Music, ambience, and atmosphere — shaped dynamically around where you are right now.
+        <p
+          className="text-xs sm:text-sm font-light leading-relaxed max-w-lg mx-auto mb-8 sm:mb-10 opacity-60"
+          style={{ color: "var(--text-muted, #94988B)" }}
+        >
+          Immerse your senses in generative soundscapes tuned precisely to your current coordinates, actions, and inner rhythm.
         </p>
 
-        {/* Shimmer Button */}
+        {/* Enter Button matching SituationBuilder styling */}
         <div className="flex justify-center">
           <button
             type="button"
             onClick={handleEnterClick}
-            className="group relative inline-flex items-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full border border-[rgba(214,184,135,0.25)] bg-[rgba(24,26,21,0.85)] hover:bg-[rgba(31,34,27,0.95)] hover:border-[#A8B69A] backdrop-blur-xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_12px_40px_rgba(0,0,0,0.5)] cursor-pointer"
+            className="group relative inline-flex items-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl font-semibold uppercase tracking-wider text-[10px] sm:text-xs transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl cursor-pointer"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--sage, #A8B69A), var(--champagne, #D6B887))",
+              color: "#151713",
+              boxShadow: "0 12px 35px rgba(168, 182, 154, 0.2)",
+            }}
           >
-            <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-              <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent group-hover:translate-x-full duration-1000 transition-transform" />
-            </div>
-
-            <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#F3EFE6] group-hover:text-[#D6B887] transition-colors">
-              Enter Experience
-            </span>
-
+            <span>Enter Experience</span>
             <ArrowUpRight
               size={15}
-              className="text-[#A8B69A] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </button>
         </div>
       </main>
 
       {/* =====================================================
-          BOTTOM CORNER HUD (PROFESSIONAL SPEC)
+          BOTTOM FOOTER HUD
       ===================================================== */}
-      <footer className="relative z-10 flex items-center justify-between text-[8px] sm:text-[9px] tracking-[0.22em] uppercase font-mono text-[#666A5D]">
-        {/* Bottom Left */}
+      <footer className="relative z-10 flex items-center justify-between text-[8px] sm:text-[9px] tracking-[0.2em] uppercase font-mono text-[#7D8175]">
         <div>
-          <span>MODULE // GENERATIVE ACOUSTICS</span>
+          <span>LIVE STUDIO // COORDINATES READY</span>
         </div>
 
-        {/* Bottom Right */}
         <div className="text-right">
-          <span>COORDINATES // DYNAMIC RES_01</span>
+          <span>CALIBRATED // LOSSLESS</span>
         </div>
       </footer>
     </div>
