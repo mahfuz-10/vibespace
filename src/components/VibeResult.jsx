@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { useAudio } from "./AudioManager";
+import { VibeCanvasFX } from "./VibeCanvasFX";
 
 /* =========================================================
    ENVIRONMENT VISUALS
@@ -323,7 +324,7 @@ export const VibeResult = ({ onOpenStudio }) => {
   ======================================================= */
 
   return (
-    <main className="min-h-screen px-4 sm:px-8 pt-5 sm:pt-24 pb-32 sm:pb-40 max-w-6xl mx-auto">
+    <main className="min-h-screen px-4 sm:px-8 pt-5 sm:pt-24 pb-32 sm:pb-40 max-w-6xl mx-auto relative">
 
       {/* ===================================================
           BACKGROUND ATMOSPHERE
@@ -347,6 +348,12 @@ export const VibeResult = ({ onOpenStudio }) => {
           }}
         />
       </div>
+
+      {/* ===================================================
+          CANVAS PARTICLE SYSTEM
+      =================================================== */}
+
+      <VibeCanvasFX environment={environment} />
 
       {/* ===================================================
           BACK BUTTON
