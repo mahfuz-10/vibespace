@@ -1,5 +1,6 @@
-import React from 'react';
-import { useAudio, MUSIC_DATABASE } from './AudioManager';
+import React from "react";
+import { useAudio, MUSIC_DATABASE } from "./AudioManager";
+
 import {
   Volume2,
   VolumeX,
@@ -13,12 +14,17 @@ import {
   CloudLightning,
   Car,
   Radio,
-  Sliders
-} from 'lucide-react';
-import { LiveMixBar } from './LiveMixBar';
-import PresetMixes from './PresetMixes';
+  Sliders,
+  Sparkles,
+} from "lucide-react";
 
-/* Ambience card icons mapping */
+import { LiveMixBar } from "./LiveMixBar";
+import PresetMixes from "./PresetMixes";
+
+/* =========================================================
+   AMBIENCE ICONS
+========================================================= */
+
 const AMBIENCE_ICONS = {
   rain: CloudRain,
   coffee: Coffee,
@@ -31,126 +37,245 @@ const AMBIENCE_ICONS = {
   city: Car,
 };
 
+/* =========================================================
+   COMPONENT
+========================================================= */
+
 export const AtmosphereStudio = () => {
   const {
     currentTrack,
     playTrack,
     isPlaying,
+
     ambientLayers,
     setAmbientVolume,
     toggleAmbientMute,
+
     masterVolume,
-    setMasterVolume
+    setMasterVolume,
   } = useAudio();
 
+  /* =======================================================
+     SLIDER BACKGROUND
+  ======================================================= */
+
   const getSliderBackground = (value, max = 1) => {
-    const percentage = (value / max) * 100;
+    const percentage = Math.min(
+      100,
+      Math.max(0, (value / max) * 100)
+    );
 
     return `linear-gradient(
       to right,
+      var(--sage) 0%,
       var(--sage) ${percentage}%,
-      var(--border-subtle, rgba(244,240,230,0.15)) ${percentage}%
+      rgba(244,240,230,0.10) ${percentage}%,
+      rgba(244,240,230,0.10) 100%
     )`;
   };
 
+  /* =======================================================
+     AMBIENCE ANIMATION
+  ======================================================= */
+
+  const getAnimationClass = (id) => {
+    switch (id) {
+      case "rain":
+        return "anim-rain";
+
+      case "fireplace":
+        return "anim-fire";
+
+      case "wind":
+        return "anim-wind";
+
+      case "ocean":
+        return "anim-waves";
+
+      default:
+        return "";
+    }
+  };
+
+  /* =======================================================
+     ACTIVE LAYERS
+  ======================================================= */
+
+  const activeLayerCount = (ambientLayers || []).filter(
+    (layer) => layer.volume > 0 && !layer.isMuted
+  ).length;
+
+  /* =======================================================
+     RENDER
+  ======================================================= */
+
   return (
-    <div
+    <main
       className="
+        relative
         w-full
         max-w-7xl
         mx-auto
+
         px-4
         sm:px-6
         lg:px-8
 
-        pt-2
-        sm:pt-24
-        lg:pt-32
+        pt-3
+        sm:pt-20
+        lg:pt-28
 
-        pb-24
-        sm:pb-32
-        lg:pb-40
+        pb-28
+        sm:pb-36
+        lg:pb-44
 
         animate-fade-up
       "
     >
+      {/* =====================================================
+          BACKGROUND ATMOSPHERE
+      ===================================================== */}
 
-      {/* =========================================================
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        {/* Main radial glow */}
+        <div
+          className="
+            absolute
+            left-1/2
+            -translate-x-1/2
+
+            -top-48
+
+            w-[520px]
+            sm:w-[700px]
+
+            h-[520px]
+            sm:h-[700px]
+
+            rounded-full
+            blur-[130px]
+
+            opacity-[0.10]
+          "
+          style={{
+            background:
+              "radial-gradient(circle, rgba(168,182,154,0.8), transparent 68%)",
+          }}
+        />
+
+        {/* Champagne glow */}
+        <div
+          className="
+            absolute
+            right-[-180px]
+            top-[35%]
+
+            w-[400px]
+            h-[400px]
+
+            rounded-full
+            blur-[130px]
+
+            opacity-[0.06]
+          "
+          style={{
+            background:
+              "radial-gradient(circle, rgba(214,184,135,0.8), transparent 70%)",
+          }}
+        />
+      </div>
+
+      {/* =====================================================
           HEADER
-      ========================================================= */}
-      <div
+      ===================================================== */}
+
+      <header
         className="
-          mb-4
-          sm:mb-10
-          lg:mb-12
+          relative
 
           text-center
           max-w-2xl
           mx-auto
-          relative
+
+          mb-7
+          sm:mb-12
+          lg:mb-14
+
           px-1
         "
       >
-
-        {/* Subtle Header Glow */}
+        {/* Header glow */}
         <div
           className="
             absolute
-            inset-x-0
-            -top-6
-            sm:-top-10
+            left-1/2
+            -translate-x-1/2
 
-            h-40
-            sm:h-52
+            -top-12
 
-            bg-radial
-            from-emerald-500/10
-            via-transparent
-            to-transparent
+            w-64
+            sm:w-96
 
-            blur-2xl
+            h-44
+            sm:h-56
+
+            rounded-full
+            blur-[80px]
+
             pointer-events-none
           "
+          style={{
+            background:
+              "radial-gradient(circle, rgba(168,182,154,0.12), transparent 70%)",
+          }}
         />
 
         {/* Badge */}
+
         <div
           className="
             relative
+
             inline-flex
             items-center
-            gap-1.5
-            sm:gap-2
+            justify-center
+            gap-2
 
-            px-2.5
-            sm:px-3.5
+            px-3
+            sm:px-4
 
-            py-1
-            sm:py-1.5
+            py-1.5
+            sm:py-2
 
             rounded-full
-            border
-            mb-2
-            sm:mb-4
 
-            backdrop-blur-md
-            max-w-full
+            border
+
+            mb-3
+            sm:mb-5
+
+            backdrop-blur-xl
           "
           style={{
-            backgroundColor: 'rgba(168, 182, 154, 0.05)',
-            borderColor: 'rgba(168, 182, 154, 0.2)'
+            background:
+              "linear-gradient(120deg, rgba(168,182,154,0.07), rgba(214,184,135,0.035))",
+            borderColor: "rgba(168,182,154,0.18)",
           }}
         >
           <img
             src="/vibespace-logo-icon.png"
-            alt=""
+            alt="VibeSpace"
+            className="
+              w-3
+              h-3
+              sm:w-3.5
+              sm:h-3.5
+
+              object-contain
+            "
             style={{
-              height: '11px',
-              width: 'auto',
-              objectFit: 'contain',
-              flexShrink: 0,
               filter:
-                'drop-shadow(0 0 6px rgba(168, 182, 154, 0.3)) drop-shadow(0 0 12px rgba(214, 184, 135, 0.15))'
+                "drop-shadow(0 0 6px rgba(168,182,154,0.35))",
             }}
           />
 
@@ -158,17 +283,17 @@ export const AtmosphereStudio = () => {
             className="
               text-[7px]
               xs:text-[8px]
-              sm:text-[10px]
-
-              font-semibold
-              tracking-[0.13em]
-              sm:tracking-widest
+              sm:text-[9px]
 
               uppercase
+              tracking-[0.18em]
+              sm:tracking-[0.22em]
+
+              font-semibold
               whitespace-nowrap
             "
             style={{
-              color: 'var(--sage)'
+              color: "var(--sage)",
             }}
           >
             Spatial Acoustic Laboratory
@@ -176,33 +301,34 @@ export const AtmosphereStudio = () => {
         </div>
 
         {/* Title */}
+
         <h1
           className="
             relative
 
-            text-[26px]
-            xs:text-[28px]
+            text-[29px]
+            xs:text-[32px]
 
-            sm:text-4xl
-            lg:text-[42px]
+            sm:text-5xl
+            lg:text-[54px]
 
-            leading-[1.05]
+            leading-[0.98]
+
             font-light
-            tracking-tight
+            tracking-[-0.035em]
 
-            mb-1.5
-            sm:mb-3
+            mb-3
+            sm:mb-5
           "
           style={{
-            color: 'var(--text-primary)',
-            fontWeight: 300
+            color: "var(--text-primary)",
           }}
         >
-          Atmosphere{' '}
+          Atmosphere{" "}
           <span
-            className="font-normal italic"
+            className="italic font-normal"
             style={{
-              color: 'var(--champagne)'
+              color: "var(--champagne)",
             }}
           >
             Studio
@@ -210,36 +336,80 @@ export const AtmosphereStudio = () => {
         </h1>
 
         {/* Description */}
+
         <p
           className="
             relative
 
+            max-w-[310px]
+            sm:max-w-lg
+
+            mx-auto
+
             text-[10px]
             sm:text-xs
 
-            leading-[1.55]
-            sm:leading-[1.7]
-
-            max-w-[300px]
-            sm:max-w-md
-
-            mx-auto
+            leading-[1.65]
           "
           style={{
-            color: 'var(--text-muted)',
-            opacity: 0.62
+            color: "var(--text-muted)",
+            opacity: 0.68,
           }}
         >
-          Independent control over your hero music track and multi-layered
-          generative ambient soundscapes.
+          Shape your soundscape with independent control over music,
+          ambience, and the space between them.
         </p>
-      </div>
 
+        {/* Active layers indicator */}
 
-      {/* =========================================================
-          MASTER VOLUME + LIVE MIX
-      ========================================================= */}
-      <div
+        <div
+          className="
+            relative
+
+            mt-4
+            sm:mt-6
+
+            inline-flex
+            items-center
+            gap-2
+
+            text-[8px]
+            sm:text-[9px]
+
+            uppercase
+            tracking-[0.16em]
+          "
+          style={{
+            color: "var(--text-muted)",
+          }}
+        >
+          <span
+            className="
+              w-1.5
+              h-1.5
+
+              rounded-full
+
+              animate-pulse
+            "
+            style={{
+              backgroundColor:
+                activeLayerCount > 0
+                  ? "var(--sage)"
+                  : "rgba(255,255,255,0.25)",
+            }}
+          />
+
+          {activeLayerCount} active layer
+          {activeLayerCount !== 1 ? "s" : ""}
+        </div>
+      </header>
+
+      {/* =====================================================
+          MASTER + LIVE MIX
+      ===================================================== */}
+
+      <section
         className="
           grid
           grid-cols-1
@@ -249,156 +419,189 @@ export const AtmosphereStudio = () => {
           sm:gap-5
           lg:gap-6
 
-          mb-7
-          sm:mb-10
+          mb-8
+          sm:mb-11
         "
       >
+        {/* MASTER VOLUME */}
 
-        {/* Master Volume */}
         <div
           className="
+            relative
+            overflow-hidden
+
             lg:col-span-5
 
-            p-3.5
-            sm:p-5
+            p-4
+            sm:p-6
 
-            rounded-[20px]
-            sm:rounded-3xl
+            rounded-[22px]
+            sm:rounded-[26px]
 
             border
 
-            flex
-            flex-col
-            justify-between
+            backdrop-blur-xl
 
             transition-all
-            duration-300
+            duration-500
 
-            relative
-            overflow-hidden
-            shadow-xl
+            hover:-translate-y-0.5
           "
           style={{
             background:
-              'linear-gradient(145deg, rgba(37, 38, 32, 0.9), rgba(20, 21, 17, 0.95))',
-            borderColor: 'rgba(214, 184, 135, 0.2)',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)'
+              "linear-gradient(145deg, rgba(42,45,38,0.88), rgba(24,26,22,0.94))",
+
+            borderColor:
+              "rgba(214,184,135,0.16)",
+
+            boxShadow:
+              "0 24px 70px rgba(0,0,0,0.28)",
           }}
         >
+          {/* Decorative glow */}
 
-          {/* subtle glow */}
           <div
             className="
               absolute
-              -right-16
-              -top-16
-              w-32
-              h-32
+              -right-24
+              -top-24
+
+              w-48
+              h-48
+
               rounded-full
-              blur-3xl
+              blur-[80px]
+
               pointer-events-none
             "
             style={{
-              background: 'rgba(214, 184, 135, 0.06)'
+              background:
+                "rgba(214,184,135,0.09)",
             }}
           />
 
-          <div className="relative flex items-center justify-between mb-4 sm:mb-5">
+          <div
+            className="
+              relative
 
-            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              flex
+              items-center
+              justify-between
 
+              gap-3
+
+              mb-6
+            "
+          >
+            {/* Icon + title */}
+
+            <div
+              className="
+                flex
+                items-center
+                gap-3
+
+                min-w-0
+              "
+            >
               <div
                 className="
-                  w-8
-                  h-8
+                  w-9
+                  h-9
                   sm:w-10
                   sm:h-10
 
                   rounded-xl
+
                   flex
                   items-center
                   justify-center
 
                   border
+
                   flex-shrink-0
                 "
                 style={{
-                  backgroundColor: 'rgba(168, 182, 154, 0.1)',
-                  borderColor: 'rgba(168, 182, 154, 0.2)'
+                  backgroundColor:
+                    "rgba(168,182,154,0.08)",
+
+                  borderColor:
+                    "rgba(168,182,154,0.17)",
                 }}
               >
                 <Volume2
-                  className="w-3.5 h-3.5 sm:w-[17px] sm:h-[17px]"
+                  size={16}
                   style={{
-                    color: 'var(--sage)'
+                    color: "var(--sage)",
                   }}
                 />
               </div>
 
               <div className="min-w-0">
-
-                <h3
+                <h2
                   className="
                     text-[10px]
                     sm:text-xs
 
                     font-medium
                     tracking-tight
-                    truncate
                   "
                   style={{
-                    color: 'var(--text-primary)'
+                    color:
+                      "var(--text-primary)",
                   }}
                 >
-                  Master Output Volume
-                </h3>
+                  Master Output
+                </h2>
 
                 <p
                   className="
-                    text-[8px]
-                    sm:text-[10px]
-
-                    opacity-50
                     mt-0.5
+
+                    text-[8px]
+                    sm:text-[9px]
                   "
                   style={{
-                    color: 'var(--text-muted)'
+                    color:
+                      "var(--text-muted)",
+                    opacity: 0.55,
                   }}
                 >
-                  Overall system sound pressure.
+                  Overall experience volume
                 </p>
-
               </div>
             </div>
 
+            {/* Percentage */}
+
             <span
               className="
-                text-[9px]
-                sm:text-xs
-
-                font-mono
-                font-bold
-
-                px-2
-                py-1
+                px-2.5
+                py-1.5
 
                 rounded-lg
 
+                text-[9px]
+                sm:text-[10px]
+
+                font-mono
+                font-semibold
+
                 flex-shrink-0
-                ml-3
               "
               style={{
-                color: 'var(--champagne)',
-                backgroundColor: 'rgba(214, 184, 135, 0.1)'
+                color: "var(--champagne)",
+                backgroundColor:
+                  "rgba(214,184,135,0.08)",
               }}
             >
               {Math.round(masterVolume * 100)}%
             </span>
-
           </div>
 
-          <div className="relative pt-1">
+          {/* Slider */}
 
+          <div className="relative">
             <input
               type="range"
               min="0"
@@ -406,123 +609,187 @@ export const AtmosphereStudio = () => {
               step="0.01"
               value={masterVolume}
               onChange={(e) =>
-                setMasterVolume(parseFloat(e.target.value))
+                setMasterVolume(
+                  parseFloat(e.target.value)
+                )
               }
+              aria-label="Master volume"
               className="
                 w-full
+
                 h-1.5
                 sm:h-2
+
                 rounded-full
+
                 appearance-none
+
                 cursor-pointer
+
                 studio-slider
               "
               style={{
-                background: getSliderBackground(masterVolume, 1),
-                accentColor: 'var(--sage)'
+                background:
+                  getSliderBackground(
+                    masterVolume
+                  ),
+
+                accentColor:
+                  "var(--sage)",
               }}
             />
-
           </div>
-        </div>
 
-
-        {/* Live Mix */}
-        <div
-          className="
-            lg:col-span-7
-            flex
-            items-center
-            min-w-0
-          "
-        >
-          <div className="w-full min-w-0">
-            <LiveMixBar activeLayers={ambientLayers} />
-          </div>
-        </div>
-
-      </div>
-
-
-      {/* =========================================================
-          PRESET MIXES
-      ========================================================= */}
-      <div className="mb-7 sm:mb-12">
-        <PresetMixes
-          ambientLayers={ambientLayers}
-          setAmbientVolume={setAmbientVolume}
-        />
-      </div>
-
-
-      {/* =========================================================
-          MAIN STUDIO SECTIONS
-      ========================================================= */}
-      <div className="space-y-6 sm:space-y-10 lg:space-y-12">
-
-
-        {/* =======================================================
-            HERO TRACK SELECTION
-        ======================================================= */}
-        <div
-          className="
-            p-3.5
-            sm:p-6
-            lg:p-8
-
-            rounded-[22px]
-            sm:rounded-3xl
-
-            border
-
-            relative
-            overflow-hidden
-            backdrop-blur-md
-          "
-          style={{
-            background:
-              'linear-gradient(160deg, rgba(30, 31, 27, 0.7), rgba(20, 21, 17, 0.85))',
-            borderColor:
-              'var(--border-subtle, rgba(244,240,230,0.08))',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-          }}
-        >
-
-          {/* Section Header */}
           <div
             className="
               flex
-              flex-col
+              justify-between
 
-              gap-2.5
-              sm:gap-3
+              mt-2.5
+
+              text-[7px]
+              sm:text-[8px]
+
+              uppercase
+              tracking-[0.14em]
+            "
+            style={{
+              color: "var(--text-muted)",
+              opacity: 0.35,
+            }}
+          >
+            <span>Silent</span>
+            <span>Full</span>
+          </div>
+        </div>
+
+        {/* LIVE MIX */}
+
+        <div
+          className="
+            lg:col-span-7
+
+            min-w-0
+          "
+        >
+          <LiveMixBar
+            activeLayers={ambientLayers}
+          />
+        </div>
+      </section>
+
+      {/* =====================================================
+          PRESET MIXES
+      ===================================================== */}
+
+      <section className="mb-8 sm:mb-12">
+        <PresetMixes
+          ambientLayers={ambientLayers}
+          setAmbientVolume={
+            setAmbientVolume
+          }
+        />
+      </section>
+
+      {/* =====================================================
+          MAIN STUDIO
+      ===================================================== */}
+
+      <div className="space-y-7 sm:space-y-10 lg:space-y-12">
+
+        {/* ===================================================
+            HERO TRACK
+        =================================================== */}
+
+        <section
+          className="
+            relative
+            overflow-hidden
+
+            p-4
+            sm:p-6
+            lg:p-8
+
+            rounded-[24px]
+            sm:rounded-[28px]
+
+            border
+
+            backdrop-blur-xl
+          "
+          style={{
+            background:
+              "linear-gradient(160deg, rgba(38,41,35,0.82), rgba(22,24,20,0.92))",
+
+            borderColor:
+              "rgba(244,240,230,0.075)",
+
+            boxShadow:
+              "0 25px 70px rgba(0,0,0,0.25)",
+          }}
+        >
+          {/* Section glow */}
+
+          <div
+            className="
+              absolute
+              -right-32
+              -top-32
+
+              w-72
+              h-72
+
+              rounded-full
+              blur-[100px]
+
+              opacity-30
+
+              pointer-events-none
+            "
+            style={{
+              background:
+                "rgba(214,184,135,0.12)",
+            }}
+          />
+
+          {/* Header */}
+
+          <div
+            className="
+              relative
+
+              flex
+              flex-col
 
               sm:flex-row
               sm:items-center
               sm:justify-between
 
-              mb-4
-              sm:mb-6
+              gap-3
 
-              pb-3
-              sm:pb-4
+              mb-5
+              sm:mb-7
+
+              pb-4
+              sm:pb-5
 
               border-b
               border-white/5
             "
           >
-
-            <div className="flex items-center gap-2">
-
+            <div
+              className="
+                flex
+                items-center
+                gap-2.5
+              "
+            >
               <div
                 className="
-                  w-7
-                  h-7
+                  w-8
+                  h-8
 
-                  sm:w-8
-                  sm:h-8
-
-                  rounded-lg
+                  rounded-xl
 
                   flex
                   items-center
@@ -530,35 +797,55 @@ export const AtmosphereStudio = () => {
                 "
                 style={{
                   backgroundColor:
-                    'rgba(214, 184, 135, 0.06)'
+                    "rgba(214,184,135,0.07)",
                 }}
               >
                 <Radio
                   size={14}
                   style={{
-                    color: 'var(--champagne)'
+                    color:
+                      "var(--champagne)",
                   }}
                 />
               </div>
 
-              <h2
-                className="
-                  text-[9px]
-                  sm:text-xs
+              <div>
+                <h2
+                  className="
+                    text-[10px]
+                    sm:text-xs
 
-                  uppercase
-                  tracking-[0.15em]
-                  sm:tracking-[0.17em]
+                    uppercase
+                    tracking-[0.16em]
 
-                  font-semibold
-                "
-                style={{
-                  color: 'var(--text-primary)'
-                }}
-              >
-                Hero Track Selection
-              </h2>
+                    font-semibold
+                  "
+                  style={{
+                    color:
+                      "var(--text-primary)",
+                  }}
+                >
+                  Hero Track Selection
+                </h2>
 
+                <p
+                  className="
+                    hidden
+                    sm:block
+
+                    mt-1
+
+                    text-[8px]
+                  "
+                  style={{
+                    color:
+                      "var(--text-muted)",
+                    opacity: 0.45,
+                  }}
+                >
+                  Choose the musical center of your atmosphere
+                </p>
+              </div>
             </div>
 
             <span
@@ -566,309 +853,408 @@ export const AtmosphereStudio = () => {
                 self-start
                 sm:self-auto
 
+                px-2.5
+                py-1.5
+
+                rounded-lg
+
+                border
+
                 text-[8px]
-                sm:text-[10px]
+                sm:text-[9px]
 
                 font-mono
-
-                px-2
-                sm:px-2.5
-
-                py-1
-
-                rounded-md
-                border
               "
               style={{
-                color: 'var(--text-muted)',
-                borderColor: 'var(--border-subtle)',
-                backgroundColor: 'rgba(255,255,255,0.02)'
+                color:
+                  "var(--text-muted)",
+
+                borderColor:
+                  "rgba(244,240,230,0.08)",
+
+                backgroundColor:
+                  "rgba(255,255,255,0.02)",
               }}
             >
-              {MUSIC_DATABASE.length} Cinematic Tracks
+              {MUSIC_DATABASE.length} tracks
             </span>
-
           </div>
 
-
           {/* Tracks */}
+
           <div
             className="
+              relative
+
               grid
 
               grid-cols-1
               sm:grid-cols-2
               lg:grid-cols-3
 
-              gap-2
+              gap-2.5
               sm:gap-3.5
             "
           >
+            {MUSIC_DATABASE.map(
+              (track) => {
+                const isCurrent =
+                  currentTrack?.id ===
+                  track.id;
 
-            {MUSIC_DATABASE.map((track) => {
+                const isPlayingCurrent =
+                  isCurrent && isPlaying;
 
-              const isCurrent =
-                currentTrack?.id === track.id;
-
-              const isSpinning =
-                isCurrent && isPlaying;
-
-              return (
-                <div
-                  key={track.id}
-                  onClick={() => playTrack(track)}
-                  className={`
-                    p-2.5
-                    sm:p-3.5
-
-                    rounded-xl
-                    sm:rounded-2xl
-
-                    border
-                    cursor-pointer
-
-                    flex
-                    items-center
-
-                    gap-2.5
-                    sm:gap-3.5
-
-                    transition-all
-                    duration-300
-
-                    group
-
-                    active:scale-[0.985]
-                    hover:-translate-y-0.5
-
-                    ${isCurrent ? 'font-medium' : ''}
-                  `}
-                  style={{
-                    backgroundColor: isCurrent
-                      ? 'rgba(168, 182, 154, 0.08)'
-                      : 'var(--surface-primary)',
-
-                    borderColor: isCurrent
-                      ? 'var(--sage)'
-                      : 'var(--border-subtle, rgba(244,240,230,0.08))',
-
-                    opacity: isCurrent ? 1 : 0.82,
-
-                    boxShadow: isCurrent
-                      ? '0 8px 25px rgba(168,182,154,0.15)'
-                      : '0 4px 15px rgba(0,0,0,0.05)'
-                  }}
-                >
-
-                  {/* Artwork */}
-                  <div
+                return (
+                  <button
+                    key={track.id}
+                    type="button"
+                    onClick={() =>
+                      playTrack(track)
+                    }
                     className="
-                      w-10
-                      h-10
+                      w-full
+                      text-left
 
-                      sm:w-12
-                      sm:h-12
+                      p-2.5
+                      sm:p-3.5
 
-                      overflow-hidden
-                      flex-shrink-0
+                      rounded-xl
+                      sm:rounded-2xl
+
+                      border
+
+                      cursor-pointer
+
+                      flex
+                      items-center
+
+                      gap-3
+                      sm:gap-3.5
 
                       transition-all
-                      duration-500
+                      duration-300
 
-                      shadow-lg
-                      relative
+                      group
+
+                      active:scale-[0.985]
+                      hover:-translate-y-0.5
                     "
                     style={{
-                      borderRadius:
-                        isSpinning ? '50%' : '10px'
+                      backgroundColor:
+                        isCurrent
+                          ? "rgba(168,182,154,0.075)"
+                          : "rgba(255,255,255,0.018)",
+
+                      borderColor:
+                        isCurrent
+                          ? "rgba(168,182,154,0.38)"
+                          : "rgba(244,240,230,0.065)",
+
+                      boxShadow:
+                        isCurrent
+                          ? "0 12px 35px rgba(168,182,154,0.09)"
+                          : "none",
                     }}
                   >
-                    <img
-                      src={track.artwork}
-                      alt=""
-                      className={`
-                        w-full
-                        h-full
-                        object-cover
+                    {/* Artwork */}
 
-                        transition-transform
-                        duration-300
-
-                        group-hover:scale-105
-
-                        ${isSpinning ? 'vinyl-spinning' : ''}
-                      `}
-                      style={{
-                        animationPlayState: isPlaying
-                          ? 'running'
-                          : 'paused'
-                      }}
-                    />
-                  </div>
-
-
-                  {/* Track Info */}
-                  <div className="flex-grow min-w-0">
-
-                    <h4
-                      className="
-                        text-[10px]
-                        sm:text-xs
-
-                        truncate
-                        font-medium
-
-                        mb-0.5
-                      "
-                      style={{
-                        color: isCurrent
-                          ? 'var(--sage)'
-                          : 'var(--text-primary)'
-                      }}
-                    >
-                      {track.title}
-                    </h4>
-
-                    <p
-                      className="
-                        text-[8px]
-                        sm:text-[10px]
-
-                        truncate
-                        opacity-50
-                      "
-                      style={{
-                        color: 'var(--text-muted)'
-                      }}
-                    >
-                      {track.artist}
-                    </p>
-
-                  </div>
-
-
-                  {/* Playing Indicator */}
-                  {isCurrent && isPlaying && (
                     <div
                       className="
-                        flex
-                        items-end
-                        space-x-0.5
+                        relative
+                        overflow-hidden
 
-                        h-3.5
+                        w-11
+                        h-11
+
+                        sm:w-13
+                        sm:h-13
+
                         flex-shrink-0
 
-                        px-0.5
-                        sm:px-1
+                        shadow-lg
+
+                        transition-all
+                        duration-500
+                      "
+                      style={{
+                        width:
+                          undefined,
+                        borderRadius:
+                          isPlayingCurrent
+                            ? "50%"
+                            : "11px",
+                      }}
+                    >
+                      <img
+                        src={track.artwork}
+                        alt=""
+                        className={`
+                          w-full
+                          h-full
+                          object-cover
+
+                          transition-transform
+                          duration-500
+
+                          group-hover:scale-110
+
+                          ${
+                            isPlayingCurrent
+                              ? "vinyl-spinning"
+                              : ""
+                          }
+                        `}
+                        style={{
+                          animationPlayState:
+                            isPlayingCurrent
+                              ? "running"
+                              : "paused",
+                        }}
+                      />
+
+                      {/* Current overlay */}
+
+                      {isCurrent && (
+                        <div
+                          className="
+                            absolute
+                            inset-0
+
+                            flex
+                            items-center
+                            justify-center
+
+                            bg-black/15
+                          "
+                        >
+                          <div
+                            className="
+                              w-1.5
+                              h-1.5
+
+                              rounded-full
+                            "
+                            style={{
+                              backgroundColor:
+                                "var(--sage)",
+                              boxShadow:
+                                "0 0 10px rgba(168,182,154,0.8)",
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Info */}
+
+                    <div
+                      className="
+                        min-w-0
+                        flex-1
                       "
                     >
-                      <span
+                      <h3
                         className="
-                          w-0.5
-                          h-full
-                          animate-pulse
-                          rounded-full
-                        "
-                        style={{
-                          backgroundColor: 'var(--sage)',
-                          animationDuration: '0.6s'
-                        }}
-                      />
+                          text-[10px]
+                          sm:text-xs
 
-                      <span
-                        className="
-                          w-0.5
-                          h-2/3
-                          animate-pulse
-                          rounded-full
-                        "
-                        style={{
-                          backgroundColor: 'var(--sage)',
-                          animationDuration: '0.4s'
-                        }}
-                      />
+                          truncate
 
-                      <span
-                        className="
-                          w-0.5
-                          h-4/5
-                          animate-pulse
-                          rounded-full
+                          font-medium
                         "
                         style={{
-                          backgroundColor: 'var(--sage)',
-                          animationDuration: '0.5s'
+                          color:
+                            isCurrent
+                              ? "var(--sage)"
+                              : "var(--text-primary)",
                         }}
-                      />
+                      >
+                        {track.title}
+                      </h3>
+
+                      <p
+                        className="
+                          mt-1
+
+                          text-[8px]
+                          sm:text-[9px]
+
+                          truncate
+                        "
+                        style={{
+                          color:
+                            "var(--text-muted)",
+                          opacity: 0.55,
+                        }}
+                      >
+                        {track.artist}
+                      </p>
                     </div>
-                  )}
 
-                </div>
-              );
-            })}
+                    {/* Playing bars */}
 
+                    {isPlayingCurrent && (
+                      <div
+                        className="
+                          flex
+                          items-end
+                          gap-[2px]
+
+                          h-4
+
+                          flex-shrink-0
+                        "
+                      >
+                        <span
+                          className="
+                            w-[2px]
+                            h-2
+
+                            rounded-full
+                            animate-pulse
+                          "
+                          style={{
+                            backgroundColor:
+                              "var(--sage)",
+                            animationDuration:
+                              "0.55s",
+                          }}
+                        />
+
+                        <span
+                          className="
+                            w-[2px]
+                            h-4
+
+                            rounded-full
+                            animate-pulse
+                          "
+                          style={{
+                            backgroundColor:
+                              "var(--sage)",
+                            animationDuration:
+                              "0.35s",
+                          }}
+                        />
+
+                        <span
+                          className="
+                            w-[2px]
+                            h-3
+
+                            rounded-full
+                            animate-pulse
+                          "
+                          style={{
+                            backgroundColor:
+                              "var(--sage)",
+                            animationDuration:
+                              "0.45s",
+                          }}
+                        />
+                      </div>
+                    )}
+                  </button>
+                );
+              }
+            )}
           </div>
-        </div>
+        </section>
 
-
-        {/* =======================================================
+        {/* ===================================================
             AMBIENCE SOUNDSCAPES
-        ======================================================= */}
-        <div
+        =================================================== */}
+
+        <section
           className="
-            p-3.5
+            relative
+            overflow-hidden
+
+            p-4
             sm:p-6
             lg:p-8
 
-            rounded-[22px]
-            sm:rounded-3xl
+            rounded-[24px]
+            sm:rounded-[28px]
 
             border
-            relative
-            overflow-hidden
-            backdrop-blur-md
+
+            backdrop-blur-xl
           "
           style={{
             background:
-              'linear-gradient(160deg, rgba(30, 31, 27, 0.7), rgba(20, 21, 17, 0.85))',
+              "linear-gradient(160deg, rgba(38,41,35,0.82), rgba(22,24,20,0.92))",
+
             borderColor:
-              'var(--border-subtle, rgba(244,240,230,0.08))',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+              "rgba(244,240,230,0.075)",
+
+            boxShadow:
+              "0 25px 70px rgba(0,0,0,0.25)",
           }}
         >
+          {/* Section glow */}
 
-          {/* Section Header */}
           <div
             className="
+              absolute
+              -left-32
+              -top-32
+
+              w-72
+              h-72
+
+              rounded-full
+              blur-[100px]
+
+              opacity-25
+
+              pointer-events-none
+            "
+            style={{
+              background:
+                "rgba(168,182,154,0.11)",
+            }}
+          />
+
+          {/* Header */}
+
+          <div
+            className="
+              relative
+
               flex
               flex-col
-              gap-2.5
 
               sm:flex-row
               sm:items-center
               sm:justify-between
 
-              mb-4
-              sm:mb-6
+              gap-3
 
-              pb-3
-              sm:pb-4
+              mb-5
+              sm:mb-7
+
+              pb-4
+              sm:pb-5
 
               border-b
               border-white/5
             "
           >
-
-            <div className="flex items-center gap-2">
-
+            <div
+              className="
+                flex
+                items-center
+                gap-2.5
+              "
+            >
               <div
                 className="
-                  w-7
-                  h-7
-                  sm:w-8
-                  sm:h-8
+                  w-8
+                  h-8
 
-                  rounded-lg
+                  rounded-xl
 
                   flex
                   items-center
@@ -876,35 +1262,55 @@ export const AtmosphereStudio = () => {
                 "
                 style={{
                   backgroundColor:
-                    'rgba(214, 184, 135, 0.06)'
+                    "rgba(214,184,135,0.07)",
                 }}
               >
                 <Sliders
                   size={14}
                   style={{
-                    color: 'var(--champagne)'
+                    color:
+                      "var(--champagne)",
                   }}
                 />
               </div>
 
-              <h2
-                className="
-                  text-[9px]
-                  sm:text-xs
+              <div>
+                <h2
+                  className="
+                    text-[10px]
+                    sm:text-xs
 
-                  uppercase
-                  tracking-[0.15em]
-                  sm:tracking-[0.17em]
+                    uppercase
+                    tracking-[0.16em]
 
-                  font-semibold
-                "
-                style={{
-                  color: 'var(--text-primary)'
-                }}
-              >
-                Ambience Soundscapes
-              </h2>
+                    font-semibold
+                  "
+                  style={{
+                    color:
+                      "var(--text-primary)",
+                  }}
+                >
+                  Ambience Soundscapes
+                </h2>
 
+                <p
+                  className="
+                    hidden
+                    sm:block
+
+                    mt-1
+
+                    text-[8px]
+                  "
+                  style={{
+                    color:
+                      "var(--text-muted)",
+                    opacity: 0.45,
+                  }}
+                >
+                  Blend individual environmental layers
+                </p>
+              </div>
             </div>
 
             <span
@@ -912,35 +1318,53 @@ export const AtmosphereStudio = () => {
                 self-start
                 sm:self-auto
 
+                inline-flex
+                items-center
+                gap-1.5
+
+                px-2.5
+                py-1.5
+
+                rounded-lg
+
+                border
+
                 text-[8px]
-                sm:text-[10px]
+                sm:text-[9px]
 
                 font-mono
-
-                px-2
-                sm:px-2.5
-
-                py-1
-
-                rounded-md
-                border
               "
               style={{
-                color: 'var(--text-muted)',
-                borderColor: 'var(--border-subtle)',
-                backgroundColor: 'rgba(255,255,255,0.02)'
+                color:
+                  "var(--text-muted)",
+
+                borderColor:
+                  "rgba(244,240,230,0.08)",
+
+                backgroundColor:
+                  "rgba(255,255,255,0.02)",
               }}
             >
-              Multi-Layer Spatial Engine
-            </span>
+              <Sparkles
+                size={10}
+                style={{
+                  color:
+                    "var(--champagne)",
+                }}
+              />
 
+              Multi-Layer Engine
+            </span>
           </div>
 
+          {/* Ambience cards */}
 
-          {/* Ambience Cards */}
           <div
             className="
+              relative
+
               grid
+
               grid-cols-1
               sm:grid-cols-2
               md:grid-cols-3
@@ -949,292 +1373,361 @@ export const AtmosphereStudio = () => {
               sm:gap-4
             "
           >
+            {(ambientLayers || []).map(
+              (layer) => {
+                const percentage =
+                  Math.round(
+                    layer.volume * 100
+                  );
 
-            {ambientLayers.map((layer) => {
+                const isActive =
+                  layer.volume > 0 &&
+                  !layer.isMuted;
 
-              const percentage =
-                Math.round(layer.volume * 100);
+                const IconComponent =
+                  AMBIENCE_ICONS[
+                    layer.id
+                  ] || Volume2;
 
-              const isActive =
-                layer.volume > 0 && !layer.isMuted;
+                const animationClass =
+                  getAnimationClass(
+                    layer.id
+                  );
 
-              const IconComponent =
-                AMBIENCE_ICONS[layer.id] || Volume2;
+                const sliderValue =
+                  layer.isMuted
+                    ? 0
+                    : layer.volume;
 
-
-              const getAnimationClass = (id) => {
-                switch (id) {
-                  case 'rain':
-                    return 'anim-rain';
-
-                  case 'fireplace':
-                    return 'anim-fire';
-
-                  case 'wind':
-                    return 'anim-wind';
-
-                  case 'ocean':
-                    return 'anim-waves';
-
-                  default:
-                    return '';
-                }
-              };
-
-
-              const animationClass =
-                getAnimationClass(layer.id);
-
-
-              return (
-                <div
-                  key={layer.id}
-                  className="
-                    p-3
-                    sm:p-4
-
-                    rounded-xl
-                    sm:rounded-2xl
-
-                    border
-
-                    flex
-                    flex-col
-                    justify-between
-
-                    transition-all
-                    duration-300
-
-                    hover:border-emerald-500/30
-                    active:scale-[0.99]
-                  "
-                  style={{
-                    backgroundColor: isActive
-                      ? 'rgba(168, 182, 154, 0.04)'
-                      : 'var(--surface-primary)',
-
-                    borderColor: isActive
-                      ? 'rgba(168, 182, 154, 0.4)'
-                      : 'var(--border-subtle, rgba(244,240,230,0.08))',
-
-                    boxShadow: isActive
-                      ? '0 8px 25px rgba(168,182,154,0.08)'
-                      : 'none'
-                  }}
-                >
-
-                  {/* Ambience Header */}
+                return (
                   <div
+                    key={layer.id}
                     className="
-                      flex
-                      items-center
-                      justify-between
+                      relative
 
-                      mb-3
-                      sm:mb-4
+                      p-3.5
+                      sm:p-4.5
+
+                      rounded-xl
+                      sm:rounded-2xl
+
+                      border
+
+                      flex
+                      flex-col
+
+                      transition-all
+                      duration-300
+
+                      hover:-translate-y-0.5
+
+                      group
                     "
+                    style={{
+                      background:
+                        isActive
+                          ? "linear-gradient(145deg, rgba(168,182,154,0.055), rgba(255,255,255,0.015))"
+                          : "rgba(255,255,255,0.018)",
+
+                      borderColor:
+                        isActive
+                          ? "rgba(168,182,154,0.28)"
+                          : "rgba(244,240,230,0.065)",
+
+                      boxShadow:
+                        isActive
+                          ? "0 12px 30px rgba(168,182,154,0.055)"
+                          : "none",
+                    }}
                   >
+                    {/* Top */}
 
                     <div
                       className="
                         flex
                         items-center
-                        gap-2
+                        justify-between
 
-                        min-w-0
+                        gap-3
+
+                        mb-5
                       "
                     >
+                      {/* Name */}
 
                       <div
+                        className="
+                          flex
+                          items-center
+                          gap-2.5
+
+                          min-w-0
+                        "
+                      >
+                        <div
+                          className="
+                            w-9
+                            h-9
+
+                            rounded-xl
+
+                            flex
+                            items-center
+                            justify-center
+
+                            flex-shrink-0
+
+                            transition-all
+                            duration-300
+                          "
+                          style={{
+                            backgroundColor:
+                              isActive
+                                ? "rgba(168,182,154,0.09)"
+                                : "rgba(255,255,255,0.025)",
+                          }}
+                        >
+                          <IconComponent
+                            size={16}
+                            className={
+                              animationClass
+                            }
+                            style={{
+                              color:
+                                isActive
+                                  ? "var(--sage)"
+                                  : "var(--text-muted)",
+
+                              animationPlayState:
+                                isActive
+                                  ? "running"
+                                  : "paused",
+                            }}
+                          />
+                        </div>
+
+                        <div className="min-w-0">
+                          <span
+                            className="
+                              block
+
+                              text-[10px]
+                              sm:text-[11px]
+
+                              font-medium
+
+                              truncate
+                            "
+                            style={{
+                              color:
+                                isActive
+                                  ? "var(--sage)"
+                                  : "var(--text-primary)",
+                            }}
+                          >
+                            {layer.name}
+                          </span>
+
+                          <span
+                            className="
+                              block
+
+                              mt-0.5
+
+                              text-[7px]
+                              sm:text-[8px]
+
+                              uppercase
+                              tracking-[0.12em]
+                            "
+                            style={{
+                              color:
+                                "var(--text-muted)",
+                              opacity: 0.38,
+                            }}
+                          >
+                            {isActive
+                              ? "Active"
+                              : layer.isMuted
+                              ? "Muted"
+                              : "Standby"}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Mute */}
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          toggleAmbientMute(
+                            layer.id
+                          )
+                        }
                         className="
                           w-8
                           h-8
 
-                          rounded-xl
+                          rounded-lg
 
                           flex
                           items-center
                           justify-center
 
+                          border
+
+                          transition-all
+                          duration-200
+
+                          hover:scale-105
+                          active:scale-90
+
                           flex-shrink-0
                         "
                         style={{
-                          backgroundColor: isActive
-                            ? 'rgba(168,182,154,0.08)'
-                            : 'rgba(255,255,255,0.025)'
-                        }}
-                      >
-                        <IconComponent
-                          className={`
-                            w-4
-                            h-4
-                            ${animationClass}
-                          `}
-                          style={{
-                            color: isActive
-                              ? 'var(--sage)'
-                              : 'var(--text-muted)',
+                          backgroundColor:
+                            layer.isMuted
+                              ? "rgba(248,113,113,0.07)"
+                              : "rgba(255,255,255,0.025)",
 
-                            animationPlayState:
-                              isActive
-                                ? 'running'
-                                : 'paused'
-                          }}
-                        />
-                      </div>
+                          borderColor:
+                            layer.isMuted
+                              ? "rgba(248,113,113,0.18)"
+                              : "rgba(255,255,255,0.06)",
+
+                          color:
+                            layer.isMuted
+                              ? "#f87171"
+                              : isActive
+                              ? "var(--sage)"
+                              : "var(--text-muted)",
+                        }}
+                        aria-label={
+                          layer.isMuted
+                            ? `Unmute ${layer.name}`
+                            : `Mute ${layer.name}`
+                        }
+                      >
+                        {layer.isMuted ? (
+                          <VolumeX size={14} />
+                        ) : (
+                          <Volume2 size={14} />
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Slider */}
+
+                    <div
+                      className="
+                        flex
+                        items-center
+                        gap-3
+                      "
+                    >
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={sliderValue}
+                        onChange={(e) =>
+                          setAmbientVolume(
+                            layer.id,
+                            parseFloat(
+                              e.target.value
+                            )
+                          )
+                        }
+                        aria-label={`${layer.name} volume`}
+                        className="
+                          w-full
+
+                          h-1.5
+                          sm:h-2
+
+                          rounded-full
+
+                          appearance-none
+
+                          cursor-pointer
+
+                          studio-slider
+                        "
+                        style={{
+                          background:
+                            getSliderBackground(
+                              sliderValue
+                            ),
+
+                          accentColor:
+                            "var(--sage)",
+                        }}
+                      />
 
                       <span
                         className="
-                          text-[10px]
-                          sm:text-xs
+                          w-8
 
-                          font-medium
-                          truncate
+                          text-right
+
+                          text-[8px]
+                          sm:text-[9px]
+
+                          font-mono
+
+                          flex-shrink-0
                         "
                         style={{
-                          color: isActive
-                            ? 'var(--sage)'
-                            : 'var(--text-primary)'
+                          color:
+                            isActive
+                              ? "var(--sage)"
+                              : "var(--text-muted)",
+
+                          opacity:
+                            isActive
+                              ? 0.9
+                              : 0.55,
                         }}
                       >
-                        {layer.name}
+                        {percentage}%
                       </span>
-
                     </div>
 
+                    {/* Bottom progress detail */}
 
-                    {/* Mute */}
-                    <button
-                      onClick={() =>
-                        toggleAmbientMute(layer.id)
-                      }
+                    <div
                       className="
-                        p-1.5
-                        sm:p-2
+                        mt-3
 
-                        rounded-xl
-                        text-xs
+                        flex
+                        items-center
+                        justify-between
 
-                        transition-all
-                        duration-200
-
-                        cursor-pointer
-
-                        hover:bg-white/5
-                        active:scale-90
-
-                        flex-shrink-0
+                        text-[7px]
+                        uppercase
+                        tracking-[0.12em]
                       "
                       style={{
-                        color: layer.isMuted
-                          ? '#f87171'
-                          : isActive
-                            ? 'var(--sage)'
-                            : 'var(--text-muted)',
-
-                        opacity: layer.isMuted
-                          ? 1
-                          : 0.7
-                      }}
-                      aria-label={
-                        layer.isMuted
-                          ? `Unmute ${layer.name}`
-                          : `Mute ${layer.name}`
-                      }
-                    >
-                      {layer.isMuted ? (
-                        <VolumeX className="w-4 h-4" />
-                      ) : (
-                        <Volume2 className="w-4 h-4" />
-                      )}
-                    </button>
-
-                  </div>
-
-
-                  {/* Slider */}
-                  <div
-                    className="
-                      flex
-                      items-center
-                      gap-2.5
-                    "
-                  >
-
-                    <input
-                      type="range"
-                      min="0"
-                      max="1"
-                      step="0.01"
-                      value={
-                        layer.isMuted
-                          ? 0
-                          : layer.volume
-                      }
-                      onChange={(e) =>
-                        setAmbientVolume(
-                          layer.id,
-                          parseFloat(e.target.value)
-                        )
-                      }
-                      className="
-                        w-full
-                        h-1.5
-                        sm:h-2
-
-                        rounded-full
-
-                        appearance-none
-                        cursor-pointer
-
-                        studio-slider
-                      "
-                      style={{
-                        background:
-                          getSliderBackground(
-                            layer.isMuted
-                              ? 0
-                              : layer.volume,
-                            1
-                          ),
-
-                        accentColor:
-                          'var(--sage)'
-                      }}
-                    />
-
-                    <span
-                      className="
-                        text-[8px]
-                        sm:text-[10px]
-
-                        font-mono
-
-                        w-8
-                        text-right
-
-                        opacity-70
-
-                        flex-shrink-0
-                      "
-                      style={{
-                        color: 'var(--text-muted)'
+                        color:
+                          "var(--text-muted)",
+                        opacity: 0.3,
                       }}
                     >
-                      {percentage}%
-                    </span>
+                      <span>Low</span>
 
+                      <span>Spatial Layer</span>
+
+                      <span>High</span>
+                    </div>
                   </div>
-
-                </div>
-              );
-            })}
-
+                );
+              }
+            )}
           </div>
-        </div>
-
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 
