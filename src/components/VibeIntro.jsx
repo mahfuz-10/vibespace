@@ -9,7 +9,7 @@ export const VibeIntro = ({ onEnter }) => {
   const audioCtxRef = useRef(null);
 
   /* =========================================================
-     LIVE STUDIO TIME
+     LIVE STUDIO TIME (KEEPING THE CLEAN WATCH)
   ========================================================= */
   useEffect(() => {
     const updateTime = () => {
@@ -40,7 +40,7 @@ export const VibeIntro = ({ onEnter }) => {
   };
 
   /* =========================================================
-     MOBILE-COMPLIANT SYNTHESIZER (EXPLICIT RESUME)
+     MOBILE & PC COMPLIANT HARMONIC ENTRANCE AUDIO
   ========================================================= */
   const playHarmonicEntranceChord = async () => {
     try {
@@ -52,7 +52,7 @@ export const VibeIntro = ({ onEnter }) => {
       }
       const ctx = audioCtxRef.current;
 
-      // Crucial for Android / iOS: Resume suspended audio context on touch
+      // Unlocks mobile sound restrictions
       if (ctx.state === "suspended") {
         await ctx.resume();
       }
@@ -62,7 +62,7 @@ export const VibeIntro = ({ onEnter }) => {
       const startTime = ctx.currentTime;
 
       masterGain.gain.setValueAtTime(0.001, startTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.35, startTime + 0.25);
+      masterGain.gain.exponentialRampToValueAtTime(0.3, startTime + 0.2);
       masterGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 1.8);
       masterGain.connect(ctx.destination);
 
@@ -73,7 +73,7 @@ export const VibeIntro = ({ onEnter }) => {
         osc.type = "sine";
         osc.frequency.setValueAtTime(freq, startTime);
 
-        oscGain.gain.setValueAtTime(0.28 / (idx + 1), startTime);
+        oscGain.gain.setValueAtTime(0.25 / (idx + 1), startTime);
         osc.connect(oscGain);
         oscGain.connect(masterGain);
 
@@ -81,91 +81,95 @@ export const VibeIntro = ({ onEnter }) => {
         osc.stop(startTime + 1.9);
       });
     } catch (e) {
-      console.warn("Audio init failed:", e);
+      console.warn("AudioContext error:", e);
     }
   };
 
   /* =========================================================
-     ENTER EXPERIENCE TRIGGER
+     TRIGGER ENTRY
   ========================================================= */
   const handleEnterClick = async () => {
     if (isEntering) return;
     setIsEntering(true);
 
     if (typeof window !== "undefined" && window.navigator?.vibrate) {
-      window.navigator.vibrate(30);
+      window.navigator.vibrate(25);
     }
 
-    // Play mobile-safe sound
     await playHarmonicEntranceChord();
 
     setTimeout(() => {
       if (typeof onEnter === "function") {
         onEnter();
       }
-    }, 650);
+    }, 600);
   };
 
   return (
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className={`fixed inset-0 z-[120] bg-[#141512] text-[#F3EFE6] overflow-hidden select-none flex flex-col justify-between p-4 sm:p-10 transition-all duration-700 ${
+      className={`fixed inset-0 z-[120] bg-[#141512] text-[#F3EFE6] overflow-hidden select-none flex flex-col justify-between p-5 sm:p-10 transition-all duration-700 ${
         isEntering
           ? "opacity-0 scale-[1.02] blur-md pointer-events-none"
           : "opacity-100"
       }`}
     >
       {/* =====================================================
-          BACKGROUND AMBIENT GLOWS
+          CINEMATIC BACKGROUND AURA
       ===================================================== */}
+      {/* Top subtle ambient glow */}
       <div
-        className="absolute inset-x-0 -top-24 h-96 pointer-events-none opacity-40 blur-3xl"
+        className="absolute inset-x-0 -top-24 h-96 pointer-events-none opacity-30 blur-3xl"
         style={{
           background:
-            "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(168, 182, 154, 0.25), transparent 75%)",
+            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(168, 182, 154, 0.3), transparent 75%)",
         }}
       />
 
+      {/* Interactive cursor light */}
       <div
         className="absolute inset-0 pointer-events-none transition-all duration-500 ease-out"
         style={{
-          background: `radial-gradient(circle 600px at ${mousePos.x}% ${mousePos.y}%, rgba(214, 184, 135, 0.08), rgba(168, 182, 154, 0.04) 40%, transparent 75%)`,
+          background: `radial-gradient(circle 600px at ${mousePos.x}% ${mousePos.y}%, rgba(214, 184, 135, 0.08), rgba(168, 182, 154, 0.03) 40%, transparent 75%)`,
         }}
       />
 
+      {/* Center soft bloom behind main text */}
       <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] h-[350px] pointer-events-none rounded-full blur-[130px] opacity-20"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[560px] h-[360px] pointer-events-none rounded-full blur-[140px] opacity-20"
         style={{
-          background: "var(--champagne, rgba(214, 184, 135, 0.25))",
+          background: "var(--champagne, rgba(214, 184, 135, 0.3))",
         }}
       />
 
       {/* =====================================================
-          TOP HEADER (MOBILE RESPONSIVE FIXED)
+          TOP HEADER: BALANCED & PROFESSIONAL
       ===================================================== */}
-      <header className="relative z-10 flex items-center justify-between gap-2 text-[8px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] uppercase font-mono text-[#8C9083]">
-        <div className="flex items-center gap-1.5 min-w-0">
+      <header className="relative z-10 flex items-center justify-between w-full max-w-6xl mx-auto">
+        {/* Brand spec label */}
+        <div className="flex items-center gap-2">
           <span
-            className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"
+            className="w-1.5 h-1.5 rounded-full animate-pulse"
             style={{ backgroundColor: "var(--sage, #A8B69A)" }}
           />
-          <span className="truncate sm:hidden" style={{ color: "var(--sage, #A8B69A)" }}>
-            SPATIAL AUDIO
-          </span>
-          <span className="hidden sm:inline" style={{ color: "var(--sage, #A8B69A)" }}>
-            SPATIAL ARCHITECTURE & SOUND ENGINE
+          <span
+            className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.2em]"
+            style={{ color: "var(--sage, #A8B69A)" }}
+          >
+            Acoustic World
           </span>
         </div>
 
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <span className="hidden sm:inline opacity-60">ACOUSTIC WORLD</span>
+        {/* Studio Watch */}
+        <div className="flex items-center">
           <span
-            className="font-medium tracking-widest px-2 py-0.5 rounded-md border text-[8px] sm:text-[10px]"
+            className="font-mono text-[9px] sm:text-[11px] font-medium tracking-[0.18em] px-2.5 py-1 rounded-lg border backdrop-blur-md"
             style={{
               color: "var(--champagne, #D6B887)",
-              borderColor: "rgba(214, 184, 135, 0.15)",
-              backgroundColor: "rgba(214, 184, 135, 0.05)",
+              borderColor: "rgba(214, 184, 135, 0.2)",
+              backgroundColor: "rgba(214, 184, 135, 0.04)",
+              boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
             }}
           >
             {timeStr || "00:00:00"}
@@ -174,14 +178,15 @@ export const VibeIntro = ({ onEnter }) => {
       </header>
 
       {/* =====================================================
-          CENTER HERO CONTENT
+          MAIN HERO SECTION: REFINED LUXURY TYPOGRAPHY
       ===================================================== */}
-      <main className="relative z-10 max-w-3xl mx-auto text-center px-2 sm:px-4 my-auto">
+      <main className="relative z-10 max-w-3xl mx-auto text-center px-4 my-auto w-full">
+        {/* Logo Icon Badge */}
         <div
-          className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border mb-5 sm:mb-8 backdrop-blur-md"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border mb-6 sm:mb-8 backdrop-blur-md"
           style={{
             backgroundColor: "rgba(168, 182, 154, 0.05)",
-            borderColor: "rgba(168, 182, 154, 0.2)",
+            borderColor: "rgba(168, 182, 154, 0.18)",
           }}
         >
           <img
@@ -190,19 +195,20 @@ export const VibeIntro = ({ onEnter }) => {
             className="w-3.5 h-3.5 object-contain"
             style={{
               filter:
-                "drop-shadow(0 0 6px rgba(168, 182, 154, 0.3)) drop-shadow(0 0 12px rgba(214, 184, 135, 0.15))",
+                "drop-shadow(0 0 6px rgba(168, 182, 154, 0.35)) drop-shadow(0 0 12px rgba(214, 184, 135, 0.15))",
             }}
           />
           <span
-            className="text-[8px] sm:text-[10px] font-semibold tracking-[0.14em] sm:tracking-[0.16em] uppercase leading-tight"
+            className="text-[8px] sm:text-[9px] font-semibold tracking-[0.22em] uppercase"
             style={{ color: "var(--sage, #A8B69A)" }}
           >
-            VibeSpace Acoustic World
+            Spatial Sound Engine
           </span>
         </div>
 
+        {/* Title */}
         <h1
-          className="text-3xl sm:text-6xl md:text-7xl font-light tracking-tight leading-[1.1] sm:leading-[1.08] mb-4 sm:mb-6"
+          className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight leading-[1.08] mb-5 sm:mb-6"
           style={{ color: "var(--text-primary, #F3EFE6)" }}
         >
           Find the sound <br />
@@ -214,26 +220,38 @@ export const VibeIntro = ({ onEnter }) => {
           </span>
         </h1>
 
+        {/* Description */}
         <p
-          className="text-[11px] sm:text-sm font-light leading-relaxed max-w-sm sm:max-w-lg mx-auto mb-7 sm:mb-10 opacity-60"
+          className="text-xs sm:text-sm font-light leading-relaxed max-w-sm sm:max-w-md mx-auto mb-8 sm:mb-11 opacity-60"
           style={{ color: "var(--text-muted, #94988B)" }}
         >
-          Immerse your senses in generative soundscapes tuned precisely to your current coordinates, actions, and inner rhythm.
+          Music, ambience, and atmosphere — shaped dynamically around where you are right now.
         </p>
 
+        {/* Premium Enter Button with Live Waveform Icon */}
         <div className="flex justify-center">
           <button
             type="button"
             onClick={handleEnterClick}
-            className="group relative inline-flex items-center justify-center gap-2.5 sm:gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl font-semibold uppercase tracking-wider text-[10px] sm:text-xs transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl cursor-pointer"
+            className="group relative inline-flex items-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-semibold uppercase tracking-wider text-[10px] sm:text-xs transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             style={{
               background:
                 "linear-gradient(135deg, var(--sage, #A8B69A), var(--champagne, #D6B887))",
               color: "#151713",
-              boxShadow: "0 12px 35px rgba(168, 182, 154, 0.2)",
+              boxShadow: "0 10px 30px rgba(168, 182, 154, 0.22)",
             }}
           >
-            <span>Enter Experience</span>
+            {/* Ambient Idle Waveform */}
+            <div className="flex items-center gap-0.5 h-3">
+              <span className="w-0.5 h-2 bg-[#151713] rounded-full animate-pulse [animation-duration:0.6s]" />
+              <span className="w-0.5 h-3 bg-[#151713] rounded-full animate-pulse [animation-duration:0.4s]" />
+              <span className="w-0.5 h-1.5 bg-[#151713] rounded-full animate-pulse [animation-duration:0.8s]" />
+            </div>
+
+            <span className="font-semibold tracking-[0.16em]">
+              Enter Experience
+            </span>
+
             <ArrowUpRight
               size={14}
               className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -243,12 +261,11 @@ export const VibeIntro = ({ onEnter }) => {
       </main>
 
       {/* =====================================================
-          BOTTOM FOOTER (MOBILE RESPONSIVE FIXED)
+          BOTTOM SPEC FOOTER: MINIMAL & CLEAN
       ===================================================== */}
-      <footer className="relative z-10 flex items-center justify-between gap-2 text-[7px] sm:text-[9px] tracking-[0.16em] sm:tracking-[0.2em] uppercase font-mono text-[#7D8175]">
+      <footer className="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between text-[8px] sm:text-[9px] tracking-[0.2em] uppercase font-mono text-[#6E7266]">
         <div>
-          <span className="sm:hidden">STUDIO READY</span>
-          <span className="hidden sm:inline">LIVE STUDIO // COORDINATES READY</span>
+          <span>LIVE ARCHITECTURE</span>
         </div>
 
         <div className="text-right">
